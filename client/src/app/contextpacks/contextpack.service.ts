@@ -40,7 +40,6 @@ export class ContextPackService {
   }
 
   addContextPack(newPack: ContextPack): Observable<string> {
-    // Send post request to add a new user with the user data as the body.
     return this.httpClient.post<{id: string}>(this.contextpackUrl, newPack).pipe(map(res => res.id));
   }
 
