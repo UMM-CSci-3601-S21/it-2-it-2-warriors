@@ -1,7 +1,9 @@
 <mat-card class="contextpack-card" *ngIf="this.contextpack">
   <mat-card-header>
     <mat-card-title class="contextpack-card-name">{{ this.contextpack.name.charAt(0).toUpperCase() + this.contextpack.name.slice(1) }}</mat-card-title>
-    <mat-card-subtitle class="contextpack-card-enabled">Enabled: {{ this.contextpack.enabled }}</mat-card-subtitle>
+
+    <button (click)="setED($event.target)">enable</button>
+
     <mat-card-subtitle class="contextpack-card-icon">Icon: {{ this.contextpack.icon }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content *ngIf="!this.simple">
@@ -35,8 +37,11 @@
     <!-- <button class="contextpack-download-button" (click)='downloadJson(contextpack, contextpack.name).click()'>Download Json</button> -->
 
   </mat-card-content>
+
+
   <mat-card-actions>
-    <button mat-button data-test="viewInfoButton" *ngIf="this.simple"  [routerLink]="['/contextpacks', this.contextpack._id]">View Info</button>
+
+  <button mat-button data-test="viewInfoButton" *ngIf="this.simple"  [routerLink]="['/contextpacks', this.contextpack._id]">View Info</button>
   </mat-card-actions>
 
 

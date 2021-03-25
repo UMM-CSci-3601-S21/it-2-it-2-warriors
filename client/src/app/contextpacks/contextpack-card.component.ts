@@ -101,4 +101,27 @@ export class ContextPackCardComponent implements OnInit {
       }
       return str;
   }
+
+  setED(element){
+    let i;
+    if(element.textContent === 'enable'){
+      element.textContent = 'disable';
+      this.contextpack.enabled = false;
+      for (i = 0; i < this.contextpack.wordlists.length; i++){
+       this.contextpack.wordlists[i].enabled = false;
+      }
+    }
+    else{
+      element.textContent = 'enable';
+      this.contextpack.enabled = true;
+      for (i = 0; i < this.contextpack.wordlists.length; i++){
+        this.contextpack.wordlists[i].enabled = true;
+       }
+    }
+  }
+
+
+
+
 }
+
