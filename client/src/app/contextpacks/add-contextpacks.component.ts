@@ -5,13 +5,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ContextPackService } from './contextpack.service';
 import { Router } from '@angular/router';
 import { ContextPackCardComponent } from './contextpack-card.component';
+import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-contextpacks',
   templateUrl: './add-contextpacks.component.html',
   styleUrls: ['./add-contextpacks.component.scss']
 })
+
 export class AddContextpacksComponent implements OnInit {
+  selectedFile;
   contextPackForm: FormGroup;
   contextpackcard = new ContextPackCardComponent();
   isShown = false;
@@ -56,10 +59,7 @@ export class AddContextpacksComponent implements OnInit {
   };
 
   constructor(private fb: FormBuilder, private contextPackService: ContextPackService,
-    private snackBar: MatSnackBar, private router: Router) { }
-
-
-
+    private snackBar: MatSnackBar, private router: Router, private http: HttpClientModule) { }
 
   ngOnInit() {
     this.contextPackForm = this.fb.group({
@@ -75,6 +75,11 @@ export class AddContextpacksComponent implements OnInit {
     });
     this.contextPackForm.valueChanges.subscribe(data => this.validateForm());
   }
+
+  onFileChanged(event) {
+    this.selectedFile = event.target.files[0];
+  }
+
 
   initwordlist() {
     return this.fb.group({
@@ -190,7 +195,6 @@ export class AddContextpacksComponent implements OnInit {
       x++;
     }
   }
-
 
 toggleShow() {
 this.isShown = ! this.isShown;

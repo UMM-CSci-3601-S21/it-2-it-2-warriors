@@ -10,5 +10,14 @@ public class Wordlist {
   public ArrayList<Word> verbs;
   public ArrayList<Word> misc;
 
+
+  public void toggleContextPack(){
+    if (this.enabled == true){
+      this.enabled = false;
+    }
+    else {
+      this.enabled = true;
+    }
+  }
 }
 

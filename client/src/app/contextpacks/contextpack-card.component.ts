@@ -8,7 +8,7 @@ import { ContextPack, Wordlist, WordRole } from './contextpack';
   styleUrls: ['./contextpack-card.component.scss']
 })
 export class ContextPackCardComponent implements OnInit {
-
+  selectedFile;
   @Input() contextpack: ContextPack;
   @Input() simple ? = false;
   selected = 'true';
@@ -107,21 +107,11 @@ export class ContextPackCardComponent implements OnInit {
     if(element.textContent === 'enable'){
       element.textContent = 'disable';
       this.contextpack.enabled = false;
-      for (i = 0; i < this.contextpack.wordlists.length; i++){
-       this.contextpack.wordlists[i].enabled = false;
-      }
     }
     else{
       element.textContent = 'enable';
       this.contextpack.enabled = true;
-      for (i = 0; i < this.contextpack.wordlists.length; i++){
-        this.contextpack.wordlists[i].enabled = true;
        }
     }
   }
-
-
-
-
-}
 
