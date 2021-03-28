@@ -139,12 +139,10 @@ describe('ContextPackCardComponent', () => {
     expect(component.convertToBetterJson(component.contextpack).id).toBeUndefined();
   });
   it('based on what the element equals the ', () => {
-    let element;
-    let element2;
-    element = {
+    const element = {
       textContent: 'enable'
     };
-    element2 = {
+    const element2 = {
       textContent: 'disable'
     };
 
