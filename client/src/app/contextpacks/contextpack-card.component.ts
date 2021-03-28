@@ -101,4 +101,18 @@ export class ContextPackCardComponent implements OnInit {
       }
       return str;
   }
+
+  setEnableOrDisable(element,wordlist){
+    if(element.textContent === 'enable'){
+      element.textContent = 'disable';
+      wordlist.enabled = false;
+    }
+    else{
+      element.textContent = 'enable';
+      wordlist.enabled = true;
+
+    }
+    return(wordlist.enabled.toString());
+}
+
 }
