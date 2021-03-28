@@ -94,7 +94,7 @@ describe('Contextpack list', () => {
     page.clickViewInfo(page.getContextpackCards().first());
 
     cy.get('.contextpack-card-name').should('have.text', 'Farm');
-    cy.get('.contextpack-card-enabled').should('have.text', 'Enabled: true');
+
     cy.get('.contextpack-card-wordlists').should('contain.text', 'goat, goats, sheep, cat, cats, dog, '
     + 'dogs, cow, cows, pig, pigs, chicken, chickens, duck, ducks, llama, llamas');
     cy.get('.contextpack-card-wordlists').should('contain.text', 'moo, moos, mooed, mooing, oink, oinks, '
@@ -107,7 +107,7 @@ describe('Contextpack list', () => {
     page.selectView('false');
 
     cy.get('.contextpack-card-name').should('have.text', 'Farm');
-    cy.get('.contextpack-card-enabled').should('have.text', 'Enabled: true');
+
     cy.get('.contextpack-card-nouns').should('contain.text', 'goat, goats, sheep, cat, cats, dog, '
     + 'dogs, cow, cows, pig, pigs, chicken, chickens, duck, ducks, llama, llamas');
     cy.get('.contextpack-card-verbs').should('contain.text', 'moo, moos, mooed, mooing, oink, oinks, '
@@ -119,7 +119,6 @@ describe('Contextpack list', () => {
   it('Should click view info on a contextpack and go to the right URL', () => {
     page.getContextpackCards().first().then((card) => {
       const firstContextpackTopic = card.find('.contextpack-card-name').text();
-      const firstContextpackEnabled = card.find('.contextpack-card-enabled').text();
 
 
       // When the view info button on the first contextpack card is clicked, the URL should have a valid mongo ID
@@ -130,7 +129,6 @@ describe('Contextpack list', () => {
 
       // On this info page we were sent to, the topic and topic should be correct
       cy.get('.contextpack-card-name').first().should('have.text', firstContextpackTopic);
-      cy.get('.contextpack-card-enabled').first().should('have.text', firstContextpackEnabled);
 
     });
    });
