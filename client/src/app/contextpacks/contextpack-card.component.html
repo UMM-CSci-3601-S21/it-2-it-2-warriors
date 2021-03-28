@@ -2,7 +2,7 @@
   <mat-card-header>
     <mat-card-title class="contextpack-card-name">{{ this.contextpack.name.charAt(0).toUpperCase() + this.contextpack.name.slice(1) }}</mat-card-title>
 
-    <button (click)="setED($event.target)">enable</button>
+
 
     <mat-card-subtitle class="contextpack-card-icon">Icon: {{ this.contextpack.icon }}</mat-card-subtitle>
   </mat-card-header>
@@ -21,6 +21,7 @@
 
     <div *ngIf="selected === 'true'; else templateWords">
       <div *ngFor="let wordlists of contextpack.wordlists; let index = index">
+        <button (click)="setEnableOrDisable($event.target,this.wordlists)" >enable</button>
         <span class="contextpack-card-wordlists"><div style="white-space: pre-line">{{displayWordlists(this.contextpack.wordlists[index])}}</div></span>
       </div>
     </div>
