@@ -1,9 +1,0 @@
-@Document(collection = "photos")
-public class Photo {
-    @Id
-    private String id;
-
-    private String title;
-
-    private Binary image;
-}
