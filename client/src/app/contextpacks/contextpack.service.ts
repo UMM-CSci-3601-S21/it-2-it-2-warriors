@@ -44,6 +44,11 @@ export class ContextPackService {
     return this.httpClient.post<{id: string}>(this.contextpackUrl, newPack).pipe(map(res => res.id));
   }
 
+  updateContextPack(updatePack: ContextPack): Observable<ContextPack> {
+
+    return this.httpClient.put<ContextPack>(this.contextpackUrl, updatePack).pipe(map(res => res));
+  }
+
 
 }
 
