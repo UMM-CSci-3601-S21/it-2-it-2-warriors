@@ -8,9 +8,9 @@ import { ContextPack, Wordlist, WordRole } from './contextpack';
   styleUrls: ['./contextpack-card.component.scss']
 })
 export class ContextPackCardComponent implements OnInit {
-  selectedFile;
   @Input() contextpack: ContextPack;
   @Input() simple ? = false;
+  selectedFile;
   selected = 'true';
 
   constructor() { }
