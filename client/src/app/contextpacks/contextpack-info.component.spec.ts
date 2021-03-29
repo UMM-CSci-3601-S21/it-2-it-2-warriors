@@ -1,5 +1,7 @@
+import { Overlay } from '@angular/cdk/overlay';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRouteStub } from '../../testing/activated-route-stub';
@@ -23,7 +25,9 @@ describe('ContextPackInfoComponent', () => {
       declarations: [ContextPackInfoComponent, ContextPackCardComponent],
       providers: [
         { provide: ContextPackService, useValue: new MockContextPackService() },
-        { provide: ActivatedRoute, useValue: activatedRoute }
+        { provide: ActivatedRoute, useValue: activatedRoute },
+        {provide: MatSnackBar},
+        {provide: Overlay}
       ]
     })
       .compileComponents();
@@ -58,6 +62,13 @@ describe('ContextPackInfoComponent', () => {
     activatedRoute.setParamMap({ id: expectedContextPack._id });
 
     expect(component.id).toEqual(expectedContextPack._id);
+
+
+
+
+
+
+
 
     // Changing the paramMap should update the displayed contextpack's info.
     expectedContextPack = MockContextPackService.testContextPacks[1];

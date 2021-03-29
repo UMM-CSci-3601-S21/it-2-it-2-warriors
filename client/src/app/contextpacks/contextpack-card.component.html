@@ -26,7 +26,7 @@
         </div>
 
         <div *ngIf='wordlists.enabled === false'>
-          <button (click)="setEnableOrDisable($event.target,wordlists,this.contextpack)" ( >enable</button>
+          <button (click)="setEnableOrDisable($event.target,wordlists,this.contextpack)" >enable</button>
         </div>
 
         <span class="contextpack-card-wordlists"><div style="white-space: pre-line">{{displayWordlists(this.contextpack.wordlists[index])}}</div></span>
