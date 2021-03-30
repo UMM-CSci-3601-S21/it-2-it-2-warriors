@@ -21,7 +21,14 @@
 
     <div *ngIf="selected === 'true'; else templateWords">
       <div *ngFor="let wordlists of contextpack.wordlists; let index = index">
-        <button (click)="setEnableOrDisable($event.target,this.wordlists)" >enable</button>
+        <div *ngIf='wordlists.enabled === true'>
+          <button id = "button"  data-test="button" (click)="setEnableOrDisable($event.target,wordlists,this.contextpack)" >disable</button>
+        </div>
+
+        <div *ngIf='wordlists.enabled === false'>
+          <button id = "button"  data-test="button" (click)="setEnableOrDisable($event.target,wordlists,this.contextpack)" >enable</button>
+        </div>
+
         <span class="contextpack-card-wordlists"><div style="white-space: pre-line">{{displayWordlists(this.contextpack.wordlists[index])}}</div></span>
       </div>
     </div>
@@ -44,7 +51,6 @@
 
   <button mat-button data-test="viewInfoButton" *ngIf="this.simple"  [routerLink]="['/contextpacks', this.contextpack._id]">View Info</button>
   </mat-card-actions>
-
 
 </mat-card>
 
