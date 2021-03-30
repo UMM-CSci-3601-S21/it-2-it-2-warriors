@@ -73,6 +73,7 @@ public class ContextPackController {
 
   public void updateContextPack(Context ctx){
     ContextPack contextPack = ctx.bodyValidator(ContextPack.class)
+      .check(pack -> pack.name != null )
       .get();
       contextPackCollection.replaceOne(eq("name", contextPack.name), contextPack);
       ctx.status(201);
