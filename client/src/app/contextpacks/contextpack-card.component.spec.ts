@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
 
 
 describe('ContextPackCardComponent', () => {
@@ -20,6 +21,9 @@ describe('ContextPackCardComponent', () => {
   let component2: ContextPackCardComponent;
   let fixture2: ComponentFixture<ContextPackCardComponent>;
   let emptyWordlist: Wordlist;
+
+
+
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -44,9 +48,9 @@ describe('ContextPackCardComponent', () => {
     fixture = TestBed.createComponent(ContextPackCardComponent);
     fixture2 = TestBed.createComponent(ContextPackCardComponent);
 
-
     component = fixture.componentInstance;
     component2 = fixture2.componentInstance;
+
 
     const noun: Word = {
       word: 'you',
@@ -89,7 +93,7 @@ describe('ContextPackCardComponent', () => {
       misc: testMisc
   }];
 
-    component.contextpack = {
+     component.contextpack = {
       _id: 'pat_id',
       enabled: true,
       name: 'happy',
@@ -101,7 +105,11 @@ describe('ContextPackCardComponent', () => {
       name: 'Joy',
     };
 
+
+
+
     fixture.detectChanges();
+
   });
 
   it('should create', () => {
@@ -154,5 +162,14 @@ describe('ContextPackCardComponent', () => {
     expect(component.convertToBetterJson(component.contextpack).id).toBeUndefined();
   });
 
+  it('should call the button', () => {
+    const element = {
+      textContent: 'disable'
+    };
+    spyOn(component,'submit');
+    expect(component.setEnableOrDisable(element,component.contextpack.wordlists[0],component.contextpack)).toEqual('false');
+    expect(component.setEnableOrDisable(element,component.contextpack.wordlists[0],component.contextpack)).toEqual('true');
+
+  });
 
 });
