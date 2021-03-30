@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { ContextPackCardComponent } from 'src/app/contextpacks/contextpack-card.component';
+import { ContextPackService } from 'src/app/contextpacks/contextpack.service';
 import { ContextPack, Word, Wordlist } from '../app/contextpacks/contextpack';
-import { ContextPackService } from '../app/contextpacks/contextpack.service';
+
 
 /**
  * A "mock" version of the `ContextpackService` that can be used to test components
  * without having to create an actual service.
  */
 @Injectable()
-export class MockContextPackService extends ContextPackService {
+export class MockContextPackService extends ContextPackService  {
   static noun: Word = {
     word: 'you',
     forms: ['you', 'yos']
@@ -83,6 +87,16 @@ export class MockContextPackService extends ContextPackService {
       return of(null);
     }
   }
-
+  submit(cp: ContextPack) {
+    let i;
+    let message = 'Pack Not Updated';
+    for(i = 0;i<MockContextPackService.testContextPacks.length;i++){
+      if(cp.name === MockContextPackService.testContextPacks[i].name){
+        MockContextPackService.testContextPacks[i] = cp;
+        message = 'Update Pack';
+      }
+    }
+    return(message);
+  }
 
 }
