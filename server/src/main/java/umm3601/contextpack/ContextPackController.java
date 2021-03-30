@@ -73,11 +73,10 @@ public class ContextPackController {
 
   public void updateContextPack(Context ctx){
     ContextPack contextPack = ctx.bodyValidator(ContextPack.class)
-      .check(pack -> pack.name != null )
       .get();
-      contextPackCollection.replaceOne(eq("_id", contextPack._id), contextPack);
+      contextPackCollection.replaceOne(eq("name", contextPack.name), contextPack);
       ctx.status(201);
-      ctx.json(ImmutableMap.of("_id", contextPack._id));
+      ctx.json(ImmutableMap.of("name", contextPack.name));
   }
 
 

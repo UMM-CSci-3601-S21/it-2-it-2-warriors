@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class ContextPack {
   @ObjectId @Id
   public String _id;
-
   public String name;
   public String icon;
   public boolean enabled;
