@@ -136,14 +136,14 @@ describe('Context Pack service: ', () => {
 
     req.flush({id: 'testid'});
   });
-
-
   it('update contextpack put to api/contextpack', () => {
     contextpackService.updateContextPack(testContextPacks[1]).subscribe(
       context => expect(context).toBe(testContextPacks[1])
-    );
 
+    );
     const req = httpTestingController.expectOne(contextpackService.contextpackUrl);
+
+
 
     expect(req.request.method).toEqual('PUT');
     expect(req.request.body).toEqual(testContextPacks[1]);
