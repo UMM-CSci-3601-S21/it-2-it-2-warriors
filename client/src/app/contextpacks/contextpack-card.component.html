@@ -21,12 +21,12 @@
 
     <div *ngIf="selected === 'true'; else templateWords">
       <div *ngFor="let wordlists of contextpack.wordlists; let index = index">
-        <div id = "button1" *ngIf='wordlists.enabled === true'>
-          <button (click)="setEnableOrDisable($event.target,wordlists,this.contextpack)" >disable</button>
+        <div *ngIf='wordlists.enabled === true'>
+          <button id = "button"  data-test="button" (click)="setEnableOrDisable($event.target,wordlists,this.contextpack)" >disable</button>
         </div>
 
-        <div id = "button2" *ngIf='wordlists.enabled === false'>
-          <button (click)="setEnableOrDisable($event.target,wordlists,this.contextpack)" >enable</button>
+        <div *ngIf='wordlists.enabled === false'>
+          <button id = "button"  data-test="button" (click)="setEnableOrDisable($event.target,wordlists,this.contextpack)" >enable</button>
         </div>
 
         <span class="contextpack-card-wordlists"><div style="white-space: pre-line">{{displayWordlists(this.contextpack.wordlists[index])}}</div></span>
