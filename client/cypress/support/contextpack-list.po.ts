@@ -1,3 +1,5 @@
+
+
 export class ContextpackListPage {
   navigateTo() {
     return cy.visit('/contextpacks');
@@ -19,6 +21,11 @@ export class ContextpackListPage {
    */
   clickViewInfo(card: Cypress.Chainable<JQuery<HTMLElement>>) {
     return card.find<HTMLButtonElement>('[data-test=viewInfoButton]').click();
+  }
+
+  clickButton() {
+    return cy.get('[data-test=button]').click({multiple: true});
+
   }
 
   selectView(value: string) {
