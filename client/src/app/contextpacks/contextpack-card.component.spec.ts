@@ -3,6 +3,15 @@ import { ContextPackCardComponent } from './contextpack-card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { Word, Wordlist,ContextPack} from './contextpack';
+import { MockContextPackService } from 'src/testing/contextpack.service.mock';
+import { ContextPackService } from './contextpack.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
 
 
 describe('ContextPackCardComponent', () => {
@@ -12,15 +21,25 @@ describe('ContextPackCardComponent', () => {
   let component2: ContextPackCardComponent;
   let fixture2: ComponentFixture<ContextPackCardComponent>;
   let emptyWordlist: Wordlist;
-  let contextpack: ContextPack;
+
+
+
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        MatSnackBarModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
         BrowserAnimationsModule,
+        RouterTestingModule,
         MatCardModule
       ],
-      declarations: [ ContextPackCardComponent ]
+      declarations: [ ContextPackCardComponent ],
+      providers:[{ provide: ContextPackService, useValue: new MockContextPackService()}]
     })
     .compileComponents();
   }));
@@ -29,9 +48,9 @@ describe('ContextPackCardComponent', () => {
     fixture = TestBed.createComponent(ContextPackCardComponent);
     fixture2 = TestBed.createComponent(ContextPackCardComponent);
 
-
     component = fixture.componentInstance;
     component2 = fixture2.componentInstance;
+
 
     const noun: Word = {
       word: 'you',
@@ -74,7 +93,7 @@ describe('ContextPackCardComponent', () => {
       misc: testMisc
   }];
 
-    component.contextpack = {
+     component.contextpack = {
       _id: 'pat_id',
       enabled: true,
       name: 'happy',
@@ -86,7 +105,11 @@ describe('ContextPackCardComponent', () => {
       name: 'Joy',
     };
 
+
+
+
     fixture.detectChanges();
+
   });
 
   it('should create', () => {
@@ -138,18 +161,15 @@ describe('ContextPackCardComponent', () => {
     toEqual('https://raw.githubusercontent.com/kidstech/story-builder/master/Assets/packs/schema/pack.schema.json');
     expect(component.convertToBetterJson(component.contextpack).id).toBeUndefined();
   });
-  it('based on what the element equals the ', () => {
+
+  it('should change the value of the button and wordlist value for enable. It would then update the context pack'+
+   'with the new version', () => {
     const element = {
-      textContent: 'enable'
-    };
-    const element2 = {
       textContent: 'disable'
     };
-
-
-    expect(component.setEnableOrDisable(element,component.contextpack.wordlists[0])).toEqual('false');
-    expect(component.setEnableOrDisable(element,component.contextpack.wordlists[0])).toEqual('true');
-    expect(component.setEnableOrDisable(element2,component.contextpack.wordlists[0])).toEqual('true');
+    spyOn(component,'submit');
+    expect(component.setEnableOrDisable(element,component.contextpack.wordlists[0],component.contextpack)).toEqual('false');
+    expect(component.setEnableOrDisable(element,component.contextpack.wordlists[0],component.contextpack)).toEqual('true');
   });
 
 });
