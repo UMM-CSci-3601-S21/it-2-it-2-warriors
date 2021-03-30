@@ -90,6 +90,29 @@ describe('Contextpack list', () => {
     cy.get('.contextpack-download-button').should('have.text', 'download');
   });
 
+  it('Should click the disable button and enable', () => {
+    page.clickViewInfo(page.getContextpackCards().first());
+
+    cy.get('#button').should('have.text', 'disable');
+    cy.get('.contextpack-card-wordlists').should('contain.text', 'true');
+    page.clickButton();
+    cy.get('#button').should('have.text', 'enable');
+    cy.get('.contextpack-card-wordlists').should('contain.text', 'false');
+    page.clickButton();
+    cy.get('#button').should('have.text', 'disable');
+    cy.get('.contextpack-card-wordlists').should('contain.text', 'true');
+  });
+
+  it('Should click the enable/disable button and see both all and no words', () => {
+    page.clickViewInfo(page.getContextpackCards().first());
+    page.clickButton();
+    page.selectView('false');
+    page.selectView('true');
+    page.clickButton();
+    page.selectView('false');
+  });
+
+
   it('Should click view info and see all the nouns and verbs', () => {
     page.clickViewInfo(page.getContextpackCards().first());
 
