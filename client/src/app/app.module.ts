@@ -34,6 +34,7 @@ import { ContextPackInfoComponent } from './contextpacks/contextpack-info.compon
 import { AddContextpacksComponent } from './contextpacks/add-contextpacks.component';
 import { AddWordlistsComponent } from './wordlists/add-wordlists/add-wordlists.component';
 
+
 const MATERIAL_MODULES: any[] = [
   MatListModule,
   MatButtonModule,
