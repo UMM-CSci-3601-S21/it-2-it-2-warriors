@@ -80,7 +80,7 @@ public class ContextPackControllerSpec {
     .append("name", "baskets")
     .append("icon", "dog.png")
     .append("enabled", true)
-    .append("wordlists", Arrays.asList(
+    .append("ContextPacks", Arrays.asList(
       new Document("name", "dogs")
             .append("enabled", true)
             .append("verbs",
@@ -108,7 +108,7 @@ public class ContextPackControllerSpec {
     );
     contextPackDocuments.insertOne(testPackID);
 
-    MongoCollection<Document> wordlistDocuments = db.getCollection("wordlists");
+    MongoCollection<Document> ContextPackDocuments = db.getCollection("ContextPacks");
 
     Document testListID = new Document()
           .append("_id", testID)
@@ -122,7 +122,7 @@ public class ContextPackControllerSpec {
                 Arrays.asList(new Document("word", "run").append("forms", Arrays.asList("ran", "runs"))))
           .append("misc",
                 Arrays.asList(new Document("word", "run").append("forms", Arrays.asList("ran", "runs"))));
-    wordlistDocuments.insertOne(testListID);
+    ContextPackDocuments.insertOne(testListID);
     contextPackController = new ContextPackController(db);
   }
 
@@ -224,7 +224,7 @@ public class ContextPackControllerSpec {
     + "\"name\": \"sight words\","
     + "\"icon\": \"eye.png\","
     + "\"enabled\": true,"
-    + "\"wordlist\":"
+    + "\"ContextPack\":"
       + "{"
       + "\"topic\": \"goats\","
       + "\"enabled\": true,"
@@ -272,10 +272,97 @@ public class ContextPackControllerSpec {
 
   }
 
+
+  @Test
+  public void updateContextPack() throws IOException {
+
+    add(1);
+    assertEquals(201, mockRes.getStatus());
+    String testContextPack = "{"
+    + "\"name\": \"sight words\","
+    + "\"icon\": \"eye.png\","
+    + "\"enabled\": true,"
+    + "\"ContextPack\":"
+      + "{"
+      + "\"topic\": \"goats\","
+      + "\"enabled\": true,"
+      + "\"nouns\": ["
+      + "{\"word\": \"boat\", \"forms\": [\"he\"]},"
+      + "{\"word\": \"she\", \"forms\": [\"he\"]}"
+      + "],"
+      + "\"adjectives\": ["
+      + "{\"word\": \"he\", \"forms\": [\"he\"]},"
+      + "{\"word\": \"he\", \"forms\": [\"he\"]}"
+      + "],"
+      + "\"verbs\": ["
+      + "{\"word\": \"he\", \"forms\": [\"he\"]},"
+      + "{\"word\": \"he\", \"forms\": [\"he\"]}"
+      + "],"
+      + "\"misc\": ["
+      + "{\"word\": \"duck\", \"forms\": [\"ducky\"]},"
+      + "{\"word\": \"he\", \"forms\": [\"he\"]}"
+      + "]"
+      + "}}";
+
+    mockReq.setBodyContent(testContextPack);
+    mockReq.setMethod("PUT");
+    Context ctx = ContextUtil.init(mockReq, mockRes, "api/contextpacks",ImmutableMap.of("name", "sight words"));
+    contextPackController.updateContextPack(ctx);
+    assertEquals(201, mockRes.getStatus());
+
+    String result = ctx.resultString();
+    String name = jsonMapper.readValue(result, ObjectNode.class).get("name").asText();
+
+    assertNotEquals("", name);
+    System.out.println(name);
+    System.out.println(result);
+
+    assertEquals(1, db.getCollection("contextpacks").countDocuments(eq("name", name)));
+
+    Document addedPack = db.getCollection("contextpacks").find(eq("name", name)).first();
+    assertNotNull(addedPack);
+    assertEquals("sight words", addedPack.getString("name"));
+    assertNotNull(addedPack);
+
+  }
+
+  public void add(int type){
+    if(type==1){
+      String testContextPack = "{"
+      + "\"name\": \"sight words\","
+      + "\"icon\": \"eye.png\","
+      + "\"enabled\": true,"
+      + "\"ContextPack\":"
+        + "{"
+        + "\"topic\": \"goats\","
+        + "\"enabled\": true,"
+        + "\"nouns\": ["
+        + "{\"word\": \"boat\", \"forms\": [\"he\"]},"
+        + "{\"word\": \"she\", \"forms\": [\"he\"]}"
+        + "],"
+        + "\"adjectives\": ["
+        + "{\"word\": \"he\", \"forms\": [\"he\"]},"
+        + "{\"word\": \"he\", \"forms\": [\"he\"]}"
+        + "],"
+        + "\"verbs\": ["
+        + "{\"word\": \"he\", \"forms\": [\"he\"]},"
+        + "{\"word\": \"he\", \"forms\": [\"he\"]}"
+        + "],"
+        + "\"misc\": ["
+        + "{\"word\": \"duck\", \"forms\": [\"ducky\"]},"
+        + "{\"word\": \"he\", \"forms\": [\"he\"]}"
+        + "]"
+        + "}}";
+      mockReq.setBodyContent(testContextPack);
+      mockReq.setMethod("POST");
+      Context ctx = ContextUtil.init(mockReq, mockRes, "api/contextpacks");
+      contextPackController.addNewContextPack(ctx);
+    }
+  }
+
   @Test
   public void GetContextPack(){
     String testContextPackID = testID.toHexString();
-
     Context ctx = ContextUtil.init(mockReq, mockRes, "api/contextpacks/:id" , ImmutableMap.of("id", testContextPackID));
     contextPackController.getContextPack(ctx);
     assertEquals(200, mockRes.getStatus());

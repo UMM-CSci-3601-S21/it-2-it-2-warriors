@@ -20,6 +20,8 @@ import { ContextPackCardComponent } from './contextpack-card.component';
 import { ContextPackListComponent } from './contextpack-list.component';
 import { ContextPackService } from './contextpack.service';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Overlay } from '@angular/cdk/overlay';
 
 const COMMON_IMPORTS: any[] = [
   FormsModule,
@@ -49,7 +51,9 @@ describe('ContextPack list', () => {
       imports: [COMMON_IMPORTS],
       declarations: [ContextPackListComponent, ContextPackCardComponent],
 
-      providers: [{ provide: ContextPackService, useValue: new MockContextPackService() }]
+      providers: [{ provide: ContextPackService, useValue: new MockContextPackService() },
+                  {provide: MatSnackBar},
+                  {provide: Overlay}]
     });
   });
 

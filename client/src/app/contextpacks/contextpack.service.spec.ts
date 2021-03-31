@@ -117,12 +117,13 @@ describe('Context Pack service: ', () => {
     req.flush(targetContextPack);
   });
 
+
   it('filterContextPack() filters by name', () => {
     expect(testContextPacks.length).toBe(3);
     const contextpackName = 'fun';
     expect(contextpackService.filterContextPacks(testContextPacks, { name: contextpackName }).length).toBe(1);
   });
-  it('add contextpack posts to api/users', () => {
+  it('add contextpack posts to api/contextpack', () => {
 
     contextpackService.addContextPack(testContextPacks[1]).subscribe(
       id => expect(id).toBe('testid')
@@ -135,5 +136,20 @@ describe('Context Pack service: ', () => {
 
     req.flush({id: 'testid'});
   });
+  it('update contextpack put to api/contextpack', () => {
+    contextpackService.updateContextPack(testContextPacks[1]).subscribe(
+      context => expect(context).toBe(testContextPacks[1]) );
+    const req = httpTestingController.expectOne(contextpackService.contextpackUrl);
+    expect(req.request.body).toEqual(testContextPacks[1]);
+    expect(req.request.method).toEqual('PUT');
+    req.flush(testContextPacks[1]);
+
+  });
+
+
+
+
+
+
 });
 

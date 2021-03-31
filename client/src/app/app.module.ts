@@ -70,7 +70,8 @@ const MATERIAL_MODULES: any[] = [
     FlexLayoutModule,
     HttpClientModule,
     MATERIAL_MODULES,
-    LayoutModule
+    LayoutModule,
+    MatSnackBarModule
   ],
   providers: [
     ContextPackService
