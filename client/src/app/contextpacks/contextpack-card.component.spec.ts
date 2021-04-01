@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 
 describe('ContextPackCardComponent', () => {
@@ -21,6 +22,7 @@ describe('ContextPackCardComponent', () => {
   let component2: ContextPackCardComponent;
   let fixture2: ComponentFixture<ContextPackCardComponent>;
   let emptyWordlist: Wordlist;
+  const routerSpy = {navigate: jasmine.createSpy('navigate')};
 
 
 
@@ -39,7 +41,8 @@ describe('ContextPackCardComponent', () => {
         MatCardModule
       ],
       declarations: [ ContextPackCardComponent ],
-      providers:[{ provide: ContextPackService, useValue: new MockContextPackService()}]
+      providers:[{ provide: ContextPackService, useValue: new MockContextPackService()},
+                 {provide: Router, useValue: routerSpy}]
     })
     .compileComponents();
   }));
@@ -170,6 +173,15 @@ describe('ContextPackCardComponent', () => {
     spyOn(component,'submit');
     expect(component.setEnableOrDisable(element,component.contextpack.wordlists[0],component.contextpack)).toEqual('false');
     expect(component.setEnableOrDisable(element,component.contextpack.wordlists[0],component.contextpack)).toEqual('true');
+    expect(component.setEnableOrDisable(element,undefined,component.contextpack)).toEqual(undefined);
+    expect(component.setEnableOrDisable(element,component.contextpack.wordlists[0],undefined)).toEqual(undefined);
   });
+
+  it('should navigate', () => {
+    expect(component.saveAndRoute(component.contextpack));
+
+   expect (routerSpy.navigate).toHaveBeenCalledWith(['edit/wordlist']);
+  });
+
 
 });
