@@ -75,9 +75,6 @@ export class AddWordlistsComponent implements OnInit  {
 
     ngOnInit() {
       this.wordlistsForm = this.fb.group({
-        name: new FormControl(this.data, Validators.compose([
-          Validators.required,
-        ])),
         wordlists: this.fb.array([])
       });
       this.wordlistsForm.valueChanges.subscribe(data => this.validateForm());
@@ -222,8 +219,6 @@ export class AddWordlistsComponent implements OnInit  {
     if(this.inputValue === undefined){
       this.inputValue = this.data;
     } ;
-
-
     this.contextPackService.getContextPacks().subscribe(contextpacks => {
       for(this.m = 0;this.m<contextpacks.length;this.m++){
         this.i.push(contextpacks[this.m]);
