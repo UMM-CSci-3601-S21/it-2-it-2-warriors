@@ -63,5 +63,5 @@ export class ContextPackListComponent implements OnInit, OnDestroy  {
     if (this.getContextpacksSub) {
       this.getContextpacksSub.unsubscribe();
     }
-  }
+  } 
 }

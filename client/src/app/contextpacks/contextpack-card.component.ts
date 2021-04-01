@@ -134,7 +134,10 @@ submit(cp: ContextPack) {
     });
   });}
 
-
+saveAndRoute(cp: ContextPack){
+  this.router.navigate(['edit/wordlist']);
+  this.contextPackService.setData(cp);
+}
 
 }
 

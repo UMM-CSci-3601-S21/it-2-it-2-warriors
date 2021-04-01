@@ -7,9 +7,16 @@ import { map } from 'rxjs/operators';
 
 
 
+
+
+
+
 @Injectable()
 export class ContextPackService {
   readonly contextpackUrl: string = environment.apiUrl + 'contextpacks';
+
+  private data: ContextPack;
+  private dataPack: ContextPack [];
 
   constructor(private httpClient: HttpClient) {
   }
@@ -50,6 +57,17 @@ export class ContextPackService {
   }
 
 
+
+  setData(data: ContextPack){
+    this.data = data;
+    localStorage.setItem('name',JSON.stringify(this.data.name));
+  }
 }
+
+
+
+
+
+
 
 
