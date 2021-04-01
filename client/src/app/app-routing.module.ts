@@ -7,6 +7,7 @@ import { AddContextpacksComponent } from './contextpacks/add-contextpacks.compon
 import { AddWordlistsComponent } from './wordlists/add-wordlists/add-wordlists.component';
 
 
+
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'contextpacks', component: ContextPackListComponent},

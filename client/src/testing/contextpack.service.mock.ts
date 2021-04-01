@@ -87,16 +87,5 @@ export class MockContextPackService extends ContextPackService  {
       return of(null);
     }
   }
-  submit(cp: ContextPack) {
-    let i;
-    let message = 'Pack Not Updated';
-    for(i = 0;i<MockContextPackService.testContextPacks.length;i++){
-      if(cp.name === MockContextPackService.testContextPacks[i].name){
-        MockContextPackService.testContextPacks[i] = cp;
-        message = 'Update Pack';
-      }
-    }
-    return(message);
-  }
 
 }
