@@ -15,7 +15,7 @@ import { AddWordlistsComponent } from './add-wordlists.component';
 
 ;
 
-describe('AddContextpacksComponent', () => {
+describe('AddWordlistComponent', () => {
   let component: AddWordlistsComponent ;
   let addWordlistForm: FormGroup;
   let fixture: ComponentFixture<AddWordlistsComponent>;
@@ -33,7 +33,7 @@ describe('AddContextpacksComponent', () => {
         RouterTestingModule,
         MatCardModule
       ],
-      declarations: [ AddContextpacksComponent ],
+      declarations: [ AddWordlistsComponent ],
       providers: [{ provide: ContextPackService, useValue: new MockContextPackService() },
       {provide: FormBuilder}]
     })
@@ -83,14 +83,14 @@ describe('AddContextpacksComponent', () => {
     });
 
   });
-  });
+
   describe('Add wordlist', () =>{
     it('should add a wordlist when prompted', () =>{
       component.addWordlist();
-      let formValue = component.contextPackForm.value;
+      let formValue = component.wordlistsForm.value;
       expect(formValue.wordlists.length).toEqual(1);
       component.addWordlist();
-      formValue = component.contextPackForm.value;
+      formValue = component.wordlistsForm.value;
       expect(formValue.wordlists.length).toEqual(2);
     });
   });
@@ -99,12 +99,12 @@ describe('AddContextpacksComponent', () => {
 
       component.addWordlist();
       component.addPosArray(0, 'nouns');
-      let control = ((component.contextPackForm.value.wordlists as Array<any>)[0]);
+      let control = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
       console.log(control.nouns);
       expect(control.nouns.length).toEqual(1);
       // Add 2 noun arrays, we expect two to be present
       component.addPosArray(0, 'nouns');
-      control = ((component.contextPackForm.value.wordlists as Array<any>)[0]);
+      control = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
       expect(control.nouns.length).toEqual(2);
     });
   });
@@ -113,11 +113,11 @@ describe('AddContextpacksComponent', () => {
 
       component.addWordlist();
       component.addPosArray(0, 'verbs');
-      let control = ((component.contextPackForm.value.wordlists as Array<any>)[0]);
+      let control = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
       expect(control.verbs.length).toEqual(1);
       // Add 2 noun arrays, we expect two to be present
       component.addPosArray(0, 'verbs');
-      control = ((component.contextPackForm.value.wordlists as Array<any>)[0]);
+      control = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
       expect(control.verbs.length).toEqual(2);
     });
   });
@@ -128,7 +128,7 @@ describe('AddContextpacksComponent', () => {
       component.addWordlist();
       component.addPosArray(0, 'verbs');
       component.addForms(0, 0, 'verbs');
-      const control = ((component.contextPackForm.value.wordlists as Array<any>)[0]);
+      const control = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
       expect(control.verbs[0].forms.length).toEqual(2);
     });
   });
@@ -141,24 +141,24 @@ describe('AddContextpacksComponent', () => {
       component.addPosArray(0, 'verbs');
       component.addForms(0, 0, 'verbs');
       // make sure components were added
-      let controls = ((component.contextPackForm.value.wordlists as Array<any>)[0]);
+      let controls = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
       expect(controls.verbs[0].forms.length).toEqual(2);
       // remove a form
       component.removeForm(0, 0, 0,'verbs');
-      controls = ((component.contextPackForm.value.wordlists as Array<any>)[0]);
+      controls = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
       expect(controls.verbs[0].forms.length).toEqual(1);
       //remove verb word group
       expect(controls.verbs.length).toEqual(2);
       component.removeWord(0, 0, 'verbs');
-      controls = ((component.contextPackForm.value.wordlists as Array<any>)[0]);
+      controls = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
       console.log(controls.verbs[0]);
       expect(controls.verbs.length).toEqual(1);
       // remove wordlist
       component.addWordlist();
-      controls = ((component.contextPackForm.value.wordlists as Array<any>));
+      controls = ((component.wordlistsForm.value.wordlists as Array<any>));
       expect(controls.length).toEqual(2);
-      component.removeWordlists(1);
-      controls = ((component.contextPackForm.value.wordlists as Array<any>));
+      component.removeWordlist(1);
+      controls = ((component.wordlistsForm.value.wordlists as Array<any>));
       expect(controls.length).toEqual(1);
     });
 
@@ -170,26 +170,16 @@ describe('AddContextpacksComponent', () => {
       component.addPosArray(0, 'verbs');
       component.addForms(0 ,0 , 'verbs');
 
-      (((component.contextPackForm.controls.wordlists as FormArray).at(0).get(`verbs`) as FormArray).at(0)
+      (((component.wordlistsForm.controls.wordlists as FormArray).at(0).get(`verbs`) as FormArray).at(0)
     .get('forms') as FormArray).at(0).setValue('cow');
 
       component.setWord(0,0,'verbs');
       // expect cow to be the first form
-      expect(((component.contextPackForm.controls.wordlists as FormArray).at(0).get(`verbs`) as FormArray).at(0)
+      expect(((component.wordlistsForm.controls.wordlists as FormArray).at(0).get(`verbs`) as FormArray).at(0)
       .get('word').value).toEqual('cow');
     });
   });
-  describe('form submission', ()=>{
-    it('form should validate based on input', ()=>{
-      component.addWordlist();
-      expect(component.contextPackForm.valid).toBeFalsy();
-      ((component.contextPackForm).get(`name`).setValue('cow'));
-      ((component.contextPackForm).get(`enabled`).setValue('true'));
-      ((component.contextPackForm.controls.wordlists as FormArray).at(0).get(`name`).setValue('cow'));
-      ((component.contextPackForm.controls.wordlists as FormArray).at(0).get(`enabled`).setValue('true'));
-      expect(component.contextPackForm.valid).toBeTruthy();
-    });
-  });
+
   describe('Toggle Button', ()=>{
     it('should toggle the boolean status', ()=>{
       expect(component.toggleShow()).toBeTruthy();
