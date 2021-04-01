@@ -40,7 +40,9 @@ export class ContextPackListComponent implements OnInit, OnDestroy  {
     }, err => {
       console.log(err);
     });
+
   }
+
 
   public updateFilter(): void {
     this.filteredContextpacks = this.contextpackService.filterContextPacks(
@@ -63,5 +65,5 @@ export class ContextPackListComponent implements OnInit, OnDestroy  {
     if (this.getContextpacksSub) {
       this.getContextpacksSub.unsubscribe();
     }
-  } 
+  }
 }
