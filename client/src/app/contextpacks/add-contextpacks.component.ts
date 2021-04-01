@@ -5,6 +5,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ContextPackService } from './contextpack.service';
 import { Router } from '@angular/router';
 import { ContextPackCardComponent } from './contextpack-card.component';
+import { AddWordlistsComponent } from '../wordlists/add-wordlists/add-wordlists.component';
+
 
 @Component({
   selector: 'app-add-contextpacks',
