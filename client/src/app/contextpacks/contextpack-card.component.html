@@ -23,6 +23,7 @@
       <div *ngFor="let wordlists of contextpack.wordlists; let index = index">
         <div *ngIf='wordlists.enabled === true'>
           <button id = "button"  data-test="button" (click)="setEnableOrDisable($event.target,wordlists,this.contextpack)" >disable</button>
+          <a [routerLink]="['/editwordlists']" routerLinkActive="active" >Edit Wordlist</a>
         </div>
 
         <div *ngIf='wordlists.enabled === false'>
