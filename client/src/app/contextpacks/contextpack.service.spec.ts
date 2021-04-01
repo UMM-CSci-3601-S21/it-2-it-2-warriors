@@ -147,6 +147,15 @@ describe('Context Pack service: ', () => {
   });
 
 
+  it('sets the data in the local storage',() => {
+    spyOn(localStorage.__proto__,'setItem');
+    const returnValue = contextpackService.setData(testContextPacks[1]);
+    expect(localStorage.__proto__.setItem).toHaveBeenCalled();
+    expect(returnValue).toBeTruthy();
+    expect(returnValue).toEqual( testContextPacks[1].name + ' is set in the local storage');
+    expect(returnValue).not.toEqual( testContextPacks[2].name + 'is set in the local storage');
+  });
+
 
 
 

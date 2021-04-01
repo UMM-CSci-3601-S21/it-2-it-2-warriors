@@ -61,7 +61,10 @@ export class ContextPackService {
   setData(data: ContextPack){
     this.data = data;
     localStorage.setItem('name',JSON.stringify(this.data.name));
+    const name = this.data.name;
+    return(name + ' is set in the local storage');
   }
+
 }
 
 
