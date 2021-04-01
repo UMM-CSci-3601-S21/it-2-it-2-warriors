@@ -8,11 +8,16 @@
       "html"
     ],
     "cSpell.words": [
-        "Bson",
-        "CSCI",
-        "Javalin",
-        "sidenav",
-        "todos"
+      "Bson",
+      "CSCI",
+      "Javalin",
+      "Wordlist",
+      "Wordlists",
+      "contextpack",
+      "contextpacks",
+      "editwordlists",
+      "sidenav",
+      "todos"
     ],
     "angular.enable-experimental-ivy-prompt": false,
 }
