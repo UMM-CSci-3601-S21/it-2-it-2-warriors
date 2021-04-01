@@ -4,17 +4,17 @@
   <mat-card class="add-wordlists-card">
     <mat-card-title class="add-wordlists-title">Create A Wordlists
     </mat-card-title>
-    
+
     <mat-card-content fxLayout="column">
     <div>
       Context Packs Available:
     </div>
 
-     
 
- 
+
+
     <mat-form-field>
-  
+
       <mat-label>Pack Name</mat-label>
 
 
@@ -31,7 +31,7 @@
 	<div formArrayName="wordlists">
 		<div *ngFor="let wordlists of wordlistsForm['controls'].wordlists['controls']; let ix=index">
 			<div formGroupName="{{ix}}" class="wordlists">
-        <button type="button" (click)="removewordlists(ix)">Remove This Wordlists</button><br>
+        <button type="button" (click)="removeWordlist(ix)">Remove This Wordlists</button><br>
         <h1>Wordlists {{ix+1}}:</h1>
 
         <div>
@@ -252,7 +252,7 @@
 
 			</div>
 		</div>
-		<button class="add-wordlists-button" type="button" (click)="addWordlists()" value="Add Wordlists">Add Wordlists</button>
+		<button class="add-wordlists-button" type="button" (click)="addWordlist()" value="Add Wordlists">Add Wordlists</button>
 	</div>
 
 
@@ -274,13 +274,13 @@
       </button>
 
 		<h5>Field Values</h5>
-    
+
 
 
 
     <br><button matTooltip="View current Json" (click)="toggleShow()" type="checkbox" data-test="showJsonButton">Preview Json File</button>
     <div *ngIf='isShown===true'>
 
-		<pre class="form-value" style="font-size:15px">{{ viewWordlistJSON() | json }}</pre>
+		<pre class="form-value" style="font-size:15px">{{wordlistsForm.value  | json }}</pre>
   </div>
 

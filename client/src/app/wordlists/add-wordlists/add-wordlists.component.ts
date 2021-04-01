@@ -31,6 +31,7 @@ export class AddWordlistsComponent implements OnInit  {
     formErrors = {
       wordlists: this.wordlistsErrors()
     };
+
     validationMessages = {
       wordlists: {
         name: [
@@ -69,19 +70,20 @@ export class AddWordlistsComponent implements OnInit  {
     constructor(private fb: FormBuilder, private contextPackService: ContextPackService,
       private snackBar: MatSnackBar, private router: Router) { }
 
+
+
+
     ngOnInit() {
       this.wordlistsForm = this.fb.group({
         name: new FormControl(this.data, Validators.compose([
           Validators.required,
         ])),
-        wordlists: this.fb.array([
-        ])
+        wordlists: this.fb.array([])
       });
       this.wordlistsForm.valueChanges.subscribe(data => this.validateForm());
-      this.getData();
     }
 
-    initwordlists() {
+    initwordlist() {
       return this.fb.group({
         //  ---------------------forms fields on x level ------------------------
         name: new FormControl('', Validators.compose([
@@ -111,9 +113,9 @@ export class AddWordlistsComponent implements OnInit  {
       });
     }
 
-    addWordlists() {
+    addWordlist() {
       const control = this.wordlistsForm.controls.wordlists as FormArray;
-      control.push(this.initwordlists());
+      control.push(this.initwordlist());
     }
     addPosArray(ix: number, pos: string){
       const control = (this.wordlistsForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray;
@@ -136,7 +138,7 @@ export class AddWordlistsComponent implements OnInit  {
     }
 
 
-    removewordlists(empIndex: number){
+    removeWordlist(empIndex: number){
       (this.wordlistsForm.controls.wordlists as FormArray).removeAt(empIndex);
     }
 
@@ -174,9 +176,9 @@ export class AddWordlistsComponent implements OnInit  {
     }
     // form validation
     validateForm() {
-      this.validatewordlists();
+      this.validateWordlists();
     }
-    validatewordlists() {
+    validateWordlists() {
       const wordlistsA = this.wordlistsForm.controls.wordlists as FormArray;
       // console.log(XsA.value);
       this.formErrors.wordlists = [];
@@ -192,7 +194,7 @@ export class AddWordlistsComponent implements OnInit  {
             ]),
           }]
         });
-        ;
+        x++;
       }
     }
 
@@ -203,6 +205,10 @@ export class AddWordlistsComponent implements OnInit  {
   }
 
 
+
+
+
+//---------------------------------- grabs the value that the user inputs
   grabValue(event){
     if(event.target.value !== null || event.target.value !== undefined){
      this.inputValue= event.target.value;
@@ -210,7 +216,7 @@ export class AddWordlistsComponent implements OnInit  {
      return(this.inputValue);
   }
 
-
+//-----------------------------------------------------------------------------submits the form updating the context pack
 
   submitForm() {
     if(this.inputValue === undefined){
@@ -249,38 +255,6 @@ export class AddWordlistsComponent implements OnInit  {
 
 
 
-}
-
-  getData(){
-
-  if(this.inputValue === undefined){
-    this.inputValue = this.data;
-  } ;
-  this.contextPackService.getContextPacks().subscribe(contextpacks => {
-    for(this.m = 0;this.m<contextpacks.length;this.m++){
-      this.i.push(contextpacks[this.m]);
-      if(contextpacks[this.m].name === this.inputValue.toString())// figure out a better if
-      {
-        this.o.push(contextpacks[this.m]);
-      // figure out the more than two context packs situation
-      } }
-    const formArray = this.wordlistsForm.get('wordlists') as FormArray;
-    for(this.m=0;this.m<formArray.value.length;this.m++){
-      this.o[0].wordlists.push(formArray.value[this.m]);
-    }
-    this.dataContextPack(this.o[0]);
-  });}
-
-
-
-dataContextPack(data: ContextPack){
-  this.q.push(data);
-  console.log(this.q);
-}
-
-
-viewWordlistJSON(){
-  return(this.q);
 }
 
 }
