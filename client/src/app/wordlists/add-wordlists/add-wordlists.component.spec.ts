@@ -5,10 +5,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AddContextpacksComponent } from 'src/app/contextpacks/add-contextpacks.component';
+
 import { ContextPackService } from 'src/app/contextpacks/contextpack.service';
 import { MockContextPackService } from 'src/testing/contextpack.service.mock';
 import { AddWordlistsComponent } from './add-wordlists.component';
@@ -19,6 +20,8 @@ describe('AddWordlistComponent', () => {
   let component: AddWordlistsComponent ;
   let addWordlistForm: FormGroup;
   let fixture: ComponentFixture<AddWordlistsComponent>;
+  const routerSpy = {navigate: jasmine.createSpy('navigate')};
+  const matsnackbarSpy = {open: jasmine.createSpy('open')};
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -35,7 +38,10 @@ describe('AddWordlistComponent', () => {
       ],
       declarations: [ AddWordlistsComponent ],
       providers: [{ provide: ContextPackService, useValue: new MockContextPackService() },
-      {provide: FormBuilder}]
+                  {provide: Router, useValue: routerSpy},
+                  {provide: MatSnackBar,useValue: matsnackbarSpy}
+                  ]
+
     })
     .compileComponents().catch(error => {
       expect(error).toBeNull();

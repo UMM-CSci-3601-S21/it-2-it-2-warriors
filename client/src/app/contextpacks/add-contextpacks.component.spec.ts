@@ -38,7 +38,7 @@ describe('AddContextpacksComponent', () => {
       declarations: [ AddContextpacksComponent ],
       providers: [{ provide: ContextPackService, useValue: new MockContextPackService() },
                   {provide: Router, useValue: routerSpy},
-                  {provide: MatSnackBar,useValue: matsnackbarSpy},]
+                  {provide: MatSnackBar,useValue: matsnackbarSpy}]
     })
     .compileComponents().catch(error => {
       expect(error).toBeNull();
