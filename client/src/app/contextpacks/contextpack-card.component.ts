@@ -110,7 +110,7 @@ export class ContextPackCardComponent implements OnInit {
   }
 
   setEnableOrDisable(element,wordlist: Wordlist,contextpack: ContextPack){
-    if(wordlist !== (undefined || null) && contextpack !== (undefined || null)){
+    if(wordlist !== null && contextpack !== null){
       if(element.textContent === 'disable'){
         element.textContent = 'enable';
         wordlist.enabled = false;
