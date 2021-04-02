@@ -109,7 +109,9 @@ export class ContextPackCardComponent implements OnInit {
       return str;
   }
 
+
   setEnableOrDisable(element,wordlist: Wordlist,contextpack: ContextPack){
+
     if(wordlist !== null && contextpack !== null){
       if(element.textContent === 'disable'){
         element.textContent = 'enable';
@@ -121,6 +123,9 @@ export class ContextPackCardComponent implements OnInit {
       }
       this.submit(contextpack);
       return(wordlist.enabled.toString());}}
+
+
+
 submit(cp: ContextPack) {
   this.contextPackService.updateContextPack(cp).subscribe(contextpack => {
 
@@ -134,7 +139,10 @@ submit(cp: ContextPack) {
     });
   });}
 
-
+saveAndRoute(cp: ContextPack){
+  this.router.navigate(['edit/wordlist']);
+  this.contextPackService.setData(cp);
+}
 
 }
 

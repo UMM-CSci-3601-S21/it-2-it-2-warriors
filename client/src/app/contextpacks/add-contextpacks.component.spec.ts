@@ -1,13 +1,15 @@
 import { compileComponentFromMetadata, componentFactoryName } from '@angular/compiler';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule, FormGroup, AbstractControl, FormArray } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup, AbstractControl, FormArray, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
 import { MockContextPackService } from 'src/testing/contextpack.service.mock';
 
 import { AddContextpacksComponent } from './add-contextpacks.component';
@@ -17,6 +19,8 @@ describe('AddContextpacksComponent', () => {
   let component: AddContextpacksComponent;
   let addPackForm: FormGroup;
   let fixture: ComponentFixture<AddContextpacksComponent>;
+  const routerSpy = {navigate: jasmine.createSpy('navigate')};
+  const matsnackbarSpy = {open: jasmine.createSpy('open')};
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -32,7 +36,9 @@ describe('AddContextpacksComponent', () => {
         MatCardModule
       ],
       declarations: [ AddContextpacksComponent ],
-      providers: [{ provide: ContextPackService, useValue: new MockContextPackService() }]
+      providers: [{ provide: ContextPackService, useValue: new MockContextPackService() },
+                  {provide: Router, useValue: routerSpy},
+                  {provide: MatSnackBar,useValue: matsnackbarSpy}]
     })
     .compileComponents().catch(error => {
       expect(error).toBeNull();
@@ -207,5 +213,38 @@ describe('AddContextpacksComponent', () => {
     it('should toggle the boolean status', ()=>{
       expect(component.toggleShow()).toBeTruthy();
     });
+
   });
+  describe('errors', () =>{
+    it('should call errors', () =>{
+      component.nounsErrors();
+      component.wordlistsErrors();
+    });
+  });
+
+  describe('Submit', ()=>{
+    it('It should submit the context packs', ()=>{
+    expect(component.submitForm).toBeTruthy();
+    let response: FormGroup = addPackForm;
+
+
+    ((response).get(`name`).setValue('cow'));
+
+    spyOn(ContextPackService.prototype, 'addContextPack').and.returnValue(of(response.value));
+    expect(component.submitForm());
+
+    expect (routerSpy.navigate).toHaveBeenCalledWith(
+       [ '/contextpacks/', Object({ name: 'cow', enabled: 'true', icon: '', wordlists: [  ] }) ] );
+
+    (response) = undefined;
+    expect(component.submitForm());
+
+
+
+    expect (matsnackbarSpy.open).toHaveBeenCalled();
+    });
+
+  });
+
+
 });

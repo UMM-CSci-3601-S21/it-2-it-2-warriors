@@ -4,12 +4,20 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ContextPack } from './contextpack';
 import { map } from 'rxjs/operators';
+import { FormControl, Validators } from '@angular/forms';
+
+
+
+
 
 
 
 @Injectable()
 export class ContextPackService {
   readonly contextpackUrl: string = environment.apiUrl + 'contextpacks';
+
+  private data: ContextPack;
+  private dataPack: ContextPack [];
 
   constructor(private httpClient: HttpClient) {
   }
@@ -48,8 +56,117 @@ export class ContextPackService {
 
     return this.httpClient.put<ContextPack>(this.contextpackUrl, updatePack).pipe(map(res => res));
   }
+  setData(data: ContextPack){
+    this.data = data;
+    localStorage.setItem('name',JSON.stringify(this.data.name));
+    const name = this.data.name;
+    return(name + ' is set in the local storage');
+  }
+  initwordlist(fb) {
+    return fb.group({
+      //  ---------------------forms fields on x level ------------------------
+      name: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      enabled: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^(true|false)$'),
+      ])),
+      // ---------------------------------------------------------------------
+      nouns: fb.array([]),
+      adjectives: fb.array([]),
+      verbs: fb.array([]),
+      misc: fb.array([])
 
+    });
+  }
 
+  initNouns(fb) {
+    return fb.group({
+      //  ---------------------forms fields on y level ------------------------
+      word: [''],
+      // ---------------------------------------------------------------------
+      forms: fb.array([
+        fb.control('')
+      ])
+    });
+  }
+
+   wordlistsErrors(fb) {
+      return [{
+        //  ---------------------forms errors on x level ------------------------
+        name: [' ', [Validators.required]],
+        enabled:[' ', [Validators.required]],
+
+        // ---------------------------------------------------------------------
+        nouns: this.nounsErrors(fb)
+
+      }];
+
+    }
+    nounsErrors(fb) {
+      return [{
+        //  ---------------------forms errors on y level ------------------------
+        word: '',
+        forms: fb.array([
+          fb.control('')
+        ]),
+
+      }];
+    }
+
+    validateWordlists(word,fb,formerrors) {
+      // console.log(XsA.value);
+      formerrors.wordlists = [];
+      let x = 1;
+      while (x <= word.length) {
+        formerrors.wordlists.push({
+          name: [' ', [Validators.required]],
+          enabled: [' ', [Validators.required]],
+          nouns: [{
+            word: '',
+            forms: fb.array([
+              fb.control('')
+            ]),
+          }]
+        });
+        x++;
+      }
+    }
+    validate()
+      {
+        return ({wordlists: {
+          name: [
+            {type: 'required', message: 'Name is required'},
+          ],
+          enabled: {
+            required: 'Must be true or false (check capitalization)',
+          },
+          nouns: {
+            word: {
+            },
+            forms: {
+            },
+          },
+          adjectives: {
+            word: {
+            },
+            forms: {
+            },
+          },
+          verbs: {
+            word: {
+            },
+            forms: {
+            },
+          },
+          misc: {
+            word: {
+            },
+            forms: {
+            },
+          }
+        }});
 }
-
+}
 

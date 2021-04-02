@@ -9,9 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
-import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { of } from 'rxjs';
 
 
 describe('ContextPackCardComponent', () => {
@@ -21,7 +22,8 @@ describe('ContextPackCardComponent', () => {
   let component2: ContextPackCardComponent;
   let fixture2: ComponentFixture<ContextPackCardComponent>;
   let emptyWordlist: Wordlist;
-
+  const routerSpy = {navigate: jasmine.createSpy('navigate')};
+  const matsnackbarSpy = {open: jasmine.createSpy('open')};
 
 
 
@@ -39,7 +41,10 @@ describe('ContextPackCardComponent', () => {
         MatCardModule
       ],
       declarations: [ ContextPackCardComponent ],
-      providers:[{ provide: ContextPackService, useValue: new MockContextPackService()}]
+      providers:[{ provide: ContextPackService, useValue: new MockContextPackService()},
+                 {provide: Router, useValue: routerSpy},
+                 {provide: MatSnackBar,useValue: matsnackbarSpy}
+                ]
     })
     .compileComponents();
   }));
@@ -47,10 +52,8 @@ describe('ContextPackCardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ContextPackCardComponent);
     fixture2 = TestBed.createComponent(ContextPackCardComponent);
-
     component = fixture.componentInstance;
     component2 = fixture2.componentInstance;
-
 
     const noun: Word = {
       word: 'you',
@@ -171,5 +174,31 @@ describe('ContextPackCardComponent', () => {
     expect(component.setEnableOrDisable(element,component.contextpack.wordlists[0],component.contextpack)).toEqual('false');
     expect(component.setEnableOrDisable(element,component.contextpack.wordlists[0],component.contextpack)).toEqual('true');
   });
+
+
+  it('should submit', () => {
+    const response: ContextPack = component.contextpack;
+
+
+    spyOn(ContextPackService.prototype, 'updateContextPack').and.returnValue(of(response));
+    expect(component.submit(component.contextpack));
+
+    expect (routerSpy.navigate).toHaveBeenCalledWith(['/contextpacks/pat_id']);
+
+    expect(component.submit(undefined));
+
+
+
+    expect (matsnackbarSpy.open).toHaveBeenCalledWith( 'Happy Pack is Updated ', null, Object({ duration: 2000 }) );
+
+  });
+
+
+  it('should navigate', () => {
+
+  expect(component.saveAndRoute(component.contextpack));
+  expect (routerSpy.navigate).toHaveBeenCalledWith(['edit/wordlist']);
+  });
+
 
 });
