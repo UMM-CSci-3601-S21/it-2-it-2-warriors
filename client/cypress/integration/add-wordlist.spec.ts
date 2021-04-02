@@ -1,49 +1,38 @@
-import { ContextPack } from 'src/app/contextpacks/contextpack';
-import { AddPackPage } from '../support/add-contextpack.po';
+import { AddWordlistPage } from 'cypress/support/add-wordlist.po';
+import { ContextPack, Wordlist } from 'src/app/contextpacks/contextpack';
 
-describe('Add a Context pack', () => {
-  const page = new AddPackPage();
+
+describe('Add Wordlists', () => {
+  const page = new AddWordlistPage();
 
   beforeEach(() => {
     page.navigateTo();
   });
 
   it('Should have the correct title', () => {
-    page.getTitle().should('have.text', 'Create A New Context Pack');
+    page.getTitle().should('have.text', 'Add Wordlists');
   });
 
-  it('Should add parts of speech when buttons are pushed and show a json file preview with button push', () => {
+  it('Should add parts of speech when buttons are pushed ', () => {
     // ADD USER button should be disabled until all the necessary fields
-    // are filled. Once the last (`#emailField`) is filled, then the button should
-    // become enabled.
     page.addWordlist();
-    page.showJson();
-    page.contextPackForm().should('contain', 'nouns');
     page.addPosArray(`noun`);
-    page.contextPackForm().should('contain', 'nouns');
   });
   it('should disable submission when needed', () =>{
-    page.addPackButton().should('be.disabled');
+    page.wordlistButton().should('be.enabled');
     page.addWordlist();
     page.addPosArray('noun');
-    page.showJson();
-    page.addPackButton().should('be.disabled');
+    page.wordlistButton().should('be.disabled');
     page.getFormField('name').then(els => {
       [...els].forEach(el => cy.wrap(el).type('Hello World'));
     });
-    page.addPackButton().should('be.disabled');
+    page.wordlistButton().should('be.disabled');
     page.selectMatSelectValue( page.getFormField('enabled'), 'true'  );
   });
   it('Should show error messages for invalid inputs', () => {
     // Before doing anything there shouldn't be an error
     cy.get('[data-test=nameError]').should('not.exist');
     // Just clicking the name field without entering anything should cause an error message
-    page.showJson();
-    page.getFormField('name').click().blur();
-    cy.get('[data-test=nameError]').should('exist').and('be.visible');
-    // Entering a valid name should remove the error.
-    page.getFormField('name').clear().type('Jojo').blur();
-    cy.get('[data-test=nameError]').should('not.exist');
 
     //Check wordlists as well
     page.addWordlist();
@@ -60,8 +49,6 @@ describe('Add a Context pack', () => {
   });
 
   it('should add a new pack', () =>{
-    page.showJson();
-
     const pack: ContextPack = {
       _id: null,
       name: 'barn',
@@ -158,13 +145,15 @@ describe('Add a Context pack', () => {
       }
     ]
     };
-    page.addPack(pack);
+
+
+
+    page.addWord(pack);
 
     cy.url()
-        .should('match', /\/contextpacks\/[0-9a-fA-F]{24}$/)
-        .should('not.match', /\/edit/);
+        .should('contain','edit/wordlist')
+        .should('not.contain','danger');
 
-    cy.get('.mat-simple-snackbar').should('contain', `Added Pack ${pack.name}`);
 
   });
   describe('removing parts of a contextpack during creation', () =>{

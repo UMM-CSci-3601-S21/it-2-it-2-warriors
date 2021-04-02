@@ -109,14 +109,8 @@ export class ContextPackCardComponent implements OnInit {
       return str;
   }
 
-
-  isUndefined(value){
-    const undefined = void(0);
-    return value === undefined;
-  }
-
-  setEnableOrDisable(element,wordlist: Wordlist,contextpack: ContextPack){
-    if(this.isUndefined(wordlist) ===false  &&  this.isUndefined(contextpack) ===false){
+   setEnableOrDisable(element,wordlist: Wordlist,contextpack: ContextPack){
+    if(wordlist !== null && contextpack !== null){
       if(element.textContent === 'disable'){
         element.textContent = 'enable';
         wordlist.enabled = false;
@@ -126,9 +120,10 @@ export class ContextPackCardComponent implements OnInit {
         wordlist.enabled = true;
       }
       this.submit(contextpack);
-      return(wordlist.enabled.toString());
-    }
-    }
+      return(wordlist.enabled.toString());}}
+
+
+
 submit(cp: ContextPack) {
   this.contextPackService.updateContextPack(cp).subscribe(contextpack => {
 

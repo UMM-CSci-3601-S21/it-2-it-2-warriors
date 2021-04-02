@@ -1,16 +1,16 @@
-import {ContextPack} from 'src/app/contextpacks/contextpack';
+import {ContextPack, Wordlist} from 'src/app/contextpacks/contextpack';
 
-export class AddPackPage {
+export class AddWordlistPage {
   navigateTo() {
-    return cy.visit('/edit');
+    return cy.visit('/edit/wordlist');
   }
 
   getTitle() {
-    return cy.get('.add-pack-title');
+    return cy.get('.add-wordlist-title');
   }
 
-  addPackButton() {
-    return cy.get('[data-test="confirmAddPackButton"]');
+  wordlistButton() {
+    return cy.get('[data-test="confirmAddWordlistButton"]');
   }
 
   selectMatSelectValue(select: Cypress.Chainable, value: string) {
@@ -30,30 +30,26 @@ export class AddPackPage {
   addPosArray(pos: string){
     return cy.get(`.add-${pos}-button`).click({force: true});
   }
-  showJson(){
-    return cy.get('[data-test="showJsonButton"]').click({force: true});
-  }
-  contextPackForm(){
+
+  wordlistForm(){
     return cy.get('.form-value');
   }
 
 
 
 
-  addPack(newPack: ContextPack) {
-    this.getFormField('name').type(newPack.name);
-    this.getFormField('enabled').click({force: true});
+  addWord(wordlist: Wordlist) {
     this.addWordlist();
     this.addPosArray('noun');
     this.addPosArray('verb');
     this.addPosArray('adj');
     this.addPosArray('misc');
-    if (newPack.wordlists) {
+    if (wordlist) {
       this.getFormField('name').then(els => {
         [...els].forEach(el => cy.wrap(el).type('horsies', {force:true}));
       });
     }
-    this.selectMatSelectValue(this.getFormField('enabled'), newPack.enabled.toString());
-    return this.addPackButton().click({ multiple: true, force:true });
+    this.selectMatSelectValue(this.getFormField('enabled'), wordlist.enabled.toString());
+    return this.addWordlist().click({ multiple: true, force:true });
   }
 }

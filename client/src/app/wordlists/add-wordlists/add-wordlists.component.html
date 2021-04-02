@@ -2,8 +2,7 @@
   <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
 <form [formGroup]="wordlistsForm" (ngSubmit)="submitForm()" class="form">
   <mat-card class="add-wordlists-card">
-    <mat-card-title class="add-wordlists-title">Add Wordlists
-    </mat-card-title>
+    <mat-card-title class="add-wordlist-title">Add Wordlists</mat-card-title>
 
     <mat-card-content fxLayout="column">
 
@@ -249,7 +248,7 @@
 
 			</div>
 		</div>
-		<button class="add-wordlists-button" type="button" (click)="addWordlist()" value="Add Wordlists">Add Wordlists</button>
+		<button class="add-wordlist-button" type="button" (click)="addWordlist()" value="Add Wordlists">Add Wordlists</button>
 	</div>
 
 
@@ -265,12 +264,12 @@
         color="primary"
         [disabled]="!wordlistsForm.valid"
         type="submit"
-        data-test="confirmAddPackButton"
+        data-test="confirmAddWordlistButton"
         required>
         ADD WORDLIST PACK
       </button>
 
-	
+
 
 
 
