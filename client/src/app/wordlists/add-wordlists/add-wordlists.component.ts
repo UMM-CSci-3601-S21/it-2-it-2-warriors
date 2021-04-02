@@ -28,43 +28,10 @@ export class AddWordlistsComponent implements OnInit  {
     inputValue;
 
     formErrors = {
-      wordlists: this.wordlistsErrors()
+      wordlists: this.contextPackService.wordlistsErrors(this.fb)
     };
 
-    validationMessages = {
-      wordlists: {
-        name: [
-          {type: 'required', message: 'Name is required'},
-        ],
-        enabled: {
-          required: 'Must be true or false (check capitalization)',
-        },
-        nouns: {
-          word: {
-          },
-          forms: {
-          },
-        },
-        adjectives: {
-          word: {
-          },
-          forms: {
-          },
-        },
-        verbs: {
-          word: {
-          },
-          forms: {
-          },
-        },
-        misc: {
-          word: {
-          },
-          forms: {
-          },
-        }
-      }
-    };
+    validationMessages  =  this.contextPackService.validate();
 
     constructor(private fb: FormBuilder, private contextPackService: ContextPackService,
       private snackBar: MatSnackBar, private router: Router) { }
@@ -81,20 +48,20 @@ export class AddWordlistsComponent implements OnInit  {
     }
 
     initwordlist() {
-     this.contextPackService.initwordlist(this.fb);
+    return this.contextPackService.initwordlist(this.fb);
     }
 
     initNouns() {
-      this.contextPackService.initNouns(this.fb);
+    return this.contextPackService.initNouns(this.fb);
     }
 
     addWordlist() {
       const control = this.wordlistsForm.controls.wordlists as FormArray;
-      control.push(this.contextPackService.initwordlist(this.fb));
+      control.push(this.initwordlist());
     }
     addPosArray(ix: number, pos: string){
       const control = (this.wordlistsForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray;
-      control.push(this.contextPackService.initNouns(this.fb));
+      control.push(this.initNouns());
     }
     addForms(ix: number, iy: number, pos: string) {
       const control = ((this.wordlistsForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray)
@@ -117,7 +84,7 @@ export class AddWordlistsComponent implements OnInit  {
       (this.wordlistsForm.controls.wordlists as FormArray).removeAt(empIndex);
     }
 
-    removeWord(ix: number, iy: number, pos: string){
+      removeWord(ix: number, iy: number, pos: string){
       ((this.wordlistsForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray).removeAt(iy);
     }
 
@@ -127,12 +94,12 @@ export class AddWordlistsComponent implements OnInit  {
     }
 
     wordlistsErrors() {
-      this.contextPackService.wordlistsErrors(this.fb);
+     return this.contextPackService.wordlistsErrors(this.fb);
 
     }
 
     nounsErrors() {
-      this.contextPackService.nounsErrors(this.fb);
+      return this.contextPackService.nounsErrors(this.fb);
     }
     // form validation
     validateForm() {

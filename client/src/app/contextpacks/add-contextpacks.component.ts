@@ -20,49 +20,13 @@ export class AddContextpacksComponent implements OnInit {
   isShown = false;
 
   formErrors = {
-    wordlists: this.wordlistsErrors()
+    wordlists: this.contextPackService.wordlistsErrors(this.fb)
   };
 
-  validationMessages = {
-    wordlists: {
-      name: [
-        {type: 'required', message: 'Name is required'},
-      ],
-      enabled: {
-        required: 'Must be true or false (check capitalization)',
-      },
-      nouns: {
-        word: {
-        },
-        forms: {
-        },
-      },
-      adjectives: {
-        word: {
-        },
-        forms: {
-        },
-      },
-      verbs: {
-        word: {
-        },
-        forms: {
-        },
-      },
-      misc: {
-        word: {
-        },
-        forms: {
-        },
-      }
-    }
-  };
+  validationMessages =  this.contextPackService.validate();
 
   constructor(private fb: FormBuilder, private contextPackService: ContextPackService,
     private snackBar: MatSnackBar, private router: Router) { }
-
-
-
 
   ngOnInit() {
     this.contextPackForm = this.fb.group({
@@ -80,20 +44,20 @@ export class AddContextpacksComponent implements OnInit {
   }
 
   initwordlist() {
-    this.contextPackService.initwordlist(this.fb);
+    return this.contextPackService.initwordlist(this.fb);
    }
 
    initNouns() {
-     this.contextPackService.initNouns(this.fb);
+     return this.contextPackService.initNouns(this.fb);
    }
 
   addWordlist() {
     const control = this.contextPackForm.controls.wordlists as FormArray;
-    control.push(this.contextPackService.initwordlist(this.fb));
+    control.push(this.initwordlist());
   }
   addPosArray(ix: number, pos: string){
     const control = (this.contextPackForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray;
-    control.push(this.contextPackService.initNouns(this.fb));
+    control.push(this.initNouns());
   }
   addForms(ix: number, iy: number, pos: string) {
     const control = ((this.contextPackForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray)
@@ -124,11 +88,8 @@ export class AddContextpacksComponent implements OnInit {
     (((this.contextPackForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray)
     .at(iy).get('forms') as FormArray).removeAt(iz);
   }
-
-  
   wordlistsErrors() {
     this.contextPackService.wordlistsErrors(this.fb);
-
   }
 
   nounsErrors() {

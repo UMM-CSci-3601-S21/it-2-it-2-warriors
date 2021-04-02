@@ -56,16 +56,12 @@ export class ContextPackService {
 
     return this.httpClient.put<ContextPack>(this.contextpackUrl, updatePack).pipe(map(res => res));
   }
-
-
-
   setData(data: ContextPack){
     this.data = data;
     localStorage.setItem('name',JSON.stringify(this.data.name));
     const name = this.data.name;
     return(name + ' is set in the local storage');
   }
-  
   initwordlist(fb) {
     return fb.group({
       //  ---------------------forms fields on x level ------------------------
@@ -137,13 +133,40 @@ export class ContextPackService {
         x++;
       }
     }
-
+    validate()
+      {
+        return ({wordlists: {
+          name: [
+            {type: 'required', message: 'Name is required'},
+          ],
+          enabled: {
+            required: 'Must be true or false (check capitalization)',
+          },
+          nouns: {
+            word: {
+            },
+            forms: {
+            },
+          },
+          adjectives: {
+            word: {
+            },
+            forms: {
+            },
+          },
+          verbs: {
+            word: {
+            },
+            forms: {
+            },
+          },
+          misc: {
+            word: {
+            },
+            forms: {
+            },
+          }
+        }});
 }
-
-
-
-
-
-
-
+}
 

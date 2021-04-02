@@ -76,7 +76,12 @@ describe('AddWordlistComponent', () => {
 
 
   });
-
+  describe('errors', () =>{
+    it('should call errors', () =>{
+      component.nounsErrors();
+      component.wordlistsErrors();
+    });
+  });
   describe('Add wordlist', () =>{
     it('should add a wordlist when prompted', () =>{
       component.addWordlist();
@@ -148,10 +153,10 @@ describe('AddWordlistComponent', () => {
       expect(controls.verbs.length).toEqual(1);
       // remove wordlist
       component.addWordlist();
-      controls = ((component.wordlistsForm.value.wordlists as Array<any>));
+      controls = component.wordlistsForm.value.wordlists as Array<any>;
       expect(controls.length).toEqual(2);
       component.removeWordlist(1);
-      controls = ((component.wordlistsForm.value.wordlists as Array<any>));
+      controls = component.wordlistsForm.value.wordlists as Array<any>;
       expect(controls.length).toEqual(1);
     });
 
@@ -182,5 +187,5 @@ describe('AddWordlistComponent', () => {
     spyOn(ContextPackService.prototype, 'getContextPacks').and.returnValue(of(response.value));
 
     spyOn(ContextPackService.prototype, 'updateContextPack').and.returnValue(of(response.value));
-
+    expect(component.submitForm());
     });});});

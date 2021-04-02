@@ -215,7 +215,12 @@ describe('AddContextpacksComponent', () => {
     });
 
   });
-
+  describe('errors', () =>{
+    it('should call errors', () =>{
+      component.nounsErrors();
+      component.wordlistsErrors();
+    });
+  });
 
   describe('Submit', ()=>{
     it('It should submit the context packs', ()=>{
