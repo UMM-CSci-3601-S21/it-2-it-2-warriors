@@ -81,42 +81,20 @@ export class AddWordlistsComponent implements OnInit  {
     }
 
     initwordlist() {
-      return this.fb.group({
-        //  ---------------------forms fields on x level ------------------------
-        name: new FormControl('', Validators.compose([
-          Validators.required,
-        ])),
-        enabled: new FormControl('', Validators.compose([
-          Validators.required,
-          Validators.pattern('^(true|false)$'),
-        ])),
-        // ---------------------------------------------------------------------
-        nouns: this.fb.array([]),
-        adjectives: this.fb.array([]),
-        verbs: this.fb.array([]),
-        misc: this.fb.array([])
-
-      });
+     this.contextPackService.initwordlist(this.fb);
     }
 
     initNouns() {
-      return this.fb.group({
-        //  ---------------------forms fields on y level ------------------------
-        word: [''],
-        // ---------------------------------------------------------------------
-        forms: this.fb.array([
-          this.fb.control('')
-        ])
-      });
+      this.contextPackService.initNouns(this.fb);
     }
 
     addWordlist() {
       const control = this.wordlistsForm.controls.wordlists as FormArray;
-      control.push(this.initwordlist());
+      control.push(this.contextPackService.initwordlist(this.fb));
     }
     addPosArray(ix: number, pos: string){
       const control = (this.wordlistsForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray;
-      control.push(this.initNouns());
+      control.push(this.contextPackService.initNouns(this.fb));
     }
     addForms(ix: number, iy: number, pos: string) {
       const control = ((this.wordlistsForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray)
@@ -149,27 +127,12 @@ export class AddWordlistsComponent implements OnInit  {
     }
 
     wordlistsErrors() {
-      return [{
-        //  ---------------------forms errors on x level ------------------------
-        name: [' ', [Validators.required]],
-        enabled:[' ', [Validators.required]],
-
-        // ---------------------------------------------------------------------
-        nouns: this.nounsErrors()
-
-      }];
+      this.contextPackService.wordlistsErrors(this.fb);
 
     }
 
     nounsErrors() {
-      return [{
-        //  ---------------------forms errors on y level ------------------------
-        word: '',
-        forms: this.fb.array([
-          this.fb.control('')
-        ]),
-
-      }];
+      this.contextPackService.nounsErrors(this.fb);
     }
     // form validation
     validateForm() {
@@ -178,21 +141,7 @@ export class AddWordlistsComponent implements OnInit  {
     validateWordlists() {
       const wordlistsA = this.wordlistsForm.controls.wordlists as FormArray;
       // console.log(XsA.value);
-      this.formErrors.wordlists = [];
-      let x = 1;
-      while (x <= wordlistsA.length) {
-        this.formErrors.wordlists.push({
-          name: [' ', [Validators.required]],
-          enabled: [' ', [Validators.required]],
-          nouns: [{
-            word: '',
-            forms: this.fb.array([
-              this.fb.control('')
-            ]),
-          }]
-        });
-        x++;
-      }
+      this.contextPackService.validateWordlists(wordlistsA,this.fb,this.formErrors);
     }
 
 
@@ -230,7 +179,7 @@ export class AddWordlistsComponent implements OnInit  {
       });}
  ,);
 
-//
+
 
 }
 

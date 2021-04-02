@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ContextPack } from './contextpack';
 import { map } from 'rxjs/operators';
+import { FormControl, Validators } from '@angular/forms';
 
 
 
@@ -64,6 +65,78 @@ export class ContextPackService {
     const name = this.data.name;
     return(name + ' is set in the local storage');
   }
+  
+  initwordlist(fb) {
+    return fb.group({
+      //  ---------------------forms fields on x level ------------------------
+      name: new FormControl('', Validators.compose([
+        Validators.required,
+      ])),
+      enabled: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^(true|false)$'),
+      ])),
+      // ---------------------------------------------------------------------
+      nouns: fb.array([]),
+      adjectives: fb.array([]),
+      verbs: fb.array([]),
+      misc: fb.array([])
+
+    });
+  }
+
+  initNouns(fb) {
+    return fb.group({
+      //  ---------------------forms fields on y level ------------------------
+      word: [''],
+      // ---------------------------------------------------------------------
+      forms: fb.array([
+        fb.control('')
+      ])
+    });
+  }
+
+   wordlistsErrors(fb) {
+      return [{
+        //  ---------------------forms errors on x level ------------------------
+        name: [' ', [Validators.required]],
+        enabled:[' ', [Validators.required]],
+
+        // ---------------------------------------------------------------------
+        nouns: this.nounsErrors(fb)
+
+      }];
+
+    }
+    nounsErrors(fb) {
+      return [{
+        //  ---------------------forms errors on y level ------------------------
+        word: '',
+        forms: fb.array([
+          fb.control('')
+        ]),
+
+      }];
+    }
+
+    validateWordlists(word,fb,formerrors) {
+      // console.log(XsA.value);
+      formerrors.wordlists = [];
+      let x = 1;
+      while (x <= word.length) {
+        formerrors.wordlists.push({
+          name: [' ', [Validators.required]],
+          enabled: [' ', [Validators.required]],
+          nouns: [{
+            word: '',
+            forms: fb.array([
+              fb.control('')
+            ]),
+          }]
+        });
+        x++;
+      }
+    }
 
 }
 
