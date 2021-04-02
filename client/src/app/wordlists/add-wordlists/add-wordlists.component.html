@@ -2,13 +2,10 @@
   <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
 <form [formGroup]="wordlistsForm" (ngSubmit)="submitForm()" class="form">
   <mat-card class="add-wordlists-card">
-    <mat-card-title class="add-wordlists-title">Create A Wordlists
+    <mat-card-title class="add-wordlists-title">Add Wordlists
     </mat-card-title>
 
     <mat-card-content fxLayout="column">
-    <div>
-      Context Packs Available:
-    </div>
 
 
 
@@ -18,7 +15,7 @@
       <mat-label>Pack Name</mat-label>
 
 
-      <input class="form-control" matInput placeholder="Name" value = {{this.data}} (keyup)="grabValue($event)" required />
+      <input class="form-control" matInput placeholder="Name" value = {{this.data}}  readonly />
 
 
 
@@ -41,7 +38,7 @@
                 required>
           <mat-error *ngFor="let validation of validationMessages.wordlists.name">
             <mat-error class="error-message" data-test="nameError"
-                      *ngIf="wordlistsForm.get('name').hasError(validation.type) && (wordlistsForm.get('name').dirty || wordlistsForm.get('name').touched)">
+                      *ngIf="wordlistsForm.hasError(validation.type) && (wordlistsForm.dirty || wordlistsForm.touched)">
               {{validation.message}}
             </mat-error>
           </mat-error>
@@ -273,14 +270,10 @@
         ADD WORDLIST PACK
       </button>
 
-		<h5>Field Values</h5>
+	
 
 
 
 
-    <br><button matTooltip="View current Json" (click)="toggleShow()" type="checkbox" data-test="showJsonButton">Preview Json File</button>
-    <div *ngIf='isShown===true'>
-
-		<pre class="form-value" style="font-size:15px">{{wordlistsForm.value  | json }}</pre>
   </div>
 

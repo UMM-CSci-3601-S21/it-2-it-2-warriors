@@ -21,8 +21,7 @@ export class AddWordlistsComponent implements OnInit  {
     i: ContextPack[] = [];
     m;
     o: ContextPack[] = [];
-    q: ContextPack[] = [];
-
+    y: ContextPack[] = [];
 
     contextpackcard = new ContextPackCardComponent(this.contextPackService,this.snackBar,this.router);
     isShown = false;
@@ -75,11 +74,9 @@ export class AddWordlistsComponent implements OnInit  {
 
     ngOnInit() {
       this.wordlistsForm = this.fb.group({
-        name: new FormControl(this.data, Validators.compose([
-          Validators.required,
-        ])),
         wordlists: this.fb.array([])
       });
+
       this.wordlistsForm.valueChanges.subscribe(data => this.validateForm());
     }
 
@@ -199,33 +196,15 @@ export class AddWordlistsComponent implements OnInit  {
     }
 
 
-  toggleShow() {
-  this.isShown = ! this.isShown;
-  return this.isShown;
-  }
 
-
-
-
-
-//---------------------------------- grabs the value that the user inputs
-  grabValue(event){
-    if(event.target.value !== null || event.target.value !== undefined){
-     this.inputValue= event.target.value;
-    }
-     return(this.inputValue);
-  }
 
 //-----------------------------------------------------------------------------submits the form updating the context pack
 
   submitForm() {
-    if(this.inputValue === undefined){
-      this.inputValue = this.data;
-    } ;
     this.contextPackService.getContextPacks().subscribe(contextpacks => {
       for(this.m = 0;this.m<contextpacks.length;this.m++){
         this.i.push(contextpacks[this.m]);
-        if(contextpacks[this.m].name === this.inputValue.toString())// figure out a better if
+        if(contextpacks[this.m].name === this.data)// figure out a better if
         {
 
           this.o.push(contextpacks[this.m]);
@@ -251,7 +230,7 @@ export class AddWordlistsComponent implements OnInit  {
       });}
  ,);
 
-
+//
 
 }
 

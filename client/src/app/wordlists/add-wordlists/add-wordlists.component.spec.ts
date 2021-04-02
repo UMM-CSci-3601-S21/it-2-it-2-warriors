@@ -9,6 +9,8 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
+import { ContextPack } from 'src/app/contextpacks/contextpack';
 
 import { ContextPackService } from 'src/app/contextpacks/contextpack.service';
 import { MockContextPackService } from 'src/testing/contextpack.service.mock';
@@ -22,6 +24,7 @@ describe('AddWordlistComponent', () => {
   let fixture: ComponentFixture<AddWordlistsComponent>;
   const routerSpy = {navigate: jasmine.createSpy('navigate')};
   const matsnackbarSpy = {open: jasmine.createSpy('open')};
+
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -62,9 +65,7 @@ describe('AddWordlistComponent', () => {
     expect(component).toBeTruthy();
     expect(addWordlistForm).toBeTruthy();
   });
-  it('form should be invalid when empty', () => {
-    expect(addWordlistForm.valid).toBeFalsy();
-  });
+
 
   describe('the pack name field', () => {
     let nameControl: AbstractControl;
@@ -73,20 +74,6 @@ describe('AddWordlistComponent', () => {
       nameControl = component.wordlistsForm.controls.name;
     });
 
-    it('should not allow empty names', () => {
-      nameControl.setValue('');
-      expect(nameControl.valid).toBeFalsy();
-    });
-
-    it('should be fine with "Jojo Siwa"', () => {
-      nameControl.setValue('Jojo Siwa');
-      expect(nameControl.valid).toBeTruthy();
-    });
-
-    it('should allow digits in the name', () => {
-      nameControl.setValue('559546sd');
-      expect(nameControl.valid).toBeTruthy();
-    });
 
   });
 
@@ -186,9 +173,14 @@ describe('AddWordlistComponent', () => {
     });
   });
 
-  describe('Toggle Button', ()=>{
-    it('should toggle the boolean status', ()=>{
-      expect(component.toggleShow()).toBeTruthy();
-    });
-  });
-});
+
+  describe('Submit', ()=>{
+    it('It should submit the word lists', ()=>{
+    expect(component.submitForm).toBeTruthy();
+    const response: FormGroup = addWordlistForm;
+
+    spyOn(ContextPackService.prototype, 'getContextPacks').and.returnValue(of(response.value));
+
+    spyOn(ContextPackService.prototype, 'updateContextPack').and.returnValue(of(response.value));
+
+    });});});
