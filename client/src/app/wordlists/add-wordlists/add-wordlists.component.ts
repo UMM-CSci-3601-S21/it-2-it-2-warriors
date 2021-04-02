@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder,  FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { ContextPack,Wordlist } from 'src/app/contextpacks/contextpack';
+import { ContextPack } from 'src/app/contextpacks/contextpack';
 import { ContextPackCardComponent } from 'src/app/contextpacks/contextpack-card.component';
 import { ContextPackListComponent } from 'src/app/contextpacks/contextpack-list.component';
 import { ContextPackService } from 'src/app/contextpacks/contextpack.service';
