@@ -24,19 +24,7 @@
   background: rgb(247, 108, 103);
 }
 
-.fix{
-  display: inline-block;
-  border-radius: 5px;
-  padding: 10px;
-  width: auto;
-  margin: auto;
-  display: flex;
-  border:none;
-  background-color:black;
 
-
-
-}
 
 .contextpack-card {
   margin-bottom: 10px;
@@ -55,4 +43,19 @@
   position: fixed;
   bottom: 15px;
   right: 30px;
+}
+
+
+.addbutton{
+  border: 2px solid rgb(31, 29, 56);
+  background-color: rgb(152, 170, 247);
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+
+}
+
+.addbutton:hover{
+  border: 2px solid rgb(253, 6, 6);
+  background: rgb(247, 108, 103);
 }

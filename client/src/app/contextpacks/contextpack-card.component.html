@@ -4,10 +4,13 @@
 
   </mat-card-header>
   <mat-card-content *ngIf="!this.simple">
-
+    <mat-card-actions align ="right">
+      <button class = "buttonroute" mat-button type="submit" (click)="saveAndRoute(this.contextpack)">Add Wordlist</button>
+    </mat-card-actions>
       <button mat-icon-button color="accent" class="contextpack-download-button" (click)='downloadJson(contextpack, contextpack.name).click()'>
     <mat-icon>download</mat-icon>
   </button>
+
     <mat-form-field>
       <mat-label>View Type</mat-label>
       <mat-select [(value)]="selected" data-test="contextpackWordSelect">
@@ -61,16 +64,13 @@
   </ng-template>
 
 
-  <mat-card-actions>
-    <button mat-button type="submit" (click)="saveAndRoute(this.contextpack)">Add Wordlist</button>
-  </mat-card-actions>
+
     <!-- <button class="contextpack-download-button" (click)='downloadJson(contextpack, contextpack.name).click()'>Download Json</button> -->
 
   </mat-card-content>
 
 
   <mat-card-actions>
-
   <button class = "viewbutton" mat-button data-test="viewInfoButton" *ngIf="this.simple"  [routerLink]="['/contextpacks', this.contextpack._id]">View Info</button>
   </mat-card-actions>
 
