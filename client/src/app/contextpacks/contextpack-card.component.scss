@@ -8,10 +8,7 @@ span.contextpack-card-wordlists{
 .mat-card{
 
 }
-.contextpack-card-name{
 
-
-}
 
 
 span.contextpack-card-nouns{
@@ -137,4 +134,16 @@ span.contextpack-card-verbs{
   padding: 5px;
   margin: 10px;
 }
+.viewbutton{
+  border: 2px solid rgb(0, 255, 13);
+  background-color: rgb(140, 235, 163);
+}
+
+.viewbutton:hover{
+  border: 2px solid rgb(253, 6, 6);
+  background: rgb(247, 108, 103);
+}
+
+
+
 
