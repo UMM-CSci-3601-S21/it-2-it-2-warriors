@@ -22,6 +22,8 @@ export class AddWordlistsComponent implements OnInit  {
     m;
     o: ContextPack[] = [];
     y: ContextPack[] = [];
+    q: ContextPack[] = [];
+    len: number;
 
     contextpackcard = new ContextPackCardComponent(this.contextPackService,this.snackBar,this.router);
     isShown = false;
@@ -40,6 +42,7 @@ export class AddWordlistsComponent implements OnInit  {
 
 
     ngOnInit() {
+      this.getData();
       this.wordlistsForm = this.fb.group({
         wordlists: this.fb.array([])
       });
@@ -112,6 +115,10 @@ export class AddWordlistsComponent implements OnInit  {
     }
 
 
+    toggleShow() {
+      this.isShown = ! this.isShown;
+      return this.isShown;
+      }
 
 
 //-----------------------------------------------------------------------------submits the form updating the context pack
@@ -148,6 +155,34 @@ export class AddWordlistsComponent implements OnInit  {
 
 
 
+}
+
+getData(){
+  this.contextPackService.getContextPacks().subscribe(contextpacks => {
+    for(this.m = 0;this.m<contextpacks.length;this.m++){
+      this.i.push(contextpacks[this.m]);
+      if(contextpacks[this.m].name === this.data)// figure out a better if
+      {
+        this.o.push(contextpacks[this.m]);
+      // figure out the more than two context packs situation
+      } }
+    this.dataContextPack(this.o[0]);
+  });}
+
+
+dataContextPack(data: ContextPack){
+  this.q.push(data);
+  this.len = this.q[0].wordlists.length;
+  console.log(this.q);
+}
+
+viewWordlistJSON(){
+  const formArray = this.wordlistsForm.get('wordlists') as FormArray;
+  this.q[0].wordlists.splice(this.len,this.q[0].wordlists.length-this.len);
+  for(this.m=0;this.m<formArray.value.length;this.m++){
+    this.q[0].wordlists.push(formArray.value[this.m]);
+  }
+  return(this.q[0]);
 }
 
 }

@@ -270,8 +270,21 @@
       </button>
 
 
+      <h5>Field Values</h5>
 
 
+      <button class="contextpack-download-button"
+      type="button"
+      color='primary'
+      [disabled]="!wordlistsForm.valid"
+      (click)='contextpackcard.downloadJson(viewWordlistJSON()  , this.q[0].name).click()'
+
+      >Download Json</button>
+
+      <br><button matTooltip="View current Json" (click)="toggleShow()" type="checkbox" data-test="showJsonButton">Preview Json File</button>
+      <div *ngIf='isShown===true'>
+
+      <pre class="form-value" style="font-size:15px">{{ viewWordlistJSON() | json }}</pre>
 
 
   </div>
