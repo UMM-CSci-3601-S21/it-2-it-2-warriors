@@ -1,9 +1,22 @@
 .contextpack-cards-container {
   width: 100%;
   position: relative;
+
 }
 
+.fix{
+  display: inline-block;
+  border-radius: 5px;
+  padding: 10px;
+  width: auto;
+  margin: auto;
+  display: flex;
+  border:none;
+  background-color:black;
 
+
+
+}
 .contextpack-card {
   margin-bottom: 10px;
 }

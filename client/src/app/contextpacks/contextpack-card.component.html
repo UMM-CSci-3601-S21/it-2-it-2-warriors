@@ -4,7 +4,7 @@
 
 
 
-    <mat-card-subtitle class="contextpack-card-icon">Icon: {{ this.contextpack.icon }}</mat-card-subtitle>
+
   </mat-card-header>
   <mat-card-content *ngIf="!this.simple">
 
@@ -28,12 +28,35 @@
         <div *ngIf='wordlists.enabled === false'>
           <button id = "button"  data-test="button" (click)="setEnableOrDisable($event.target,wordlists,this.contextpack)" >enable</button>
         </div>
+          <span class = "wordlist-name">{{'Wordlist ' + 'Name: '}}</span>
+          <span class= "name">{{contextpack.wordlists[index].name}}</span>
+        <div>
+          <span class = "wordlist-name">{{'Wordlist is '}}</span>
+          <span class= "name">{{contextpack.wordlists[index].enabled && 'enabled' || 'disabled'}}</span>
+        </div>
+        
+        <div class = "box-one">
+          <div class = "wordlist-name" style="white-space: pre-line">{{'Nouns: '}}</div>
+          <span class="contextpack-card-nouns-wordlist"><div style="white-space: pre-line">{{displayWords(this.contextpack.wordlists[index],'nouns')}}</div></span>
+        </div>
 
-        <span class="contextpack-card-wordlists"><div style="white-space: pre-line">{{displayWordlists(this.contextpack.wordlists[index])}}</div></span>
+        <div class = "box-two">
+          <div class = "wordlist-name" style="white-space: pre-line">{{'Verbs: '}}</div>
+          <span class="contextpack-card-verbs-wordlists"><div style="white-space: pre-line">{{displayWords(this.contextpack.wordlists[index],'verbs')}}</div></span>
+        </div>
+        <div class = "box-three">
+          <div class = "wordlist-name" style="white-space: pre-line">{{'Adjectives: '}}</div>
+          <span class="contextpack-card-adjectives-wordlists"><div style="white-space: pre-line">{{displayWords(this.contextpack.wordlists[index],'adjectives')}}</div></span>
+        </div>
+        <div class = "box-four">
+          <div class = "wordlist-name" style="white-space: pre-line">{{'Miscs: '}}</div>
+          <span class="contextpack-card-miscs-wordlists"><div style="white-space: pre-line">{{displayWords(this.contextpack.wordlists[index],'misc')}}</div></span>
+        </div>
       </div>
     </div>
 
     <ng-template #templateWords>
+
         <span class="contextpack-card-nouns"><div style="white-space: pre-line">Nouns: {{displayAllWords(this.contextpack, 'nouns')}}</div></span>
         <span class="contextpack-card-verbs"><div style="white-space: pre-line">Verbs: {{displayAllWords(this.contextpack, 'verbs')}}</div></span>
         <span class="contextpack-card-adjectives"><div style="white-space: pre-line">Adjectives: {{displayAllWords(this.contextpack, 'adjectives')}}</div></span>
