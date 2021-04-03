@@ -46,13 +46,14 @@
             <h3 mat-subheader>ContextPacks</h3>
             <a mat-list-item *ngFor="let contextpack of this.filteredContextpacks" [routerLink]="['/contextpacks', contextpack._id]" class="contextpack-list-item">
               <h3 matLine class="contextpack-list-name"> {{this.contextpack.name}} </h3>
-              <p matLine class="contextpack-list-enabled"> {{this.contextpack.enabled}} </p>
             </a>
           </mat-nav-list>
         </mat-card-content>
       </mat-card>
     </div>
   </div>
+
+
 
   <!-- Maybe this should be a pop-up instead of just a text message? Not sure. -->
   <ng-template #contextpackError>
@@ -68,4 +69,11 @@
   </ng-template>
 
 </div>
+
+
+  <mat-card-actions class = "fix">
+   <button mat-button data-test="addContextPack" [routerLink]="['/edit']" >Add Context Pack</button>
+  </mat-card-actions>
+
+
 
