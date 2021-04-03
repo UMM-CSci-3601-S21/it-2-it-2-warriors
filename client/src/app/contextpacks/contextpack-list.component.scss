@@ -4,6 +4,19 @@
 
 }
 
+.contextpack-list-item{
+  border: 2px solid rgb(0, 255, 13);
+  background-color: rgb(140, 235, 163);
+  padding: 5px;
+  margin: 10px;
+  width:auto;
+  border-radius: 10px;
+}
+.contextpack-list-item:hover {
+  border: 2px solid rgb(253, 6, 6);
+  background: rgb(247, 108, 103);
+}
+
 .fix{
   display: inline-block;
   border-radius: 5px;
@@ -17,12 +30,14 @@
 
 
 }
+
 .contextpack-card {
   margin-bottom: 10px;
 }
 
 .search-card {
   margin-bottom: 10px;
+
 }
 
 .mat-radio-button {
