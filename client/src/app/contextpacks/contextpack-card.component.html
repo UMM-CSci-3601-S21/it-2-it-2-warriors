@@ -7,6 +7,11 @@
     <mat-card-actions align ="right">
       <button class = "buttonroute" mat-button type="submit" (click)="saveAndRoute(this.contextpack)">Add Wordlist</button>
     </mat-card-actions>
+
+    <mat-card-actions align ="right">
+      <button class = "buttonroute" mat-button type="submit" (click)="saveRouteAndEdit(this.contextpack)">Edit Context</button>
+    </mat-card-actions>
+
       <button mat-icon-button color="accent" class="contextpack-download-button" (click)='downloadJson(contextpack, contextpack.name).click()'>
     <mat-icon>download</mat-icon>
   </button>
