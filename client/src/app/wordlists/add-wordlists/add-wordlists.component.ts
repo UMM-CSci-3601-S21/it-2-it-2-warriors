@@ -48,6 +48,7 @@ export class AddWordlistsComponent implements OnInit  {
       });
 
       this.wordlistsForm.valueChanges.subscribe(data => this.validateForm());
+      console.log(this.wordlistsForm);
     }
 
     initwordlist() {
