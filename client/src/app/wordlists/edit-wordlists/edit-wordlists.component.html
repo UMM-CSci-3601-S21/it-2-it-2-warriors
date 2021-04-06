@@ -25,14 +25,18 @@
       <input class="form-control" matInput placeholder="icon" [value] = "this.data.icon"  readonly/>
     </mat-form-field>
 
+    <div *ngIf='history[0] !== undefined'>
+      <button id = "button"  data-test="button" (click)="undoWordlist()" >Add Back Wordlist</button>
+    </div>
 
     <div *ngFor="let wordlist of wordlistsForm['controls'].wordlists['controls']; let ix = index">
 
         <div class = "wordlist" formGroupName="wordlists">
           <div formGroupName={{ix}}>
+
           <button type="button" (click)="deleteWordlist(ix)">Remove This Wordlist</button><br>
           <h1>Wordlist {{ix+1}}:</h1>
-            <div>
+            <div >
               <mat-form-field>
                 <mat-label>Wordlist Name</mat-label>
                 <input class="form-control" matInput placeholder="Name" formControlName="name"
@@ -47,34 +51,163 @@
                 <mat-option value="false">Disabled</mat-option>
                 </mat-select>
               </mat-form-field>
+              </div>
 
-              <div *ngFor="let noun of wordlistsForm['controls'].wordlists['controls'].nouns; let m = index">
-                <div class = "wordlist" formGroupName="nouns">
-                  <div formGroupName={{m}}>
-                    <div *ngFor="let noun of wordlistsForm['controls'].wordlists['controls'].nouns.word['control'];
-                     let n = index">
-                      <div class = "wordlist" formGroupName="nouns">
-                        <div formGroupName={{n}}>
-                          <mat-form-field>
-                            <mat-label>Wordlist Name</mat-label>
-                            <input class="form-control" matInput placeholder="word" formControlName="word"
-                              required>
-                          </mat-form-field>
+            <div formGroupName="nouns" class ="nouns">
+              <h1>Nouns</h1>
+              <div *ngFor="let noun of data.wordlists[ix].nouns; let m = index">
 
-                    </div>
-                    </div>
-                    </div>
+              <div formGroupName={{m}}>
+
+
+
+
+                <mat-form-field>
+                  <mat-label>Noun Word:</mat-label>
+                  <input class="form-control" matInput placeholder="word" formControlName="word"
+                    required>
+                </mat-form-field>
+                <button type="button" (click)="removeWord(ix, m, 'nouns')">Remove Noun</button>
+
+
+
+                <div formGroupName="forms" class ="forms">
+                  <div *ngFor="let form of data.wordlists[ix].nouns[m].forms; let n = index">
+                    <div formGroupName={{n}}>
+
+                    <mat-form-field>
+                      <mat-label>Noun Word Forms:</mat-label>
+                      <input class="form-control" matInput placeholder="word" formControlName="form"
+                        required>
+                    </mat-form-field>
                   </div>
                   </div>
+                </div>
+              </div>
+
               </div>
             </div>
+
+
+
+
+            <div formGroupName="adjectives" class ="adjectives">
+              <h1>Adjectives</h1>
+              <div *ngFor="let adjective of data.wordlists[ix].adjectives; let m = index">
+
+              <div formGroupName={{m}}>
+
+                <mat-form-field>
+                  <mat-label>Adjective Word:</mat-label>
+                  <input class="form-control" matInput placeholder="word" formControlName="word"
+                    required>
+                </mat-form-field>
+
+                <div formGroupName="forms" class ="forms">
+                  <div *ngFor="let form of data.wordlists[ix].adjectives[m].forms; let n = index">
+                    <div formGroupName={{n}}>
+                    <mat-form-field>
+                      <mat-label>Adjective Word Forms:</mat-label>
+                      <input class="form-control" matInput placeholder="word" formControlName="form"
+                        required>
+                    </mat-form-field>
+                    <button type="button" (click)="removeWord(ix, m, 'adjectives')">Remove Adjective</button>
+                  </div>
+                  </div>
+                </div>
+              </div>
+
+              </div>
+            </div>
+
+
+
+
+            <div formGroupName="verbs" class ="verbs">
+              <h1>Verbs</h1>
+              <div *ngFor="let verb of data.wordlists[ix].verbs; let m = index">
+
+              <div formGroupName={{m}}>
+
+                <mat-form-field>
+                  <mat-label>Verb Word:</mat-label>
+                  <input class="form-control" matInput placeholder="word" formControlName="word"
+                    required>
+                </mat-form-field>
+
+                <div formGroupName="forms" class ="forms">
+                  <div *ngFor="let form of data.wordlists[ix].verbs[m].forms; let n = index">
+                    <div formGroupName={{n}}>
+                    <mat-form-field>
+                      <mat-label>Verb Word Forms:</mat-label>
+                      <input class="form-control" matInput placeholder="word" formControlName="form"
+                        required>
+                    </mat-form-field>
+                    <button type="button" (click)="removeWord(ix, m, 'verbs')">Remove Verb</button>
+                  </div>
+                  </div>
+                </div>
+              </div>
+
+              </div>
+            </div>
+
+
+
+
+            <div formGroupName="misc" class ="misc">
+              <h1>Miscs</h1>
+              <div *ngFor="let verb of data.wordlists[ix].misc; let m = index">
+
+              <div formGroupName={{m}}>
+
+                <mat-form-field>
+                  <mat-label>Misc Word:</mat-label>
+                  <input class="form-control" matInput placeholder="word" formControlName="word"
+                    required>
+                </mat-form-field>
+
+                <div formGroupName="forms" class ="forms">
+                  <div *ngFor="let form of data.wordlists[ix].misc[m].forms; let n = index">
+                    <div formGroupName={{n}}>
+                    <mat-form-field>
+                      <mat-label>Misc Word Forms:</mat-label>
+                      <input class="form-control" matInput placeholder="word" formControlName="form"
+                        required>
+                    </mat-form-field>
+                    <button type="button" (click)="removeWord(ix, m, 'misc')">Remove Misc</button>
+                  </div>
+                  </div>
+                </div>
+              </div>
+
+              </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          </div>
           </div>
         </div>
 
+        <button class="add-wordlist-button" type="button" (click)="addWordlist()" value="Add Wordlists">Add Wordlists</button>
 
 
-
-</div>
 
   </mat-card-content>
   </mat-card>

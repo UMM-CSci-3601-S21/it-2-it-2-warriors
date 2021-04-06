@@ -2,7 +2,8 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ContextPack } from 'src/app/contextpacks/contextpack';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import { ContextPack,Wordlist } from 'src/app/contextpacks/contextpack';
 import { ContextPackListComponent } from 'src/app/contextpacks/contextpack-list.component';
 import { ContextPackService } from 'src/app/contextpacks/contextpack.service';
 
@@ -12,23 +13,13 @@ import { ContextPackService } from 'src/app/contextpacks/contextpack.service';
   styleUrls: ['./edit-wordlists.component.scss']
 })
 export class EditWordlistsComponent implements OnInit {
-  saveDelete: ContextPack[] = [];
   isShown = false;
-  finishPack: ContextPack[] = [];
   data = JSON.parse(localStorage.getItem('data'));
-
-
   wordlistsForm: FormGroup;
+  history: Wordlist[] = [];
 
 
-  contextpack: ContextPack;
-  contextPackList: ContextPackListComponent;
-  i: ContextPack[] = [];
-  m;
-  o: ContextPack[] = [];
-  y: ContextPack[] = [];
-  q: ContextPack[] = [];
-  len: number;
+
   formErrors = {
     wordlists: this.contextPackService.wordlistsErrors(this.fb)
   };
@@ -37,13 +28,11 @@ export class EditWordlistsComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder,private route: ActivatedRoute,private contextPackService: ContextPackService,
-    private snackBar: MatSnackBar, private router: Router,private cdr: ChangeDetectorRef) { }
+    private snackBar: MatSnackBar, private router: Router) { }
 
 
    ngOnInit() {
     console.log(this.data);
-    this.saveDelete.push(this.data);
-    this.finishPack.push(this.data);
 
     this.wordlistsForm = this.fb.group({
       id: new FormControl(this.data._id, []),
@@ -54,7 +43,7 @@ export class EditWordlistsComponent implements OnInit {
         this.data.wordlists.map(
           x=>this.fb.group({
             name: new FormControl(x.name, []),
-            enabled: new FormControl(x.enabled, []),
+            enabled: new FormControl(x.enabled.toString(), []),
             nouns: this.fb.array(
               x.nouns.map(
                 p=>this.fb.group({
@@ -62,7 +51,7 @@ export class EditWordlistsComponent implements OnInit {
                 forms: this.fb.array(
                   p.forms.map(
                     q => this.fb.group({
-                      forms: new FormControl(q,[])
+                      form: new FormControl(q,[])
                     })
                   )
                 )
@@ -75,7 +64,7 @@ export class EditWordlistsComponent implements OnInit {
                 forms:this.fb.array(
                   p.forms.map(
                     q => this.fb.group({
-                      forms: new FormControl(q,[])
+                      form: new FormControl(q,[])
                     })
                   )
                 ) }))),
@@ -86,18 +75,18 @@ export class EditWordlistsComponent implements OnInit {
                 forms:this.fb.array(
                   p.forms.map(
                     q => this.fb.group({
-                      forms: new FormControl(q,[])
+                      form: new FormControl(q,[])
                     })
                   )
                 ) }))),
-            miscs:this.fb.array(
+            misc:this.fb.array(
               x.misc.map(
                 p=>this.fb.group({
                 word: new FormControl(p.word, []),
                 forms:this.fb.array(
                   p.forms.map(
                     q => this.fb.group({
-                      forms: new FormControl(q,[])
+                      form: new FormControl(q,[])
                     })
                   )
                 ) })))
@@ -111,10 +100,30 @@ export class EditWordlistsComponent implements OnInit {
       });
 
       console.log(this.wordlistsForm);
-      //this.wordlistsForm.valueChanges.subscribe(data => this.validateForm());
+      const formArray = this.wordlistsForm.get('wordlists').get('nouns') as FormArray;
+      console.log(formArray);
+      this.wordlistsForm.valueChanges.subscribe(data => this.validateForm());
 
   }
 
+  // adds wordlist
+  addWordlist() {
+    const control = this.wordlistsForm.controls.wordlists as FormArray;
+    control.push(this.initwordlist());
+  }
+
+  undoWordlist(){
+    const undo = this.history.slice(0,1);
+    console.log(undo);
+    const length = (this.wordlistsForm.controls.wordlists as FormArray).length;
+    const control = (this.wordlistsForm.controls.wordlists as FormArray).at(length+1).value(undo);
+  }
+
+
+
+  initwordlist() {
+    return this.contextPackService.initwordlist(this.fb);
+    }
 
 
 toggleShow() {
@@ -132,13 +141,17 @@ toggleShow() {
 
 // deletes the wordlist
   deleteWordlist(empIndex: number){
+    const copyForm = (this.wordlistsForm.controls.wordlists as FormArray).at(empIndex);
     (this.wordlistsForm.controls.wordlists as FormArray).removeAt(empIndex);
+    this.data.wordlists.splice(empIndex,empIndex+1);
+    this.history.push(copyForm);
+
   }
 
-  addWordlist(empIndex: number){
-    const control =((this.wordlistsForm.controls.wordlist as FormArray).at(empIndex));
-    control.setValue(this.saveDelete[0].wordlists[empIndex]);
-    }
+  removeWord(ix: number, iy: number, pos: string){
+    ((this.wordlistsForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray).removeAt(iy);
+    this.data.wordlists[ix][(`${pos}`)].splice(iy,iy+1);
+  }
 
 
 
@@ -151,15 +164,7 @@ toggleShow() {
 // Shows the new form
 
 viewWordlistJSON(){
-  const nameArray = this.wordlistsForm.value.name as FormArray;
-  const enableArray = this.wordlistsForm.value.enabled as FormArray;
-  console.log(nameArray);
-  const str = JSON.parse(enableArray.toString().toLowerCase());
-  this.finishPack[0].name =  nameArray.toString();
-  this.finishPack[0].enabled = str;
-  console.log(nameArray);
-  console.log(str);
-  return(this.finishPack[0]);
+  return 0;
 
 }
 
