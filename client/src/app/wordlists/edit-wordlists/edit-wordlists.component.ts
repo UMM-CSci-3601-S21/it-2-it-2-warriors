@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 import { ContextPack,Wordlist } from 'src/app/contextpacks/contextpack';
+import { ContextPackCardComponent } from 'src/app/contextpacks/contextpack-card.component';
 import { ContextPackListComponent } from 'src/app/contextpacks/contextpack-list.component';
 import { ContextPackService } from 'src/app/contextpacks/contextpack.service';
 
@@ -16,10 +17,8 @@ export class EditWordlistsComponent implements OnInit {
   isShown = false;
   data = JSON.parse(localStorage.getItem('data'));
   wordlistsForm: FormGroup;
-  history: Wordlist[] = [];
-
-
-
+  contextpackcard = new ContextPackCardComponent(this.contextPackService,this.snackBar,this.router);
+  m;
   formErrors = {
     wordlists: this.contextPackService.wordlistsErrors(this.fb)
   };
@@ -35,7 +34,6 @@ export class EditWordlistsComponent implements OnInit {
     console.log(this.data);
 
     this.wordlistsForm = this.fb.group({
-      id: new FormControl(this.data._id, []),
       icon: new FormControl(this.data.icon, []),
       name: new FormControl(this.data.name, []),
       enabled: new FormControl(this.data.enabled.toString(), []),
@@ -48,48 +46,27 @@ export class EditWordlistsComponent implements OnInit {
               x.nouns.map(
                 p=>this.fb.group({
                 word: new FormControl(p.word, []),
-                forms: this.fb.array(
-                  p.forms.map(
-                    q => this.fb.group({
-                      form: new FormControl(q,[])
-                    })
-                  )
-                )
+                forms: new FormControl(p.forms, [])
 
               }))),
             adjectives:this.fb.array(
               x.adjectives.map(
                 p=>this.fb.group({
                 word: new FormControl(p.word, []),
-                forms:this.fb.array(
-                  p.forms.map(
-                    q => this.fb.group({
-                      form: new FormControl(q,[])
-                    })
-                  )
-                ) }))),
+                forms: new FormControl(p.forms, [])
+              }))),
             verbs:this.fb.array(
               x.verbs.map(
                 p=>this.fb.group({
                 word: new FormControl(p.word, []),
-                forms:this.fb.array(
-                  p.forms.map(
-                    q => this.fb.group({
-                      form: new FormControl(q,[])
-                    })
-                  )
-                ) }))),
+                forms: new FormControl(p.forms, [])
+              }))),
             misc:this.fb.array(
               x.misc.map(
                 p=>this.fb.group({
                 word: new FormControl(p.word, []),
-                forms:this.fb.array(
-                  p.forms.map(
-                    q => this.fb.group({
-                      form: new FormControl(q,[])
-                    })
-                  )
-                ) })))
+                forms: new FormControl(p.forms, [])
+                 })))
 
           }
             ),
@@ -99,25 +76,16 @@ export class EditWordlistsComponent implements OnInit {
     )
       });
 
-      console.log(this.wordlistsForm);
-      const formArray = this.wordlistsForm.get('wordlists').get('nouns') as FormArray;
-      console.log(formArray);
+
       this.wordlistsForm.valueChanges.subscribe(data => this.validateForm());
 
   }
 
   // adds wordlist
-  addWordlist() {
-    const control = this.wordlistsForm.controls.wordlists as FormArray;
-    control.push(this.initwordlist());
+  addWordlist(cp) {
+    this.router.navigate(['edit/wordlist']);
   }
 
-  undoWordlist(){
-    const undo = this.history.slice(0,1);
-    console.log(undo);
-    const length = (this.wordlistsForm.controls.wordlists as FormArray).length;
-    const control = (this.wordlistsForm.controls.wordlists as FormArray).at(length+1).value(undo);
-  }
 
 
 
@@ -141,31 +109,34 @@ toggleShow() {
 
 // deletes the wordlist
   deleteWordlist(empIndex: number){
-    const copyForm = (this.wordlistsForm.controls.wordlists as FormArray).at(empIndex);
-    (this.wordlistsForm.controls.wordlists as FormArray).removeAt(empIndex);
-    this.data.wordlists.splice(empIndex,empIndex+1);
-    this.history.push(copyForm);
 
+    console.log((this.wordlistsForm.controls.wordlists as FormArray).removeAt(empIndex));
+    console.log(this.data.wordlists.splice(empIndex,empIndex+1));
   }
 
   removeWord(ix: number, iy: number, pos: string){
     ((this.wordlistsForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray).removeAt(iy);
-    this.data.wordlists[ix][(`${pos}`)].splice(iy,iy+1);
+    console.log(this.data.wordlists[ix][(`${pos}`)].splice(iy,iy+1));
+
   }
 
 
 
 // submits the form
 
-  submitForm() {
-    return 0;
-}
 
-// Shows the new form
+submitForm() {
+    this.contextPackService.updateContextPack(this.wordlistsForm.value).subscribe(contextpack => {
+    this.snackBar.open(this.wordlistsForm.value.name
+      + ' Pack is Updated ' , null, {
+        duration: 2000,
+      });
+      this.router.navigate(['/contextpacks/' + this.data._id]);
+    }, err => {
+      this.snackBar.open('Failed to update the pack', 'OK', {
+        duration: 5000,
+      });
+    });}
 
-viewWordlistJSON(){
-  return 0;
-
-}
 
 }

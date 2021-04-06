@@ -25,11 +25,9 @@
       <input class="form-control" matInput placeholder="icon" [value] = "this.data.icon"  readonly/>
     </mat-form-field>
 
-    <div *ngIf='history[0] !== undefined'>
-      <button id = "button"  data-test="button" (click)="undoWordlist()" >Add Back Wordlist</button>
-    </div>
 
-    <div *ngFor="let wordlist of wordlistsForm['controls'].wordlists['controls']; let ix = index">
+
+    <div *ngFor="let wordlist of data.wordlists; let ix = index">
 
         <div class = "wordlist" formGroupName="wordlists">
           <div formGroupName={{ix}}>
@@ -51,42 +49,37 @@
                 <mat-option value="false">Disabled</mat-option>
                 </mat-select>
               </mat-form-field>
-              </div>
+            </div>
+
 
             <div formGroupName="nouns" class ="nouns">
               <h1>Nouns</h1>
               <div *ngFor="let noun of data.wordlists[ix].nouns; let m = index">
 
               <div formGroupName={{m}}>
-
-
-
-
+              <div>
                 <mat-form-field>
                   <mat-label>Noun Word:</mat-label>
                   <input class="form-control" matInput placeholder="word" formControlName="word"
                     required>
                 </mat-form-field>
-                <button type="button" (click)="removeWord(ix, m, 'nouns')">Remove Noun</button>
+
+                <button type="button" (click)="removeWord(ix, m, 'nouns')">Remove Nouns</button>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label>Noun Forms:</mat-label>
+                  <input class="form-control" matInput placeholder="form" formControlName="forms"
+                    required>
+                </mat-form-field>
+              </div>
 
 
-
-                <div formGroupName="forms" class ="forms">
-                  <div *ngFor="let form of data.wordlists[ix].nouns[m].forms; let n = index">
-                    <div formGroupName={{n}}>
-
-                    <mat-form-field>
-                      <mat-label>Noun Word Forms:</mat-label>
-                      <input class="form-control" matInput placeholder="word" formControlName="form"
-                        required>
-                    </mat-form-field>
-                  </div>
-                  </div>
-                </div>
               </div>
 
               </div>
             </div>
+
 
 
 
@@ -96,25 +89,24 @@
               <div *ngFor="let adjective of data.wordlists[ix].adjectives; let m = index">
 
               <div formGroupName={{m}}>
-
+                <div>
                 <mat-form-field>
                   <mat-label>Adjective Word:</mat-label>
                   <input class="form-control" matInput placeholder="word" formControlName="word"
                     required>
                 </mat-form-field>
+                <button type="button" (click)="removeWord(ix, m, 'adjectives')">Remove Adjective</button>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label>Adjective Forms:</mat-label>
+                  <input class="form-control" matInput placeholder="form" formControlName="forms"
+                    required>
+                </mat-form-field>
+              </div>
 
-                <div formGroupName="forms" class ="forms">
-                  <div *ngFor="let form of data.wordlists[ix].adjectives[m].forms; let n = index">
-                    <div formGroupName={{n}}>
-                    <mat-form-field>
-                      <mat-label>Adjective Word Forms:</mat-label>
-                      <input class="form-control" matInput placeholder="word" formControlName="form"
-                        required>
-                    </mat-form-field>
-                    <button type="button" (click)="removeWord(ix, m, 'adjectives')">Remove Adjective</button>
-                  </div>
-                  </div>
-                </div>
+
+
               </div>
 
               </div>
@@ -128,26 +120,22 @@
               <div *ngFor="let verb of data.wordlists[ix].verbs; let m = index">
 
               <div formGroupName={{m}}>
-
+              <div>
                 <mat-form-field>
                   <mat-label>Verb Word:</mat-label>
                   <input class="form-control" matInput placeholder="word" formControlName="word"
                     required>
                 </mat-form-field>
-
-                <div formGroupName="forms" class ="forms">
-                  <div *ngFor="let form of data.wordlists[ix].verbs[m].forms; let n = index">
-                    <div formGroupName={{n}}>
-                    <mat-form-field>
-                      <mat-label>Verb Word Forms:</mat-label>
-                      <input class="form-control" matInput placeholder="word" formControlName="form"
-                        required>
-                    </mat-form-field>
-                    <button type="button" (click)="removeWord(ix, m, 'verbs')">Remove Verb</button>
-                  </div>
-                  </div>
-                </div>
+                <button type="button" (click)="removeWord(ix, m, 'verbs')">Remove Verb</button>
               </div>
+             <div>
+                <mat-form-field>
+                  <mat-label>Verb Forms:</mat-label>
+                  <input class="form-control" matInput placeholder="form" formControlName="forms"
+                    required>
+                </mat-form-field>
+              </div>
+            </div>
 
               </div>
             </div>
@@ -160,25 +148,21 @@
               <div *ngFor="let verb of data.wordlists[ix].misc; let m = index">
 
               <div formGroupName={{m}}>
-
+              <div>
                 <mat-form-field>
                   <mat-label>Misc Word:</mat-label>
                   <input class="form-control" matInput placeholder="word" formControlName="word"
                     required>
                 </mat-form-field>
-
-                <div formGroupName="forms" class ="forms">
-                  <div *ngFor="let form of data.wordlists[ix].misc[m].forms; let n = index">
-                    <div formGroupName={{n}}>
-                    <mat-form-field>
-                      <mat-label>Misc Word Forms:</mat-label>
-                      <input class="form-control" matInput placeholder="word" formControlName="form"
-                        required>
-                    </mat-form-field>
-                    <button type="button" (click)="removeWord(ix, m, 'misc')">Remove Misc</button>
-                  </div>
-                  </div>
-                </div>
+                <button type="button" (click)="removeWord(ix, m, 'misc')">Remove Misc</button>
+              </div>
+              <div>
+                <mat-form-field>
+                  <mat-label>Misc Forms:</mat-label>
+                  <input class="form-control" matInput placeholder="form" formControlName="forms"
+                    required>
+                </mat-form-field>
+              </div>
               </div>
 
               </div>
@@ -205,8 +189,6 @@
           </div>
         </div>
 
-        <button class="add-wordlist-button" type="button" (click)="addWordlist()" value="Add Wordlists">Add Wordlists</button>
-
 
 
   </mat-card-content>
@@ -215,11 +197,37 @@
 
 </form>
 
+<button class="add-wordlist-button" type="button"  (click)="addWordlist(this.wordlistsForm)" value="Add Wordlists">Add Wordlists</button>
+<div class="buttons-div">
 
-<br><button matTooltip="View current Json" (click)="toggleShow()" type="checkbox" data-test="showJsonButton">Preview Json File</button>
-      <div *ngIf='isShown===true'>
+  <button type="submit" (click)="submitForm()"
+    mat-button
+    type="button"
+    color="primary"
+    [disabled]="!wordlistsForm.valid"
+    type="submit"
+    data-test="confirmAddWordlistButton"
+    required>
+    SUBMIT EDITS
+  </button>
 
-<pre class="form-value" style="font-size:15px">{{ wordlistsForm.value | json }}</pre>
+
+  <h5>Field Values</h5>
+
+
+  <button class="contextpack-download-button"
+  type="button"
+  color='primary'
+  [disabled]="!wordlistsForm.valid"
+  (click)='contextpackcard.downloadJson(wordlistsForm.value, wordlistsForm.value.name).click()'
+
+  >Download Json</button>
+
+  <br><button matTooltip="View current Json" (click)="toggleShow()" type="checkbox" data-test="showJsonButton">Preview Json File</button>
+  <div *ngIf='isShown===true'>
+
+  <pre class="form-value" style="font-size:15px">{{ wordlistsForm.value| json }}</pre>
+
 
 </div>
 
