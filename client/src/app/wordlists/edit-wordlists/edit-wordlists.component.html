@@ -1,86 +1,80 @@
 <div fxLayout="row">
 <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
-<form [formGroup]="this.wordlistsForm" (ngSubmit)="submitForm()" class="form">
+<form [formGroup]="wordlistsForm" (ngSubmit)="submitForm()" class="form">
   <mat-card class="edit-wordlists-card">
     <mat-card-title class="edit-wordlist-title">Edit Context Pack Wordlists</mat-card-title>
     <mat-card-content fxLayout="column">
     <mat-form-field>
       <mat-label>Pack ID</mat-label>
-      <input class="form-control" matInput placeholder="id" value = {{this.data._id}} readonly/>
+      <input class="form-control" matInput placeholder="id" [value]="data._id" readonly/>
     </mat-form-field>
-
     <mat-form-field>
       <mat-label>Pack Name</mat-label>
-      <input matInput placeholder="Name" formControlName="name"
-            required>
-      <mat-error *ngFor="let validation of validationMessages.wordlists.name">
-        <mat-error class="error-message" data-test="nameError"
-                  *ngIf="wordlistsForm.get('name').hasError(validation.type) && (wordlistsForm.get('name').dirty || wordlistsForm.get('name').touched)">
-          {{validation.message}}
-        </mat-error>
-      </mat-error>
+      <input matInput placeholder="Name" formControlName="name" value = {{this.data.name}}
+        required>
     </mat-form-field>
-
-
     <mat-form-field>
       <mat-label>Context Pack is: </mat-label>
-      <mat-select required value = {{this.data.enabled}}>
+      <mat-select required formControlName="enabled" value = {{this.data.enabled}} >
         <mat-option value="true">Enabled</mat-option>
         <mat-option value="false">Disabled</mat-option>
       </mat-select>
     </mat-form-field>
+    <mat-form-field>
+      <mat-label>Icon</mat-label>
+      <input class="form-control" matInput placeholder="icon" [value] = "this.data.icon"  readonly/>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Icon</mat-label>
-    <input class="form-control" matInput placeholder="icon" value = {{this.data.icon}}  readonly/>
-  </mat-form-field>
 
+    <div *ngFor="let wordlist of wordlistsForm['controls'].wordlists['controls']; let ix = index">
 
-	<div  formArrayName="wordlist">
-		<div *ngFor="let wordlists of data.wordlists; let ix=index">
-			<div formGroupName="{{ix}}" class="wordlists">
+        <div class = "wordlist" formGroupName="wordlists">
+          <div formGroupName={{ix}}>
+          <button type="button" (click)="deleteWordlist(ix)">Remove This Wordlist</button><br>
+          <h1>Wordlist {{ix+1}}:</h1>
+            <div>
+              <mat-form-field>
+                <mat-label>Wordlist Name</mat-label>
+                <input class="form-control" matInput placeholder="Name" formControlName="name"
+                  required>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Wordlist is: </mat-label>
+                <mat-select required formControlName="enabled" value = {{this.data.enabled}} >
+                <mat-option value="true">Enabled</mat-option>
+                <mat-option value="false">Disabled</mat-option>
+                </mat-select>
+              </mat-form-field>
 
-          <div *ngIf='this.data.wordlists[ix] !== undefined || this.data.wordlists[ix] !== null '>
-            <button type="button" (click)="deleteWordlist(ix)">Remove This Wordlists</button><br>
+              <div *ngFor="let noun of wordlistsForm['controls'].wordlists['controls'].nouns; let m = index">
+                <div class = "wordlist" formGroupName="nouns">
+                  <div formGroupName={{m}}>
+                    <div *ngFor="let noun of wordlistsForm['controls'].wordlists['controls'].nouns.word['control'];
+                     let n = index">
+                      <div class = "wordlist" formGroupName="nouns">
+                        <div formGroupName={{n}}>
+                          <mat-form-field>
+                            <mat-label>Wordlist Name</mat-label>
+                            <input class="form-control" matInput placeholder="word" formControlName="word"
+                              required>
+                          </mat-form-field>
+
+                    </div>
+                    </div>
+                    </div>
+                  </div>
+                  </div>
+              </div>
+            </div>
           </div>
-          <div *ngIf='this.data.wordlists[ix] === undefined || this.data.wordlists[ix] === null '>
-            <button type="button" (click)="addWordlist(ix)">Add Back Wordlists</button><br>
-            <h1>Wordlists {{ix+1}}:</h1>
+        </div>
 
 
 
-        <h1>Wordlists {{ix+1}}:</h1>
-      <div class="flex-row-container">
-        <div>
 
-        <mat-form-field >
-          <mat-label>Wordlists Name</mat-label>
-          <input matInput placeholder="Name" formControlName="name"
-          value = {{this.data.wordlists[ix].name}}   required>
-        </mat-form-field>
-      </div>
-    <div>
-      <mat-form-field>
-        <mat-label>Word list is: </mat-label>
-        <mat-select required value = {{this.data.wordlists[ix].enabled}}>
-          <mat-option value="true">Enabled</mat-option>
-          <mat-option value="false">Disabled</mat-option>
-        </mat-select>
-      </mat-form-field>
-      </div>
-    </div>
 </div>
-</div>
-</div>
-</div>
-
-
-
-
-
-
-
-
 
   </mat-card-content>
   </mat-card>
@@ -92,10 +86,14 @@
 <br><button matTooltip="View current Json" (click)="toggleShow()" type="checkbox" data-test="showJsonButton">Preview Json File</button>
       <div *ngIf='isShown===true'>
 
-      <pre class="form-value" style="font-size:15px">{{ viewWordlistJSON() | json }}</pre>
+<pre class="form-value" style="font-size:15px">{{ wordlistsForm.value | json }}</pre>
 
 </div>
 
 
 </div>
+
+
+
+
 

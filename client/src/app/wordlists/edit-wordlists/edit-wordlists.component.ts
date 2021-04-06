@@ -12,14 +12,15 @@ import { ContextPackService } from 'src/app/contextpacks/contextpack.service';
   styleUrls: ['./edit-wordlists.component.scss']
 })
 export class EditWordlistsComponent implements OnInit {
-  wordlistsForm: FormGroup;
   saveDelete: ContextPack[] = [];
   isShown = false;
   finishPack: ContextPack[] = [];
-
-
-
   data = JSON.parse(localStorage.getItem('data'));
+
+
+  wordlistsForm: FormGroup;
+
+
   contextpack: ContextPack;
   contextPackList: ContextPackListComponent;
   i: ContextPack[] = [];
@@ -44,22 +45,77 @@ export class EditWordlistsComponent implements OnInit {
     this.saveDelete.push(this.data);
     this.finishPack.push(this.data);
 
-
     this.wordlistsForm = this.fb.group({
-      id: '',
-      name: new FormControl(this.data.name, Validators.compose([
-        Validators.required,
-      ])),
-      enabled : new FormControl(this.data.enabled, Validators.compose([
-        Validators.required,
-        Validators.pattern('^(true|false)'),
-      ])),
-      icon: '',
-      wordlist: this.fb.array([])});
+      id: new FormControl(this.data._id, []),
+      icon: new FormControl(this.data.icon, []),
+      name: new FormControl(this.data.name, []),
+      enabled: new FormControl(this.data.enabled.toString(), []),
+      wordlists: this.fb.array(
+        this.data.wordlists.map(
+          x=>this.fb.group({
+            name: new FormControl(x.name, []),
+            enabled: new FormControl(x.enabled, []),
+            nouns: this.fb.array(
+              x.nouns.map(
+                p=>this.fb.group({
+                word: new FormControl(p.word, []),
+                forms: this.fb.array(
+                  p.forms.map(
+                    q => this.fb.group({
+                      forms: new FormControl(q,[])
+                    })
+                  )
+                )
 
-      this.wordlistsForm.valueChanges.subscribe(data => this.validateForm());
+              }))),
+            adjectives:this.fb.array(
+              x.adjectives.map(
+                p=>this.fb.group({
+                word: new FormControl(p.word, []),
+                forms:this.fb.array(
+                  p.forms.map(
+                    q => this.fb.group({
+                      forms: new FormControl(q,[])
+                    })
+                  )
+                ) }))),
+            verbs:this.fb.array(
+              x.verbs.map(
+                p=>this.fb.group({
+                word: new FormControl(p.word, []),
+                forms:this.fb.array(
+                  p.forms.map(
+                    q => this.fb.group({
+                      forms: new FormControl(q,[])
+                    })
+                  )
+                ) }))),
+            miscs:this.fb.array(
+              x.misc.map(
+                p=>this.fb.group({
+                word: new FormControl(p.word, []),
+                forms:this.fb.array(
+                  p.forms.map(
+                    q => this.fb.group({
+                      forms: new FormControl(q,[])
+                    })
+                  )
+                ) })))
+
+          }
+            ),
+
+
+           )
+    )
+      });
+
       console.log(this.wordlistsForm);
+      //this.wordlistsForm.valueChanges.subscribe(data => this.validateForm());
+
   }
+
+
 
 toggleShow() {
   this.isShown = ! this.isShown;
@@ -75,11 +131,8 @@ toggleShow() {
   }
 
 // deletes the wordlist
-deleteWordlist(empIndex: number){
-  const save =  ((this.wordlistsForm.controls.wordlist as FormArray).at(empIndex));
-  ((this.wordlistsForm.controls.wordlist as FormArray).removeAt(empIndex));
-  this.saveDelete[0].wordlists[empIndex] = (save);
-
+  deleteWordlist(empIndex: number){
+    (this.wordlistsForm.controls.wordlists as FormArray).removeAt(empIndex);
   }
 
   addWordlist(empIndex: number){
