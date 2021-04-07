@@ -4,28 +4,28 @@
   <mat-card class="edit-wordlists-card">
     <mat-card-title class="edit-wordlist-title">Edit Context Pack Wordlists</mat-card-title>
     <mat-card-content fxLayout="column">
-      <mat-form-field>
+      <mat-form-field >
 
         	<!-- Context Pack -->
         <mat-label>Pack ID</mat-label>
-        <input class="form-control" matInput placeholder="id" [value]="data._id" readonly/>
+        <input class="form-controlOne"  matInput placeholder="id" [value]="data._id" readonly/>
      </mat-form-field>
-     <mat-form-field>
+     <mat-form-field >
          <mat-label>Pack Name</mat-label>
-         <input matInput placeholder="Name" formControlName="name" value = {{this.data.name}}
-          required>
+         <input class="form-controlTwo"  matInput placeholder="Name" formControlName="name" value = {{this.data.name}}
+          readonly>
       </mat-form-field>
       <mat-form-field >
 
         <mat-label>Context Pack is: </mat-label>
-        <mat-select class = "readonly-block" readonly formControlName="enabled" value = {{this.data.enabled}} >
+        <mat-select class = "form-controlThree" readonly formControlName="enabled" value = {{this.data.enabled}} >
           <mat-option value="true">Enabled</mat-option>
            <mat-option value="false">Disabled</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Icon</mat-label>
-        <input class="form-control" matInput placeholder="icon" [value] = "this.data.icon"  readonly/>
+        <input class="form-controlFour" matInput placeholder="icon" [value] = "this.data.icon"  readonly/>
        </mat-form-field>
 
 
@@ -33,20 +33,20 @@
   <div formArrayName="wordlists">
     <div *ngFor="let wordlists of wordlistsForm['controls'].wordlists['controls']; let ix=index">
       <div formGroupName="{{ix}}" class="wordlists">
-          <button type="button" (click)="deleteWordlist(ix)">Remove This Wordlist</button><br>
+          <button class = "remove-wordlist" type="button" (click)="deleteWordlist(ix)">Remove This Wordlist</button><br>
           <h1>Wordlist {{ix+1}}:</h1>
           <div class = "search">
             <div >
               <mat-form-field>
                 <mat-label>Wordlist Name</mat-label>
-                <input class="form-control" matInput placeholder="Name" formControlName="name"
+                <input class="form-control-wordlist-name" matInput placeholder="Name" formControlName="name"
                   required>
               </mat-form-field>
             </div>
             <div>
               <mat-form-field>
                 <mat-label>Wordlist is: </mat-label>
-                <mat-select required formControlName="enabled" value = {{this.data.enabled}} >
+                <mat-select class = "form-control-wordlist-enabled" required formControlName="enabled" value = {{this.data.enabled}} >
                 <mat-option value="true">Enabled</mat-option>
                 <mat-option value="false">Disabled</mat-option>
                 </mat-select>
@@ -283,18 +283,18 @@
     color="primary"
     [disabled]="!wordlistsForm.valid"
     type="submit"
-    data-test="confirmAddWordlistButton"
+    data-test="confirmUpdatePackButton"
     required
     class= "submitEdits">
-    SUBMIT EDITS
+    UPDATE CONTEXT PACK
   </button>
 
 
   <h5>Field Values</h5>
 
 
-  <button class="contextpack-download-button"
-  class = "submit"
+  <button
+  class = "submitJSON"
   type="button"
   color='primary'
   [disabled]="!wordlistsForm.valid"
