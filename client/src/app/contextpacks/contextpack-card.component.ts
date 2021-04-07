@@ -133,8 +133,5 @@ saveAndRoute(cp: ContextPack){
   this.router.navigate(['edit/wordlist']);
   this.contextPackService.setData(cp);
 }
-saveRouteAndEdit(cp: ContextPack){
-  this.router.navigate(['edit/contextpackwordlist']);
-  this.contextPackService.setData(cp);
-}}
+}
 

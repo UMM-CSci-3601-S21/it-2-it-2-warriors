@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,7 +11,8 @@ import { ContextPackService } from 'src/app/contextpacks/contextpack.service';
 @Component({
   selector: 'app-edit-wordlists',
   templateUrl: './edit-wordlists.component.html',
-  styleUrls: ['./edit-wordlists.component.scss']
+  styleUrls: ['./edit-wordlists.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditWordlistsComponent implements OnInit {
   isShown = false;
@@ -27,7 +28,7 @@ export class EditWordlistsComponent implements OnInit {
 
 
   constructor(private fb: FormBuilder,private route: ActivatedRoute,private contextPackService: ContextPackService,
-    private snackBar: MatSnackBar, private router: Router) { }
+    private snackBar: MatSnackBar, private router: Router,private cdf: ChangeDetectorRef ) { }
 
 
    ngOnInit() {
@@ -46,55 +47,65 @@ export class EditWordlistsComponent implements OnInit {
               x.nouns.map(
                 p=>this.fb.group({
                 word: new FormControl(p.word, []),
-                forms: new FormControl(p.forms, [])
+                forms: this.fb.array((p.forms))
+
 
               }))),
             adjectives:this.fb.array(
               x.adjectives.map(
                 p=>this.fb.group({
                 word: new FormControl(p.word, []),
-                forms: new FormControl(p.forms, [])
+                forms: this.fb.array((p.forms))
               }))),
             verbs:this.fb.array(
               x.verbs.map(
                 p=>this.fb.group({
                 word: new FormControl(p.word, []),
-                forms: new FormControl(p.forms, [])
+                forms: this.fb.array((p.forms))
               }))),
             misc:this.fb.array(
               x.misc.map(
                 p=>this.fb.group({
                 word: new FormControl(p.word, []),
-                forms: new FormControl(p.forms, [])
-                 })))
-
-          }
-            ),
-
-
-           )
-    )
-      });
-
+                forms: this.fb.array((p.forms))
+                 }))) } ),)) });
+      console.log(this.wordlistsForm);
+      this.cdf.detectChanges();
 
       this.wordlistsForm.valueChanges.subscribe(data => this.validateForm());
 
   }
 
   // adds wordlist
-  addWordlist(cp) {
-    this.router.navigate(['edit/wordlist']);
+  addWordlist() {
+    const control = this.wordlistsForm.controls.wordlists as FormArray;
+    control.push(this.initwordlist());
   }
-
-
-
-
   initwordlist() {
     return this.contextPackService.initwordlist(this.fb);
     }
 
+    addForms(ix: number, iy: number, pos: string) {
+      const control = ((this.wordlistsForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray)
+      .at(iy).get('forms') as FormArray;
+      control.push(this.fb.control('',[]));
+    }
+    setWord(ix: number, iy: number, pos: string){
+      return 0;
+    }
+  addPosArray(ix: number, pos: string){
+    const control = (this.wordlistsForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray;
+    control.push(this.initNouns());
+    }
+    initNouns() {
+      return this.contextPackService.initNouns(this.fb);
+   }
 
-toggleShow() {
+    removeForm(ix: number, iy: number, iz: number,  pos: string){
+      (((this.wordlistsForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray)
+      .at(iy).get('forms') as FormArray).removeAt(iz);
+    }
+  toggleShow() {
   this.isShown = ! this.isShown;
   return this.isShown;
   }
