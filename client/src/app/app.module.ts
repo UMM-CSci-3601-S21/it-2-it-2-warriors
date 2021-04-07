@@ -32,7 +32,6 @@ import { ContextPackService } from './contextpacks/contextpack.service';
 import { ContextPackCardComponent } from './contextpacks/contextpack-card.component';
 import { ContextPackInfoComponent } from './contextpacks/contextpack-info.component';
 import { AddContextpacksComponent } from './contextpacks/add-contextpacks.component';
-import { AddWordlistsComponent } from './wordlists/add-wordlists/add-wordlists.component';
 import { EditWordlistsComponent } from './wordlists/edit-wordlists/edit-wordlists.component';
 
 
@@ -63,7 +62,6 @@ const MATERIAL_MODULES: any[] = [
     ContextPackListComponent,
     ContextPackInfoComponent,
     AddContextpacksComponent,
-    AddWordlistsComponent,
     EditWordlistsComponent
   ],
   imports: [
