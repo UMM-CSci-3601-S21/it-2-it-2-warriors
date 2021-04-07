@@ -68,7 +68,7 @@
                   </mat-form-field>
 
 
-                  <button type="button" (click)="removeWord(ix, iy, 'nouns')">Remove Noun</button>
+                  <button class = "removeNoun" type="button" (click)="removeWord(ix, iy, 'nouns')">Remove Noun</button>
                 </div>
                 <div formGroupName="forms" class ="forms">
                 <div *ngFor="let forms of nouns['controls'].forms['controls']; let iz=index">
@@ -86,16 +86,15 @@
               </div>
               <!--add button-->
               <div class="add-button">
-                <button class="add-button" type="button" (click)="addForms(ix, iy, 'nouns')">
+                <button class="add-noun-form-button" type="button" (click)="addForms(ix, iy, 'nouns')">
                   <mat-icon>add</mat-icon>
                 </button>
               </div>
                <!--end add button-->
 
-
               </div>
               </div>
-              <button class="add-noun-button" type="button" (click)="addPosArray(ix,'nouns')" value="Add Noun">Add Noun</button>
+              <button class="add-nouns-button" type="button" (click)="addPosArray(ix,'nouns')" value="Add Noun">Add Noun</button>
 
 
             </div>
@@ -121,7 +120,7 @@
         </mat-form-field>
 
 
-        <button type="button" (click)="removeWord(ix, iy, 'adjectives')">Remove Adjective</button>
+        <button class = "removeAdjective" type="button" (click)="removeWord(ix, iy, 'adjectives')">Remove Adjective</button>
       </div>
       <div formGroupName="forms" class ="forms">
       <div *ngFor="let forms of adjectives['controls'].forms['controls']; let iz=index">
@@ -139,7 +138,7 @@
     </div>
     <!--add button-->
     <div class="add-button">
-      <button class="add-button" type="button" (click)="addForms(ix, iy, 'adjectives')">
+      <button class="add-adjective-form-button" type="button" (click)="addForms(ix, iy, 'adjectives')">
         <mat-icon>add</mat-icon>
       </button>
     </div>
@@ -177,7 +176,7 @@
         </mat-form-field>
 
 
-        <button type="button" (click)="removeWord(ix, iy, 'verbs')">Remove Verb</button>
+        <button class = "removeVerb" type="button" (click)="removeWord(ix, iy, 'verbs')">Remove Verb</button>
       </div>
       <div formGroupName="forms" class ="forms">
       <div *ngFor="let forms of verbs['controls'].forms['controls']; let iz=index">
@@ -195,7 +194,7 @@
     </div>
     <!--add button-->
     <div class="add-button">
-      <button class="add-button" type="button" (click)="addForms(ix, iy, 'verbs')">
+      <button class="add-verb-form-button" type="button" (click)="addForms(ix, iy, 'verbs')">
         <mat-icon>add</mat-icon>
       </button>
     </div>
@@ -232,7 +231,7 @@
         </mat-form-field>
 
 
-        <button type="button" (click)="removeWord(ix, iy, 'misc')">Remove Misc</button>
+        <button class = "removeMisc" type="button" (click)="removeWord(ix, iy, 'misc')">Remove Misc</button>
       </div>
       <div formGroupName="forms" class ="forms">
       <div *ngFor="let forms of misc['controls'].forms['controls']; let iz=index">
@@ -250,7 +249,7 @@
     </div>
     <!--add button-->
     <div class="add-button">
-      <button class="add-button" type="button" (click)="addForms(ix, iy, 'misc')">
+      <button class="add-misc-form-button" type="button" (click)="addForms(ix, iy, 'misc')">
         <mat-icon>add</mat-icon>
       </button>
     </div>
@@ -259,7 +258,7 @@
 
     </div>
     </div>
-    <button class="add-verbs-button" type="button" (click)="addPosArray(ix,'misc')" value="Add Misc">
+    <button class="add-miscs-button" type="button" (click)="addPosArray(ix,'misc')" value="Add Misc">
       Add Misc</button>
 
 

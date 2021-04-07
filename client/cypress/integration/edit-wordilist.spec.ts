@@ -53,7 +53,7 @@ describe('Edit a Context pack', () => {
     cy.get('.form-control-wordlist-name').first().should('exist');
     cy.get('.form-control-wordlist-name').first().should('have.value','farm_animals');
     cy.get('.form-control-wordlist-enabled').first().should('exist');
-    cy.get('.form-control-wordlist-enabled').first().click().first();
+    cy.get('.form-control-wordlist-enabled').first().click();
   });
 
   it('should press show json ', () =>{
@@ -71,6 +71,57 @@ describe('Edit a Context pack', () => {
     cy.get('.buttonroute').should('have.text', 'Add Wordlist').click();
     cy.get('.submitEdits').click();
   });
+
+  it('it should remove and add a noun ', () =>{
+    page2.clickViewInfo(page2.getContextpackCards().first());
+    cy.get('.buttonroute').should('have.text', 'Add Wordlist').click();
+    cy.get('.add-nouns-button').first().click();
+    cy.get('.removeNoun').first().click();
+  });
+
+  it('it should remove and add a adjective ', () =>{
+    page2.clickViewInfo(page2.getContextpackCards().first());
+    cy.get('.buttonroute').should('have.text', 'Add Wordlist').click();
+    cy.get('.add-adjective-button').first().click();
+    cy.get('.removeAdjective').first().click();
+  });
+
+  it('it should remove and add a verb ', () =>{
+    page2.clickViewInfo(page2.getContextpackCards().first());
+    cy.get('.buttonroute').should('have.text', 'Add Wordlist').click();
+    cy.get('.add-verbs-button').first().click();
+    cy.get('.removeVerb').first().click();
+  });
+
+  it('it should remove and add a misc ', () =>{
+    page2.clickViewInfo(page2.getContextpackCards().first());
+    cy.get('.buttonroute').should('have.text', 'Add Wordlist').click();
+    cy.get('.add-miscs-button').first().click();
+    cy.get('.removeMisc').first().click();
+  });
+  it('it should add a verb adjective noun and misc form ', () =>{
+    page2.clickViewInfo(page2.getContextpackCards().first());
+    cy.get('.buttonroute').should('have.text', 'Add Wordlist').click();
+    cy.get('.add-nouns-button').first().click();
+    cy.get('.add-miscs-button').first().click();
+    cy.get('.add-adjective-button').first().click();
+    cy.get('.add-verbs-button').first().click();
+    cy.get('.add-noun-form-button').first().click();
+    cy.get('.add-adjective-form-button').first().click();
+     cy.get('.add-verb-form-button').first().click();
+     cy.get('.add-misc-form-button').first().click();
+  });
+
+  it('it should add a verb adjective noun and misc form ', () =>{
+    page2.clickViewInfo(page2.getContextpackCards().first());
+    cy.get('.buttonroute').should('have.text', 'Add Wordlist').click();
+   
+
+  });
+
+
+
+
 
 
 
