@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, resetFakeAsyncZone, TestBed, waitForAsync } from '@angular/core/testing';
 import { ContextPackCardComponent } from './contextpack-card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
@@ -13,6 +13,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+
 
 
 describe('ContextPackCardComponent', () => {
@@ -119,27 +120,6 @@ describe('ContextPackCardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should list the nouns, verbs, adjectives and misc words when displayWordlist() is called', () => {
-    expect(component.displayWordlists(component.contextpack.wordlists[0])).toContain('you, yoyo, yos, yoted');
-    expect(component.displayWordlists(component.contextpack.wordlists[0])).toContain('green, greener');
-    expect(component.displayWordlists(component.contextpack.wordlists[0])).toContain('ran, running');
-    expect(component.displayWordlists(component.contextpack.wordlists[0])).toContain('langerhans, langerhan');
-    expect(component.displayWordlists(component.contextpack.wordlists[0])).not.toContain('barbie');
-  });
-
-  it('should return the nouns displayAllNouns() is called', () => {
-    expect(component.displayAllWords(component.contextpack, 'nouns')).toContain('you, yoyo, yos, yoted, you, yoyo, yos, yoted');
-  });
-  it('should return the verbs when displayAllVerbs() is called', () => {
-    expect(component.displayAllWords(component.contextpack, 'verbs')).toContain('ran, running, ran, running');
-  });
-  it('should return the adjectives when displayAllAdjectives() is called', () => {
-    expect(component.displayAllWords(component.contextpack, 'adjectives')).toContain('green, greener, green, greener');
-  });
-  it('should return the misc words when displayAllMisc() is called', () => {
-    expect(component.displayAllWords(component.contextpack, 'misc')).toContain('langerhans, langerhan, langerhans, langerhan');
-  });
-
 
   it('should have displayNouns,verbs,adjective,misc return null if undefined', () => {
     expect(component.displayWords(emptyWordlist, 'nouns')).toBeNull();
@@ -153,6 +133,14 @@ describe('ContextPackCardComponent', () => {
     expect(component2.displayAllWords(component2.contextpack, 'verbs')).toBeNull();
     expect(component2.displayAllWords(component2.contextpack, 'adjectives')).toBeNull();
     expect(component2.displayAllWords(component2.contextpack, 'misc')).toBeNull();
+  });
+
+
+  it('it should have display all words return a result', () => {
+    expect(component.displayAllWords(component.contextpack, 'nouns')).toContain('you, yoyo, yos, yoted, you, yoyo, yos, yoted');
+    expect(component.displayAllWords(component.contextpack, 'verbs')).toContain('ran, running, ran, running');
+    expect(component.displayAllWords(component.contextpack, 'adjectives')).toContain('green, greener, green, greener');
+    expect(component.displayAllWords(component.contextpack, 'misc')).toContain('langerhans, langerhan, langerhans, langerhan');
   });
 
   it('should create a download element when given a json', () => {
@@ -176,7 +164,8 @@ describe('ContextPackCardComponent', () => {
   });
 
 
-  it('should submit', () => {
+  it('should submit the context pack', () => {
+
     const response: ContextPack = component.contextpack;
 
 
@@ -185,13 +174,9 @@ describe('ContextPackCardComponent', () => {
 
     expect (routerSpy.navigate).toHaveBeenCalledWith(['/contextpacks/pat_id']);
 
-    expect(component.submit(undefined));
-
-
-
     expect (matsnackbarSpy.open).toHaveBeenCalledWith( 'Happy Pack is Updated ', null, Object({ duration: 2000 }) );
-
   });
+
 
 
   it('should navigate', () => {

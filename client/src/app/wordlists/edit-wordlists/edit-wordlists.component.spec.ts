@@ -1,29 +1,24 @@
-
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule, FormGroup, AbstractControl, FormArray } from '@angular/forms';
+import { AbstractControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-
-
 import { ContextPackService } from 'src/app/contextpacks/contextpack.service';
 import { MockContextPackService } from 'src/testing/contextpack.service.mock';
-import { AddWordlistsComponent } from './add-wordlists.component';
 
-;
+import { EditWordlistsComponent } from './edit-wordlists.component';
 
-describe('AddWordlistComponent', () => {
-  let component: AddWordlistsComponent ;
-  let addWordlistForm: FormGroup;
-  let fixture: ComponentFixture<AddWordlistsComponent>;
-  const routerSpy = {navigate: jasmine.createSpy('navigate')};
-  const matsnackbarSpy = {open: jasmine.createSpy('open')};
+describe('EditWordlistComponent', () => {
+  let component: EditWordlistsComponent ;
+  let editWordlistForm: FormGroup;
+  let fixture: ComponentFixture<EditWordlistsComponent>;
+
 
 
   beforeEach(waitForAsync(() => {
@@ -39,10 +34,8 @@ describe('AddWordlistComponent', () => {
         RouterTestingModule,
         MatCardModule
       ],
-      declarations: [ AddWordlistsComponent ],
-      providers: [{ provide: ContextPackService, useValue: new MockContextPackService() },
-                  {provide: Router, useValue: routerSpy},
-                  {provide: MatSnackBar,useValue: matsnackbarSpy}
+      declarations: [ EditWordlistsComponent ],
+      providers: [{ provide: ContextPackService, useValue: new MockContextPackService()}
                   ]
 
     })
@@ -52,18 +45,18 @@ describe('AddWordlistComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddWordlistsComponent);
+    fixture = TestBed.createComponent(EditWordlistsComponent);
     component = fixture.componentInstance;
     component.ngOnInit();
     fixture.detectChanges();
-    addWordlistForm = component.wordlistsForm;
-    expect(addWordlistForm).toBeDefined();
-    expect(addWordlistForm.controls).toBeDefined();
+    editWordlistForm = component.wordlistsForm;
+    expect(editWordlistForm).toBeDefined();
+    expect(editWordlistForm.controls).toBeDefined();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(addWordlistForm).toBeTruthy();
+    expect(editWordlistForm).toBeTruthy();
   });
 
 
@@ -76,20 +69,21 @@ describe('AddWordlistComponent', () => {
 
 
   });
-  describe('errors', () =>{
-    it('should call errors', () =>{
-      component.nounsErrors();
-      component.wordlistsErrors();
+  describe('Toggle Button', ()=>{
+    it('should toggle the boolean status', ()=>{
+      expect(component.toggleShow()).toBeTruthy();
     });
+
   });
+
   describe('Add wordlist', () =>{
     it('should add a wordlist when prompted', () =>{
       component.addWordlist();
       let formValue = component.wordlistsForm.value;
-      expect(formValue.wordlists.length).toEqual(1);
+      expect(formValue.wordlists.length).toEqual(3);
       component.addWordlist();
       formValue = component.wordlistsForm.value;
-      expect(formValue.wordlists.length).toEqual(2);
+      expect(formValue.wordlists.length).toEqual(4);
     });
   });
   describe('Add nouns', () =>{
@@ -99,11 +93,11 @@ describe('AddWordlistComponent', () => {
       component.addPosArray(0, 'nouns');
       let control = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
       console.log(control.nouns);
-      expect(control.nouns.length).toEqual(1);
+      expect(control.nouns.length).toEqual(2);
       // Add 2 noun arrays, we expect two to be present
       component.addPosArray(0, 'nouns');
       control = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
-      expect(control.nouns.length).toEqual(2);
+      expect(control.nouns.length).toEqual(3);
     });
   });
   describe('Add verbs', () =>{
@@ -112,11 +106,11 @@ describe('AddWordlistComponent', () => {
       component.addWordlist();
       component.addPosArray(0, 'verbs');
       let control = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
-      expect(control.verbs.length).toEqual(1);
+      expect(control.verbs.length).toEqual(2);
       // Add 2 noun arrays, we expect two to be present
       component.addPosArray(0, 'verbs');
       control = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
-      expect(control.verbs.length).toEqual(2);
+      expect(control.verbs.length).toEqual(3);
     });
   });
 
@@ -127,7 +121,7 @@ describe('AddWordlistComponent', () => {
       component.addPosArray(0, 'verbs');
       component.addForms(0, 0, 'verbs');
       const control = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
-      expect(control.verbs[0].forms.length).toEqual(2);
+      expect(control.verbs[0].forms.length).toEqual(3);
     });
   });
 
@@ -140,52 +134,38 @@ describe('AddWordlistComponent', () => {
       component.addForms(0, 0, 'verbs');
       // make sure components were added
       let controls = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
-      expect(controls.verbs[0].forms.length).toEqual(2);
+      expect(controls.verbs[0].forms.length).toEqual(3);
       // remove a form
       component.removeForm(0, 0, 0,'verbs');
       controls = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
-      expect(controls.verbs[0].forms.length).toEqual(1);
+      expect(controls.verbs[0].forms.length).toEqual(2);
       //remove verb word group
-      expect(controls.verbs.length).toEqual(2);
+      expect(controls.verbs.length).toEqual(3);
       component.removeWord(0, 0, 'verbs');
       controls = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
       console.log(controls.verbs[0]);
-      expect(controls.verbs.length).toEqual(1);
+      expect(controls.verbs.length).toEqual(2);
       // remove wordlist
       component.addWordlist();
       controls = component.wordlistsForm.value.wordlists as Array<any>;
-      expect(controls.length).toEqual(2);
-      component.removeWordlist(1);
+      expect(controls.length).toEqual(4);
+      component.deleteWordlist(1);
       controls = component.wordlistsForm.value.wordlists as Array<any>;
-      expect(controls.length).toEqual(1);
+      expect(controls.length).toEqual(3);
     });
 
   });
 
-  describe('Set word feature', ()=>{
-    it('should set the first form to the same word', ()=>{
-      component.addWordlist();
-      component.addPosArray(0, 'verbs');
-      component.addForms(0 ,0 , 'verbs');
 
-      (((component.wordlistsForm.controls.wordlists as FormArray).at(0).get(`verbs`) as FormArray).at(0)
-    .get('forms') as FormArray).at(0).setValue('cow');
-
-      component.setWord(0,0,'verbs');
-      // expect cow to be the first form
-      expect(((component.wordlistsForm.controls.wordlists as FormArray).at(0).get(`verbs`) as FormArray).at(0)
-      .get('word').value).toEqual('cow');
-    });
-  });
 
 
   describe('Submit', ()=>{
     it('It should submit the word lists', ()=>{
-    expect(component.submitForm).toBeTruthy();
-    const response: FormGroup = addWordlistForm;
+    expect(component.submitFormUpdate).toBeTruthy();
+    const response: FormGroup = editWordlistForm;
 
     spyOn(ContextPackService.prototype, 'getContextPacks').and.returnValue(of(response.value));
 
     spyOn(ContextPackService.prototype, 'updateContextPack').and.returnValue(of(response.value));
-    expect(component.submitForm());
+    expect(component.submitFormUpdate());
     });});});

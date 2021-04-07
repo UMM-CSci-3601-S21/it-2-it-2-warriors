@@ -2,7 +2,7 @@
 
 export class ContextpackListPage {
   navigateTo() {
-    return cy.visit('/contextpacks');
+    cy.visit('/contextpacks');
   }
 
   getContextpackCards() {

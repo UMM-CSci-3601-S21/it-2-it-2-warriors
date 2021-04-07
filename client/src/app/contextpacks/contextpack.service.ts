@@ -60,6 +60,7 @@ export class ContextPackService {
     this.data = data;
     localStorage.setItem('name',JSON.stringify(this.data.name));
     const name = this.data.name;
+    localStorage.setItem('data',JSON.stringify(this.data));
     return(name + ' is set in the local storage');
   }
   initwordlist(fb) {
@@ -168,5 +169,10 @@ export class ContextPackService {
           }
         }});
 }
+
+
+
+
+
 }
 

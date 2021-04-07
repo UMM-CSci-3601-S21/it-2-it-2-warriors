@@ -23,17 +23,7 @@ export class ContextPackCardComponent implements OnInit {
   }
 
 
-  displayWordlists(contextpack: Wordlist){
-    let  wordlists: string;
-      wordlists = '';
-        wordlists += 'Word List ' + 'Name: ' + contextpack.name + '\n';
-        wordlists += 'Enabled: ' + contextpack.enabled + '\n';
-        wordlists += 'Nouns: \n' + this.displayWords(contextpack, 'nouns');
-        wordlists += 'Verbs: \n' + this.displayWords(contextpack, 'verbs');
-        wordlists += 'Adjectives: \n' + this.displayWords(contextpack, 'adjectives');
-        wordlists += 'Misc: \n' + this.displayWords(contextpack, 'misc');
-    return wordlists;
-  }
+
 
   displayWords(wordlist: Wordlist, pos: WordRole){
     let words: string[];
@@ -143,6 +133,5 @@ saveAndRoute(cp: ContextPack){
   this.router.navigate(['edit/wordlist']);
   this.contextPackService.setData(cp);
 }
-
 }
 

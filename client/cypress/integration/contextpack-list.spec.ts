@@ -94,13 +94,13 @@ describe('Contextpack list', () => {
     page.clickViewInfo(page.getContextpackCards().first());
 
     cy.get('#button').should('have.text', 'disable');
-    cy.get('.contextpack-card-wordlists').should('contain.text', 'true');
+    cy.get('.enabled').first().should('contain.text', 'enabled');
     page.clickButton();
     cy.get('#button').should('have.text', 'enable');
-    cy.get('.contextpack-card-wordlists').should('contain.text', 'false');
+    cy.get('.enabled').first().should('contain.text', 'disabled');
     page.clickButton();
     cy.get('#button').should('have.text', 'disable');
-    cy.get('.contextpack-card-wordlists').should('contain.text', 'true');
+    cy.get('.enabled').first().should('contain.text', 'enabled');
   });
 
   it('Should click the enable/disable button and see both all and no words', () => {
@@ -118,11 +118,6 @@ describe('Contextpack list', () => {
 
     cy.get('.contextpack-card-name').should('have.text', 'Farm');
 
-    cy.get('.contextpack-card-wordlists').should('contain.text', 'goat, goats, sheep, cat, cats, dog, '
-    + 'dogs, cow, cows, pig, pigs, chicken, chickens, duck, ducks, llama, llamas');
-    cy.get('.contextpack-card-wordlists').should('contain.text', 'moo, moos, mooed, mooing, oink, oinks, '
-    + 'oinked, oinking, cluck, clucks, clucking, clucked, baa, baas, baaed, baaing, meow, meows, meowing, '
-    + 'meowed, bark, barks, barked, barking');
   });
 
   it('Should click view info, select a view words, and see all the words', () => {

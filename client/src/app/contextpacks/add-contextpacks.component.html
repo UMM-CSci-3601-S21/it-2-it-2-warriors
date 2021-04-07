@@ -1,6 +1,6 @@
 <div fxLayout="row">
   <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
-<form [formGroup]="contextPackForm" (ngSubmit)="submitForm()" class="form">
+<form [formGroup]="contextPackForm" (ngSubmit)="submitFormAdded()" class="form">
   <mat-card class="add-contextpack-card">
     <mat-card-title class="add-pack-title">Create A New Context Pack</mat-card-title>
     <mat-card-content fxLayout="column">
@@ -275,7 +275,7 @@
 </form>
     <div class="buttons-div">
 
-      <button type="submit" (click)="submitForm()"
+      <button type="submit" (click)="submitFormAdded()"
         mat-button
         type="button"
         color="primary"
