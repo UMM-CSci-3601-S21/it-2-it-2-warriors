@@ -112,7 +112,9 @@ this.isShown = ! this.isShown;
 return this.isShown;
 }
 
-  submitForm() {
+// submits the new form to the context pack array
+
+  submitFormAdded() {
     this.contextPackService.addContextPack(this.contextPackForm.value).subscribe(newID => {
       this.snackBar.open('Added Pack ' + this.contextPackForm.value.name, null, {
         duration: 2000,

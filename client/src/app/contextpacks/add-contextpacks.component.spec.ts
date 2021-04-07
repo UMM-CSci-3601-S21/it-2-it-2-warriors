@@ -224,20 +224,20 @@ describe('AddContextpacksComponent', () => {
 
   describe('Submit', ()=>{
     it('It should submit the context packs', ()=>{
-    expect(component.submitForm).toBeTruthy();
+    expect(component.submitFormAdded).toBeTruthy();
     let response: FormGroup = addPackForm;
 
 
     ((response).get(`name`).setValue('cow'));
 
     spyOn(ContextPackService.prototype, 'addContextPack').and.returnValue(of(response.value));
-    expect(component.submitForm());
+    expect(component.submitFormAdded());
 
     expect (routerSpy.navigate).toHaveBeenCalledWith(
        [ '/contextpacks/', Object({ name: 'cow', enabled: 'true', icon: '', wordlists: [  ] }) ] );
 
     (response) = undefined;
-    expect(component.submitForm());
+    expect(component.submitFormAdded());
 
 
 
