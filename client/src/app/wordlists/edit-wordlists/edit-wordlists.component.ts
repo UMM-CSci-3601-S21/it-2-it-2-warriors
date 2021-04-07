@@ -83,25 +83,23 @@ export class EditWordlistsComponent implements OnInit {
   }
   initwordlist() {
     return this.contextPackService.initwordlist(this.fb);
-    }
-
-    addForms(ix: number, iy: number, pos: string) {
+  }
+  // adds form
+  addForms(ix: number, iy: number, pos: string) {
       const control = ((this.wordlistsForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray)
       .at(iy).get('forms') as FormArray;
       control.push(this.fb.control('',[]));
     }
-    setWord(ix: number, iy: number, pos: string){
-      return 0;
-    }
+   // adds a new word
   addPosArray(ix: number, pos: string){
     const control = (this.wordlistsForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray;
     control.push(this.initNouns());
     }
-    initNouns() {
+  initNouns() {
       return this.contextPackService.initNouns(this.fb);
    }
-
-    removeForm(ix: number, iy: number, iz: number,  pos: string){
+// removes form
+  removeForm(ix: number, iy: number, iz: number,  pos: string){
       (((this.wordlistsForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray)
       .at(iy).get('forms') as FormArray).removeAt(iz);
     }
@@ -130,13 +128,8 @@ export class EditWordlistsComponent implements OnInit {
     console.log(this.data.wordlists[ix][(`${pos}`)].splice(iy,iy+1));
 
   }
-
-
-
-// submits the form
-
-
-submitForm() {
+// submits the updated form
+submitFormUpdate() {
     this.contextPackService.updateContextPack(this.wordlistsForm.value).subscribe(contextpack => {
     this.snackBar.open(this.wordlistsForm.value.name
       + ' Pack is Updated ' , null, {
