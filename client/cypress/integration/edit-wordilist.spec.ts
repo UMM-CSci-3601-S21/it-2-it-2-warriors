@@ -116,4 +116,26 @@ describe('Edit a Context pack', () => {
     page2.clickViewInfo(page2.getContextpackCards().first());
     cy.get('.buttonroute').should('have.text', 'Add Wordlist').click();
   });
+
+  it('it click the remove form button ', () =>{
+    page2.clickViewInfo(page2.getContextpackCards().first());
+    cy.get('.buttonroute').should('have.text', 'Add Wordlist').click();
+    cy.get('.add-nouns-button').first().click();
+    cy.get('.add-miscs-button').first().click();
+    cy.get('.add-adjective-button').first().click();
+    cy.get('.add-verbs-button').first().click();
+    cy.get('.add-noun-form-button').first().click();
+    cy.get('.add-adjective-form-button').first().click();
+     cy.get('.add-verb-form-button').first().click();
+     cy.get('.add-misc-form-button').first().click();
+    cy.get('.delete-button-misc').first().click();
+    cy.get('.delete-button-adjectives').first().click();
+    cy.get('.delete-button-verbs').first().click();
+    cy.get('.delete-button-nouns').first().click();
+
+  });
+
+
+
+
 });
