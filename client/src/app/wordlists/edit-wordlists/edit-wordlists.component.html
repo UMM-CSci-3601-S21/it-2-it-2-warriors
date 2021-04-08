@@ -79,11 +79,9 @@
                 <mat-label>Noun Form:</mat-label>
                 <input class="form-control" matInput placeholder="form"  formControlName ={{iz}}>
                 </mat-form-field>
-
-                <button class="delete-button-nouns"(click)="removeForm(ix, iy, iz, 'nouns')"  >
+                <button *ngIf="iz !== 0" class="delete-button-nouns"(click)="removeForm(ix, iy, iz, 'nouns')"  >
                   <mat-icon>delete</mat-icon>
                 </button>
-
                 </div>
 
                   <!-- end delete button--->
@@ -135,10 +133,9 @@
       <mat-label>Adjective Form:</mat-label>
       <input class="form-control" matInput placeholder="form"  formControlName ={{iz}}>
       </mat-form-field>
-      <button class="delete-button-adjectives"(click)="removeForm(ix, iy, iz, 'adjectives')"  >
+      <button *ngIf="iz !== 0" class="delete-button-adjectives"(click)="removeForm(ix, iy, iz, 'adjectives')"  >
         <mat-icon>delete</mat-icon>
       </button>
-
       </div>
 
         <!-- end delete button--->
@@ -182,7 +179,7 @@
           <input class="form-control" matInput placeholder="word" formControlName="word"
             required>
         </mat-form-field>
-        
+
 
 
         <button class = "removeVerb" type="button" (click)="removeWord(ix, iy, 'verbs')">Remove Verb</button>
@@ -196,11 +193,10 @@
       <input class="form-control" matInput placeholder="form"  formControlName ={{iz}}>
       </mat-form-field>
 
-      <button class="delete-button-verbs"(click)="removeForm(ix, iy, iz, 'verbs')"  >
+      <button *ngIf="iz !== 0" class="delete-button-verbs"(click)="removeForm(ix, iy, iz, 'verbs')"  >
         <mat-icon>delete</mat-icon>
       </button>
-      </div>
-
+    </div>
         <!-- end delete button--->
 
     </div>
@@ -253,7 +249,8 @@
       <mat-label>Misc Form:</mat-label>
       <input class="form-control" matInput placeholder="form"  formControlName ={{iz}}>
       </mat-form-field>
-      <button class="delete-button-misc"(click)="removeForm(ix, iy, iz, 'misc')"  >
+
+      <button *ngIf="iz !== 0" class="delete-button-misc" (click)="removeForm(ix, iy, iz, 'misc')">
         <mat-icon>delete</mat-icon>
       </button>
 
