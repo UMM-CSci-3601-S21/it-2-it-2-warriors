@@ -74,6 +74,7 @@ const MATERIAL_MODULES: any[] = [
     HttpClientModule,
     MATERIAL_MODULES,
     LayoutModule,
+    MatIconModule,
     MatSnackBarModule
   ],
   providers: [
