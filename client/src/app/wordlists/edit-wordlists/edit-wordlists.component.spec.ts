@@ -33,7 +33,8 @@ describe('EditWordlistComponent', () => {
         MatInputModule,
         BrowserAnimationsModule,
         RouterTestingModule,
-        MatCardModule
+        MatCardModule,
+        MatIconModule
       ],
       declarations: [ EditWordlistsComponent ],
       providers: [{ provide: ContextPackService, useValue: new MockContextPackService()}
