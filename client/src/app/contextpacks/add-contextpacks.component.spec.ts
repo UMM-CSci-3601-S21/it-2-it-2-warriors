@@ -1,4 +1,3 @@
-import { compileComponentFromMetadata, componentFactoryName } from '@angular/compiler';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule, FormGroup, AbstractControl, FormArray, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -11,7 +10,6 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { MockContextPackService } from 'src/testing/contextpack.service.mock';
-
 import { AddContextpacksComponent } from './add-contextpacks.component';
 import { ContextPackService } from './contextpack.service';
 

@@ -115,15 +115,5 @@ describe('Edit a Context pack', () => {
   it('it should add a verb adjective noun and misc form ', () =>{
     page2.clickViewInfo(page2.getContextpackCards().first());
     cy.get('.buttonroute').should('have.text', 'Add Wordlist').click();
-   
-
   });
-
-
-
-
-
-
-
-
 });
