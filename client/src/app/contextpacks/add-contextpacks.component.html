@@ -18,7 +18,7 @@
     </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Enabled</mat-label>
+    <mat-label>Eznabled</mat-label>
     <mat-select required formControlName="enabled">
       <mat-option value="true">True</mat-option>
       <mat-option value="false">False</mat-option>
@@ -56,9 +56,9 @@
           </mat-form-field>
         </label>
         <label>
-          Enabled:
+          enabled:
           <mat-form-field>
-            <mat-label>Enabled</mat-label>
+            <mat-label>enabled</mat-label>
             <mat-select required formControlName="enabled">
               <mat-option value="true">True</mat-option>
               <mat-option value="false">False</mat-option>
@@ -74,7 +74,7 @@
 
 				<!-- Nouns -->
 
-          <div formArrayName="nouns" >
+          <div formArrayName="nouns" id="test" >
            <h3>Nouns:</h3>
             <div *ngFor="let nouns of wordlists['controls'].nouns['controls']; let iy=index">
               <div formGroupName="{{iy}}" class="nouns">
@@ -121,7 +121,7 @@
 				<!-- Nouns End -->
         <!-- Adjectives -->
 
-          <div formArrayName="adjectives" >
+          <div formArrayName="adjectives" id="test" >
            <h3>Adjectives:</h3>
             <div *ngFor="let adj of wordlists['controls'].adjectives['controls']; let iy=index">
               <div formGroupName="{{iy}}" class="adjectives" >
@@ -169,7 +169,7 @@
 				<!-- Adjectives End -->
         <!-- Verbs -->
 
-          <div formArrayName="verbs">
+          <div formArrayName="verbs" id="test">
            <h3>Verbs:</h3>
             <div *ngFor="let verbs of wordlists['controls'].verbs['controls']; let iy=index">
               <div formGroupName="{{iy}}" class="verbs" >
@@ -217,7 +217,7 @@
 
 				<!-- Verbs End -->
         <!-- Misc -->
-          <div formArrayName="misc">
+          <div formArrayName="misc" id="test">
            <h3>Misc:</h3>
             <div *ngFor="let misc of wordlists['controls'].misc['controls']; let iy=index">
               <div formGroupName="{{iy}}" class="misc" >

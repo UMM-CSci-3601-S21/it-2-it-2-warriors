@@ -159,12 +159,10 @@ describe('EditWordlistComponent', () => {
 
 
 
-  describe('Submit', ()=>{
+  describe('Submit the context pack', ()=>{
     it('It should submit the word lists', ()=>{
     expect(component.submitFormUpdate).toBeTruthy();
     const response: FormGroup = editWordlistForm;
-
-    spyOn(ContextPackService.prototype, 'getContextPacks').and.returnValue(of(response.value));
 
     spyOn(ContextPackService.prototype, 'updateContextPack').and.returnValue(of(response.value));
     expect(component.submitFormUpdate());

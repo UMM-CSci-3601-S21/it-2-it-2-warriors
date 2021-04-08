@@ -5,15 +5,9 @@ span.contextpack-card-wordlists{
   width: 70%;
   margin: 5px;
 }
-.mat-card{
-
-}
-
-
 
 span.contextpack-card-nouns{
   display: inline-block;
-
   border-radius: 5px;
   padding: 10px;
   margin: 5px;
@@ -47,7 +41,7 @@ span.contextpack-card-adjectives{
 
 span.contextpack-card-verbs{
   display: inline-block;
-  border-radius: 5px;
+  border-radius: px;
   padding: 10px;
   width: 70%;
   margin: 5px;
@@ -71,7 +65,7 @@ span.contextpack-card-verbs{
   text-align: left;
 
   border: 2px solid rgb(136, 6, 6);
-  background-color: rgb(255, 130, 14);
+  background-color: rgba(211, 127, 127, 0.329);
   padding: 5px;
   margin: 10px;
   border-radius: 10px;
@@ -80,25 +74,23 @@ span.contextpack-card-verbs{
 
   text-align: left;
   border: 2px solid rgb(11, 65, 31);
-  background-color: rgb(123, 206, 129);
+  background-color: rgba(123, 206, 129, 0.192);
   padding: 5px;
   margin: 10px;
   border-radius: 10px;
 }
 .box-three{
-
   text-align: left;
   border: 2px solid rgb(25, 58, 71);
-  background-color: rgb(98, 144, 170);
+  background-color: rgba(98, 144, 170, 0.15);
   padding: 5px;
   margin: 10px;
   border-radius: 10px;
 }
 .box-four{
-
   text-align: left;
-  border: 2px solid rgb(68, 9, 9);
-  background-color: rgb(255, 118, 116);
+  border: 2px solid rgb(219, 111, 49);
+  background-color: rgba(238, 166, 118, 0.192);
   padding: 5px;
   margin: 10px;
   border-radius: 10px;
@@ -134,14 +126,17 @@ span.contextpack-card-verbs{
   padding: 5px;
   margin: 10px;
 }
+
 .viewbutton{
-  border: 2px solid rgb(0, 255, 13);
-  background-color: rgb(140, 235, 163);
+  border: 2px solid rgb(19, 202, 178);
+  background-color: rgba(140, 235, 235, 0.335);
 }
 
+
+
 .viewbutton:hover{
-  border: 2px solid rgb(253, 6, 6);
-  background: rgb(247, 108, 103);
+  border: 2px solid rgb(19, 202, 178);
+  background: rgba(59, 62, 243, 0.76);
 }
 
 .buttonroute{
@@ -153,6 +148,16 @@ span.contextpack-card-verbs{
   border: 2px solid rgb(253, 6, 6);
   background: rgb(247, 108, 103);
 }
+
+#button{
+  display: inline-table;
+  z-index: 1;
+  font-family: Arial, sans-serif;
+  padding: 2px;
+  border-radius: 5px;
+  margin: 5px;
+}
+
 
 
 

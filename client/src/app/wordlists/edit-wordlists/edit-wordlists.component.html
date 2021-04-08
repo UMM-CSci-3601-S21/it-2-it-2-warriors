@@ -30,6 +30,7 @@
 
 
 	<!-- Wordlists -->
+  <div class="test">
   <div formArrayName="wordlists">
     <div *ngFor="let wordlists of wordlistsForm['controls'].wordlists['controls']; let ix=index">
       <div formGroupName="{{ix}}" class="wordlists">
@@ -55,7 +56,7 @@
           </div>
 		  <!-- Nouns -->
 
-            <div formGroupName="nouns" class ="nouns">
+            <div formGroupName="nouns" class ="nouns" id="word-box">
               <h1>Nouns</h1>
                 <div *ngFor="let nouns of wordlists['controls'].nouns['controls']; let iy=index">
 
@@ -107,7 +108,7 @@
 
   <!-- Adjective -->
 
-  <div formGroupName="adjectives" class ="adjectives">
+  <div formGroupName="adjectives" class ="adjectives" id="word-box">
     <h1>Adjectives</h1>
       <div *ngFor="let adjectives of wordlists['controls'].adjectives['controls']; let iy=index">
 
@@ -163,7 +164,7 @@
 
   <!-- Verb -->
 
-  <div formGroupName="verbs" class ="verbs">
+  <div formGroupName="verbs" class ="verbs" id="word-box">
     <h1>Verb</h1>
       <div *ngFor="let verbs of wordlists['controls'].verbs['controls']; let iy=index">
 
@@ -218,7 +219,7 @@
 
   <!-- Misc -->
 
-  <div formGroupName="misc" class ="misc">
+  <div formGroupName="misc" class ="misc" id="word-box">
     <h1>Misc</h1>
       <div *ngFor="let misc of wordlists['controls'].misc['controls']; let iy=index">
 
@@ -260,14 +261,12 @@
     </div>
     <button class="add-miscs-button" type="button" (click)="addPosArray(ix,'misc')" value="Add Misc">
       Add Misc</button>
-
-
   </div>
 
 <!-- Misc End -->
 </div>
 </div>
-      </div>
+      </div></div>
   </mat-card-content>
   </mat-card>
 
@@ -276,10 +275,9 @@
 <button class="add-wordlist-button" type="button"  (click)="addWordlist()" value="Add Wordlists">Add Wordlists</button>
 <div class="buttons-div">
 
-  <button type="submit" (click)="submitFormUpdate()"
-    mat-button
-    type="button"
-    color="primary"
+  <button type="button" (click)="submitFormUpdate()"
+
+
     [disabled]="!wordlistsForm.valid"
     type="submit"
     data-test="confirmUpdatePackButton"
@@ -306,8 +304,8 @@
 
   <pre class="form-value" style="font-size:15px">{{ wordlistsForm.value| json }}</pre>
 
-
 </div>
+
 
 
 </div>
