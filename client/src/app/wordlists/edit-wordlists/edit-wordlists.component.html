@@ -64,7 +64,7 @@
                   <div>
                   <mat-form-field>
                     <mat-label>Noun Word:</mat-label>
-                    <input class="form-control" matInput placeholder="word" formControlName="word"
+                    <input  (keyup)="updateForm(nouns)"  class="form-control" matInput placeholder="word" formControlName="word"
                       required>
                   </mat-form-field>
 
@@ -75,8 +75,8 @@
                 <div *ngFor="let forms of nouns['controls'].forms['controls']; let iz=index">
 
 
-                <mat-form-field>
-                <mat-label>Noun Form:</mat-label>
+                <mat-form-field *ngIf="iz !== 0">
+                <mat-label >Noun Form:</mat-label>
                 <input class="form-control" matInput placeholder="form"  formControlName ={{iz}}>
                 </mat-form-field>
                 <button *ngIf="iz !== 0" class="delete-button-nouns"(click)="removeForm(ix, iy, iz, 'nouns')"  >
@@ -118,7 +118,7 @@
         <div>
         <mat-form-field>
           <mat-label>Adjective Word:</mat-label>
-          <input class="form-control" matInput placeholder="word" formControlName="word"
+          <input  (keyup)="updateForm(adjectives)"  class="form-control" matInput placeholder="word" formControlName="word"
             required>
         </mat-form-field>
 
@@ -129,7 +129,7 @@
       <div *ngFor="let forms of adjectives['controls'].forms['controls']; let iz=index">
 
 
-      <mat-form-field>
+      <mat-form-field *ngIf="iz !== 0">
       <mat-label>Adjective Form:</mat-label>
       <input class="form-control" matInput placeholder="form"  formControlName ={{iz}}>
       </mat-form-field>
@@ -176,7 +176,7 @@
         <div>
         <mat-form-field>
           <mat-label>Verb Word:</mat-label>
-          <input class="form-control" matInput placeholder="word" formControlName="word"
+          <input  (keyup)="updateForm(verbs)"  class="form-control" matInput placeholder="word" formControlName="word"
             required>
         </mat-form-field>
 
@@ -188,7 +188,7 @@
       <div *ngFor="let forms of verbs['controls'].forms['controls']; let iz=index">
 
 
-      <mat-form-field>
+      <mat-form-field *ngIf="iz !== 0">
       <mat-label>Verb Form:</mat-label>
       <input class="form-control" matInput placeholder="form"  formControlName ={{iz}}>
       </mat-form-field>
@@ -234,20 +234,21 @@
         <div>
         <mat-form-field>
           <mat-label>Misc Word:</mat-label>
-          <input class="form-control" matInput placeholder="word" formControlName="word"
+          <input (keyup)="updateForm(misc)" class="form-control" matInput placeholder="word" formControlName="word"
             required>
         </mat-form-field>
 
 
-        <button class = "removeMisc" type="button" (click)="removeWord(ix, iy, 'misc')">Remove Misc</button>
+        <button class = "removeMisc" type="button"  (click)="removeWord(ix, iy, 'misc')">Remove Misc</button>
       </div>
       <div formGroupName="forms" class ="forms">
       <div *ngFor="let forms of misc['controls'].forms['controls']; let iz=index">
 
 
-      <mat-form-field>
+      <mat-form-field *ngIf="iz !== 0" >
+        
       <mat-label>Misc Form:</mat-label>
-      <input class="form-control" matInput placeholder="form"  formControlName ={{iz}}>
+      <input class="form-control" matInput placeholder="form" formControlName ={{iz}}>
       </mat-form-field>
 
       <button *ngIf="iz !== 0" class="delete-button-misc" (click)="removeForm(ix, iy, iz, 'misc')">
