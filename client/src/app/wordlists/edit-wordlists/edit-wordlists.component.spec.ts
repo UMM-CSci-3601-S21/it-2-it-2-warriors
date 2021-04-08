@@ -11,6 +11,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { ContextPackService } from 'src/app/contextpacks/contextpack.service';
 import { MockContextPackService } from 'src/testing/contextpack.service.mock';
+import { MatIconModule } from '@angular/material/icon';
 
 import { EditWordlistsComponent } from './edit-wordlists.component';
 
