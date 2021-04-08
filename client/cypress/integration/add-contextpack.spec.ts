@@ -32,7 +32,7 @@ describe('Add a Context pack', () => {
       [...els].forEach(el => cy.wrap(el).type('Hello World'));
     });
     page.addPackButton().should('be.disabled');
-    page.selectMatSelectValue( page.getFormField('enabled'), 'true'  );
+    page.selectMatSelectValue( page.getFormField('Enabled'), 'true'  );
   });
   it('Should show error messages for invalid inputs', () => {
     // Before doing anything there shouldn't be an error
