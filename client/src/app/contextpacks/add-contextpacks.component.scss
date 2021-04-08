@@ -49,28 +49,91 @@ button:disabled {
   cursor: auto;
 }
 
-.misc, .verbs, .nouns, .adjectives {
-  border-radius: 5px;
-  padding: 10px;
-  width: 400px;
-  margin: 5px;
+.misc {
+  text-align: left;
+  border: 2px solid rgb(219, 111, 49);
+  background-color: rgba(238, 166, 118, 0.192);
+  padding: 5px;
+  margin: 10px;
+  width: 20%;
+  border-radius: 10px;
+  display: inline-block;
+  width: auto;
+  vertical-align: top;
+  min-width: 10%;
+  min-height: 200px;
+
+}
+
+.verbs {
+  text-align: left;
+  border: 2px solid rgb(25, 58, 71);
+  background-color: rgba(98, 144, 170, 0.15);
+  padding: 5px;
+  margin: 10px;
+  border-radius: 10px;
+  width: auto;
+  display: inline-block;
+  vertical-align: top;
+  min-width: 10%;
+  min-height: 200px;
+
+}
+
+.nouns {
+  text-align: left;
+  border: 2px solid rgb(136, 6, 6);
+  background-color: rgba(211, 127, 127, 0.329);
+  padding: 5px;
+  margin: 10px;
+  border-radius: 10px;
+  width: 20%;
+  display: inline-block;
+  width: auto;
+  vertical-align: top;
+  min-width: 10%;
+  min-height: 200px;
+}
+
+.adjectives {
+  text-align: left;
+  border: 2px solid rgb(11, 65, 31);
+  background-color: rgba(123, 206, 129, 0.192);
+  padding: 5px;
+  margin: 10px;
+  border-radius: 10px;
+  width: auto;
+  vertical-align: top;
+  display: inline-block;
+  min-width: 10%;
+  min-height: 200px;
 }
 .wordlists{
-  border: 4px solid #3baada;
+  border: 3px solid #01596e;
   border-radius: 5px;
   padding: 10px;
-  width: 60%;
+  width: 80%;
   margin: 5px;
-
+  margin-bottom: 20px;
+  border-radius: 10px;
 }
 .mat-card-title{
   color:#01596e;
 }
 
+#test {
+  display: inline-block;
+  padding: 10px;
+  margin-left: 4px;
+  margin-right: 4px;
+  border: 2px solid rgb(241, 244, 255);
+  vertical-align: top;
+}
 
 h3{
   font-style:oblique;
   color:#01596e;
+  padding: 10px;
 }
 
 .sidenav-list a{
