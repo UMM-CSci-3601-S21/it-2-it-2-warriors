@@ -159,8 +159,8 @@ describe('ContextPackCardComponent', () => {
       textContent: 'disable'
     };
     spyOn(component,'submit');
-    expect(component.setEnableOrDisable(element,component.contextpack.wordlists[0],component.contextpack)).toEqual('false');
     expect(component.setEnableOrDisable(element,component.contextpack.wordlists[0],component.contextpack)).toEqual('true');
+    expect(component.setEnableOrDisable(element,component.contextpack.wordlists[0],component.contextpack)).toEqual('false');
   });
 
 
