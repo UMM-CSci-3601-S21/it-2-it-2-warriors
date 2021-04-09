@@ -172,12 +172,12 @@ describe('EditWordlistComponent', () => {
   describe('Update Form Function Should Work', ()=>{
       it('It should call the update form', ()=>{
       component.addWordlist();
-      let controls = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
+      const controls = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
       controls.verbs[0].word = 'h';
       controls.verbs[0].forms[0] = 'h';
-      let number = (controls.verbs[0] as FormArray);
+      const num = (controls.verbs[0] as FormArray);
       spyOn(component,'updateForm').and.callFake(MockContextPackService.prototype.updateForm);
-      component.updateForm(number);
+      component.updateForm(num);
       expect(component.updateForm).toHaveBeenCalled();
       });});
 

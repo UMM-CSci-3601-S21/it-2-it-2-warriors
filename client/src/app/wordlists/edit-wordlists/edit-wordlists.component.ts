@@ -98,9 +98,9 @@ export class EditWordlistsComponent implements OnInit {
 
 
   updateForm(pos){
-     const string = ((pos.controls.word as FormArray));
-     const replace = ((pos.controls.forms as FormArray)).at(0);
-     replace.setValue(string.value);
+     const str = (pos.controls.word as FormArray);
+     const replace = (pos.controls.forms as FormArray).at(0);
+     replace.setValue(str.value);
    }
 // removes form
   removeForm(ix: number, iy: number, iz: number,  pos: string){
