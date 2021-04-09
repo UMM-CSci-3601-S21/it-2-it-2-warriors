@@ -24,14 +24,16 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 
-import { UserListComponent } from './users/user-list.component';
 import { HomeComponent } from './home/home.component';
-import { UserService } from './users/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
-import { UserCardComponent } from './users/user-card.component';
-import { UserProfileComponent } from './users/user-profile.component';
-import { AddUserComponent } from './users/add-user.component';
+import { ContextPackListComponent } from './contextpacks/contextpack-list.component';
+import { ContextPackService } from './contextpacks/contextpack.service';
+import { ContextPackCardComponent } from './contextpacks/contextpack-card.component';
+import { ContextPackInfoComponent } from './contextpacks/contextpack-info.component';
+import { AddContextpacksComponent } from './contextpacks/add-contextpacks.component';
+import { EditWordlistsComponent } from './wordlists/edit-wordlists/edit-wordlists.component';
+
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -56,10 +58,11 @@ const MATERIAL_MODULES: any[] = [
   declarations: [
     AppComponent,
     HomeComponent,
-    UserListComponent,
-    UserCardComponent,
-    UserProfileComponent,
-    AddUserComponent,
+    ContextPackCardComponent,
+    ContextPackListComponent,
+    ContextPackInfoComponent,
+    AddContextpacksComponent,
+    EditWordlistsComponent
   ],
   imports: [
     BrowserModule,
@@ -71,9 +74,11 @@ const MATERIAL_MODULES: any[] = [
     HttpClientModule,
     MATERIAL_MODULES,
     LayoutModule,
+    MatIconModule,
+    MatSnackBarModule
   ],
   providers: [
-    UserService
+    ContextPackService
   ],
   bootstrap: [AppComponent]
 })

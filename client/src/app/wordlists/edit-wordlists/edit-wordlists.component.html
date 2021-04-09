@@ -1,0 +1,323 @@
+<div fxLayout="row">
+<div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
+<form [formGroup]="wordlistsForm" class="form">
+  <mat-card class="edit-wordlists-card">
+    <mat-card-title class="edit-wordlist-title">Edit Context Pack Wordlists</mat-card-title>
+    <mat-card-content fxLayout="column">
+      <mat-form-field >
+
+        	<!-- Context Pack -->
+        <mat-label>Pack ID</mat-label>
+        <input class="form-controlOne"  matInput placeholder="id" [value]="data._id" readonly/>
+     </mat-form-field>
+     <mat-form-field >
+         <mat-label>Pack Name</mat-label>
+         <input class="form-controlTwo"  matInput placeholder="Name" formControlName="name" value = {{this.data.name}}
+          readonly>
+      </mat-form-field>
+      <mat-form-field >
+
+        <mat-label>Context Pack is: </mat-label>
+        <mat-select class = "form-controlThree" readonly formControlName="enabled" value = {{this.data.enabled}} >
+          <mat-option value="true">Enabled</mat-option>
+           <mat-option value="false">Disabled</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Icon</mat-label>
+        <input class="form-controlFour" matInput placeholder="icon" [value] = "this.data.icon"  readonly/>
+       </mat-form-field>
+
+
+	<!-- Wordlists -->
+  <div class="test">
+  <div formArrayName="wordlists">
+    <div *ngFor="let wordlists of wordlistsForm['controls'].wordlists['controls']; let ix=index">
+      <div formGroupName="{{ix}}" class="wordlists">
+          <button class = "remove-wordlist" type="button" (click)="deleteWordlist(ix)">Remove This Wordlist</button><br>
+          <h1>Wordlist {{ix+1}}:</h1>
+          <div class = "search">
+            <div >
+              <mat-form-field>
+                <mat-label>Wordlist Name</mat-label>
+                <input class="form-control-wordlist-name" matInput placeholder="Name" formControlName="name"
+                  required>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <mat-label>Wordlist is: </mat-label>
+                <mat-select class = "form-control-wordlist-enabled" required formControlName="enabled" value = {{this.data.enabled}} >
+                <mat-option value="true">Enabled</mat-option>
+                <mat-option value="false">Disabled</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+		  <!-- Nouns -->
+
+            <div formGroupName="nouns" class ="nouns" id="word-box">
+              <h1>Nouns</h1>
+                <div *ngFor="let nouns of wordlists['controls'].nouns['controls']; let iy=index">
+
+                <div formGroupName={{iy}}>
+                  <div>
+                  <mat-form-field>
+                    <mat-label>Noun Word:</mat-label>
+                    <input  (keyup)="updateForm(nouns)"  class="form-control" matInput placeholder="word" formControlName="word"
+                      required>
+                  </mat-form-field>
+
+
+                  <button class = "removeNoun" type="button" (click)="removeWord(ix, iy, 'nouns')">Remove Noun</button>
+                </div>
+                <div formGroupName="forms" class ="forms">
+                <div *ngFor="let forms of nouns['controls'].forms['controls']; let iz=index">
+
+
+                <mat-form-field *ngIf="iz !== 0">
+                <mat-label >Noun Form:</mat-label>
+                <input class="form-control" matInput placeholder="form"  formControlName ={{iz}}>
+                </mat-form-field>
+                <button *ngIf="iz !== 0" class="delete-button-nouns"(click)="removeForm(ix, iy, iz, 'nouns')"  >
+                  <mat-icon>delete</mat-icon>
+                </button>
+                </div>
+
+                  <!-- end delete button--->
+
+              </div>
+              <!--add button-->
+              <div class="add-button">
+                <button class="add-noun-form-button" type="button" (click)="addForms(ix, iy, 'nouns')">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+               <!--end add button-->
+
+              </div>
+              </div>
+              <button class="add-nouns-button" type="button" (click)="addPosArray(ix,'nouns')" value="Add Noun">Add Noun</button>
+
+
+            </div>
+
+
+
+
+				<!-- Nouns End -->
+
+
+  <!-- Adjective -->
+
+  <div formGroupName="adjectives" class ="adjectives" id="word-box">
+    <h1>Adjectives</h1>
+      <div *ngFor="let adjectives of wordlists['controls'].adjectives['controls']; let iy=index">
+
+      <div formGroupName={{iy}}>
+        <div>
+        <mat-form-field>
+          <mat-label>Adjective Word:</mat-label>
+          <input  (keyup)="updateForm(adjectives)"  class="form-control" matInput placeholder="word" formControlName="word"
+            required>
+        </mat-form-field>
+
+
+        <button class = "removeAdjective" type="button" (click)="removeWord(ix, iy, 'adjectives')">Remove Adjective</button>
+      </div>
+      <div formGroupName="forms" class ="forms">
+      <div *ngFor="let forms of adjectives['controls'].forms['controls']; let iz=index">
+
+
+      <mat-form-field *ngIf="iz !== 0">
+      <mat-label>Adjective Form:</mat-label>
+      <input class="form-control" matInput placeholder="form"  formControlName ={{iz}}>
+      </mat-form-field>
+      <button *ngIf="iz !== 0" class="delete-button-adjectives"(click)="removeForm(ix, iy, iz, 'adjectives')"  >
+        <mat-icon>delete</mat-icon>
+      </button>
+      </div>
+
+        <!-- end delete button--->
+
+    </div>
+    <!--add button-->
+    <div class="add-button">
+      <button class="add-adjective-form-button" type="button" (click)="addForms(ix, iy, 'adjectives')">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+     <!--end add button-->
+
+
+    </div>
+    </div>
+    <button class="add-adjective-button" type="button" (click)="addPosArray(ix,'adjectives')" value="Add Adjective">
+      Add Adjective</button>
+
+
+  </div>
+
+
+
+
+<!-- Adjective End -->
+
+
+
+
+  <!-- Verb -->
+
+  <div formGroupName="verbs" class ="verbs" id="word-box">
+    <h1>Verb</h1>
+      <div *ngFor="let verbs of wordlists['controls'].verbs['controls']; let iy=index">
+
+      <div formGroupName={{iy}}>
+        <div>
+        <mat-form-field>
+          <mat-label>Verb Word:</mat-label>
+          <input  (keyup)="updateForm(verbs)"  class="form-control" matInput placeholder="word" formControlName="word"
+            required>
+        </mat-form-field>
+
+
+
+        <button class = "removeVerb" type="button" (click)="removeWord(ix, iy, 'verbs')">Remove Verb</button>
+      </div>
+      <div formGroupName="forms" class ="forms">
+      <div *ngFor="let forms of verbs['controls'].forms['controls']; let iz=index">
+
+
+      <mat-form-field *ngIf="iz !== 0">
+      <mat-label>Verb Form:</mat-label>
+      <input class="form-control" matInput placeholder="form"  formControlName ={{iz}}>
+      </mat-form-field>
+
+      <button *ngIf="iz !== 0" class="delete-button-verbs"(click)="removeForm(ix, iy, iz, 'verbs')"  >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+        <!-- end delete button--->
+
+    </div>
+    <!--add button-->
+    <div class="add-button">
+      <button class="add-verb-form-button" type="button" (click)="addForms(ix, iy, 'verbs')">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+     <!--end add button-->
+
+
+    </div>
+    </div>
+    <button class="add-verbs-button" type="button" (click)="addPosArray(ix,'verbs')" value="Add Verbs">
+      Add Verb</button>
+
+
+  </div>
+
+
+
+
+<!-- Verb End -->
+
+
+
+  <!-- Misc -->
+
+  <div formGroupName="misc" class ="misc" id="word-box">
+    <h1>Misc</h1>
+      <div *ngFor="let misc of wordlists['controls'].misc['controls']; let iy=index">
+
+      <div formGroupName={{iy}}>
+        <div>
+        <mat-form-field>
+          <mat-label>Misc Word:</mat-label>
+          <input (keyup)="updateForm(misc)" class="form-control" matInput placeholder="word" formControlName="word"
+            required>
+        </mat-form-field>
+
+
+        <button class = "removeMisc" type="button"  (click)="removeWord(ix, iy, 'misc')">Remove Misc</button>
+      </div>
+      <div formGroupName="forms" class ="forms">
+      <div *ngFor="let forms of misc['controls'].forms['controls']; let iz=index">
+
+
+      <mat-form-field *ngIf="iz !== 0" >
+        
+      <mat-label>Misc Form:</mat-label>
+      <input class="form-control" matInput placeholder="form" formControlName ={{iz}}>
+      </mat-form-field>
+
+      <button *ngIf="iz !== 0" class="delete-button-misc" (click)="removeForm(ix, iy, iz, 'misc')">
+        <mat-icon>delete</mat-icon>
+      </button>
+
+      </div>
+
+        <!-- end delete button--->
+
+    </div>
+    <!--add button-->
+    <div class="add-button">
+      <button class="add-misc-form-button" type="button" (click)="addForms(ix, iy, 'misc')">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+     <!--end add button-->
+
+
+    </div>
+    </div>
+    <button class="add-miscs-button" type="button" (click)="addPosArray(ix,'misc')" value="Add Misc">
+      Add Misc</button>
+  </div>
+
+<!-- Misc End -->
+</div>
+</div>
+      </div></div>
+  </mat-card-content>
+  </mat-card>
+
+</form>
+
+<button class="add-wordlist-button" type="button"  (click)="addWordlist()" value="Add Wordlists">Add Wordlists</button>
+<div class="buttons-div">
+
+  <button type="button" (click)="submitFormUpdate()"
+
+
+    [disabled]="!wordlistsForm.valid"
+    type="submit"
+    data-test="confirmUpdatePackButton"
+    required
+    class= "submitEdits">
+    UPDATE CONTEXT PACK
+  </button>
+
+
+  <h5>Field Values</h5>
+
+
+  <button
+  class = "submitJSON"
+  type="button"
+  color='primary'
+  [disabled]="!wordlistsForm.valid"
+  (click)='contextpackcard.downloadJson(wordlistsForm.value, wordlistsForm.value.name).click()'
+
+  >Download Json</button>
+
+  <br><button matTooltip="View current Json" class = "submit" (click)="toggleShow()" type="checkbox" data-test="showJsonButton">Preview Json File</button>
+  <div *ngIf='isShown===true'>
+
+  <pre class="form-value" style="font-size:15px">{{ wordlistsForm.value| json }}</pre>
+
+</div>
+
+
+
+</div>

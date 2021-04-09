@@ -10,12 +10,11 @@ import com.mongodb.client.MongoDatabase;
 
 import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
-
-import umm3601.user.UserController;
+import umm3601.contextpack.ContextPackController;
 
 public class Server {
 
-  static String appName = "CSCI 3601 Iteration Template";
+  static String appName = "Word River";
 
   public static void main(String[] args) {
 
@@ -34,8 +33,8 @@ public class Server {
     // Get the database
     MongoDatabase database = mongoClient.getDatabase(databaseName);
 
-    // Initialize dependencies
-    UserController userController = new UserController(database);
+
+    ContextPackController contextPackController = new ContextPackController(database);
 
     Javalin server = Javalin.create(config -> {
       config.registerPlugin(new RouteOverviewPlugin("/api"));
@@ -57,18 +56,16 @@ public class Server {
 
     server.start(4567);
 
-    // List users, filtered using query parameters
-    server.get("/api/users", userController::getUsers);
 
-    // Get the specified user
-    server.get("/api/users/:id", userController::getUser);
+    server.get("/api/contextpacks", contextPackController::getContextPacks);
 
-    // Delete the specified user
-    server.delete("/api/users/:id", userController::deleteUser);
 
-    // Add new user with the user info being in the JSON body
-    // of the HTTP request
-    server.post("/api/users", userController::addNewUser);
+    server.get("/api/contextpacks/:id", contextPackController::getContextPack);
+
+
+    server.post("/api/contextpacks", contextPackController::addNewContextPack);
+
+    server.put("/api/contextpacks", contextPackController::updateContextPack);
 
     server.exception(Exception.class, (e, ctx) -> {
       ctx.status(500);
