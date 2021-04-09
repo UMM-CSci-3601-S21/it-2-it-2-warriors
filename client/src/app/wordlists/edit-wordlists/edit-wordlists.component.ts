@@ -95,6 +95,13 @@ export class EditWordlistsComponent implements OnInit {
   initNouns() {
       return this.contextPackService.initNouns(this.fb);
    }
+
+
+  updateForm(pos){
+     const str = (pos.controls.word as FormArray);
+     const replace = (pos.controls.forms as FormArray).at(0);
+     replace.setValue(str.value);
+   }
 // removes form
   removeForm(ix: number, iy: number, iz: number,  pos: string){
       (((this.wordlistsForm.controls.wordlists as FormArray).at(ix).get(`${pos}`) as FormArray)

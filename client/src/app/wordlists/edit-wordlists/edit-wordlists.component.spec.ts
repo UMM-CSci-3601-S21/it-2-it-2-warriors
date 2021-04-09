@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { AbstractControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -168,4 +168,17 @@ describe('EditWordlistComponent', () => {
 
     spyOn(ContextPackService.prototype, 'updateContextPack').and.returnValue(of(response.value));
     expect(component.submitFormUpdate());
-    });});});
+    });});
+  describe('Update Form Function Should Work', ()=>{
+      it('It should call the update form', ()=>{
+      component.addWordlist();
+      const controls = ((component.wordlistsForm.value.wordlists as Array<any>)[0]);
+      controls.verbs[0].word = 'h';
+      controls.verbs[0].forms[0] = 'h';
+      const num = (controls.verbs[0] as FormArray);
+      spyOn(component,'updateForm').and.callFake(MockContextPackService.prototype.updateForm);
+      component.updateForm(num);
+      expect(component.updateForm).toHaveBeenCalled();
+      });});
+
+  });

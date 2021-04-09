@@ -88,4 +88,11 @@ export class MockContextPackService extends ContextPackService  {
     }
   }
 
+    updateForm(pos){
+     const str = pos.word;
+     const replace = pos.forms;
+     replace[0] = (str.value);
+     return replace[0];
+   }
+
 }
